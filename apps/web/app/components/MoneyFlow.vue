@@ -3,7 +3,7 @@ import { formatApprox, formatPercent, getKind, kindCopy, valueUnit, yearlyYield,
 
 /// Where the yield goes, drawn: deposits rest in the basin and stay the depositors', the yield they generate
 /// rises to the surface (bubbles that open into ripples), and droplets carry it over the rim and down the
-/// stream to the community. The visitor's own deposit and the amount they're typing are slices of the basin,
+/// stream to the community. What's waiting to be paid out is in the Payouts card, next to its action. The visitor's own deposit and the amount they're typing are slices of the basin,
 /// to scale, and each sends its own particle up and out.
 const props = defineProps<{ view: VaultView; communityName: string }>()
 
@@ -12,13 +12,14 @@ const copy = computed(() => kindCopy(props.view.link.kind))
 const aprSource = computed(() => getKind(props.view.link.kind)?.aprSource)
 const payouts = usePayouts(() => props.view)
 const apr = useApr(() => props.view)
-const { preview, value: ready } = usePayoutPreview(() => props.view)
 const { isConnected } = useWallet()
 const positions = usePositions(() => [props.view])
 const draft = useDepositDraft()
 
 const staked = computed(() => props.view.state?.depositorValue ?? 0n)
-const donated = computed(() => totalDonated(payouts.data.value))
+// Everything generated for the community: what's already been paid out plus what's waiting to be.
+const { preview, value: ready } = usePayoutPreview(() => props.view)
+const generated = computed(() => totalDonated(payouts.data.value) + (preview.value?.status === 'ready' ? (ready.value ?? 0n) : 0n))
 const yours = computed(() => (isConnected.value ? (positions.data.value?.[0]?.value ?? 0n) : 0n))
 const adding = computed(() => (draft.value && draft.value > 0n ? draft.value : 0n))
 
@@ -36,38 +37,9 @@ const whole = computed(() => staked.value + adding.value)
 const yoursWidth = computed(() => width(yours.value, whole.value))
 const addingWidth = computed(() => Math.min(width(adding.value, whole.value), BASIN - yoursWidth.value))
 // The Deposited label sits in the basin's open leaf area; once the slices reach into it, it moves above the
-// basin's left rim (mirroring Ready to pay out on the right), so it never covers a slice.
+// basin's left rim, so it never covers a slice.
 const crowded = computed(() => yoursWidth.value + addingWidth.value > 70)
 
-// The amount ready to pay out, when there is one to show (zero counts); otherwise a word or a dash.
-const readyValue = computed(() => (preview.value?.status === 'ready' ? (ready.value ?? 0n) : preview.value?.status === 'nothing' ? 0n : undefined))
-const readyLabel = computed(() => {
-  switch (preview.value?.status) {
-    case 'paused-loss':
-      return 'Paused'
-    case 'no-deposits':
-    case 'error':
-      return '—'
-    default:
-      return '…'
-  }
-})
-const readyHint = computed(() => {
-  switch (preview.value?.status) {
-    case 'ready':
-      return `Earned since the last payout and waiting to be sent to ${props.communityName}. Anyone can send it.`
-    case 'nothing':
-      return `Nothing yet. ${copy.value.yieldCadence}`
-    case 'paused-loss':
-      return `Payouts resume when ${copy.value.recovery}.`
-    case 'no-deposits':
-      return 'Payouts start after the first deposit.'
-    case 'error':
-      return "Couldn't check right now."
-    default:
-      return undefined
-  }
-})
 // Short form for the pill; the type's full rate name and its source sit behind the info icon.
 const aprLabel = computed(() => (apr.data.value ? `${formatPercent(apr.data.value)} APR` : undefined))
 const aprTip = computed(() => [copy.value.rateLabel, aprSource.value].filter(Boolean).join(': '))
@@ -92,7 +64,7 @@ const barAdding = computed(() => percentOf(adding.value, whole.value))
 
 // The flow only moves when there's something in the basin to generate yield.
 const flowing = computed(() => staked.value > 0n || adding.value > 0n)
-const STREAM_TAIL = 'C520 54 556 152 640 158'
+const STREAM_TAIL = 'C516 54 548 152 628 158'
 const STREAM = `M428 54 ${STREAM_TAIL}`
 const RIM = `M380 56 C400 56 418 55 428 54 ${STREAM_TAIL}`
 // A particle rising out of a slice, over the rim and down the stream; x only ever increases.
@@ -102,12 +74,11 @@ const addingCentre = computed(() => BASIN_RIGHT - yoursWidth.value - addingWidth
 // A long strip of waves that slides under a clip, so the surface moves without the basin changing shape.
 const waveStrip = (y: number, amp: number, wl: number) =>
   `M-200 ${y} ${Array.from({ length: 16 }, (_, i) => `q${wl / 2} ${i % 2 ? amp : -amp} ${wl} 0`).join(' ')} V64 H-200 Z`
-// The flow can be paused (WCAG 2.2.2), and it also rests while the diagram is off-screen.
+// The flow rests while the diagram is off-screen, and stays still for anyone who asks for reduced motion.
 const root = ref<HTMLElement>()
 const picture = ref<SVGSVGElement>()
-const userPaused = ref(false)
 const onScreen = ref(true)
-const paused = computed(() => userPaused.value || !onScreen.value)
+const paused = computed(() => !onScreen.value)
 let observer: IntersectionObserver | undefined
 onMounted(() => {
   observer = new IntersectionObserver(([entry]) => (onScreen.value = entry?.isIntersecting ?? true))
@@ -133,20 +104,9 @@ const bubbles = [
     :class="paused && 'is-paused'"
     style="--ui-bg-elevated: #2b5e47"
   >
-    <div class="relative flex items-center justify-between gap-3">
-      <h2 class="font-semibold">Where the yield goes</h2>
-      <button
-        v-if="flowing"
-        type="button"
-        class="-m-1.5 inline-flex rounded-full p-1.5 text-(--yf-flow-text) transition-colors hover:bg-white/10 hover:text-white motion-reduce:hidden"
-        :aria-label="userPaused ? 'Play the animation' : 'Pause the animation'"
-        @click="userPaused = !userPaused"
-      >
-        <UIcon :name="userPaused ? 'i-lucide-play' : 'i-lucide-pause'" class="size-4" />
-      </button>
-    </div>
+    <h2 class="relative font-semibold">Where the yield goes</h2>
 
-    <div class="relative mt-14 aspect-[800/280] @xl:mt-12">
+    <div class="relative aspect-[800/280]" :class="crowded ? 'mt-14 @xl:mt-12' : 'mt-5'">
       <svg ref="picture" viewBox="0 0 800 280" class="absolute inset-0 size-full overflow-visible" aria-hidden="true">
         <defs>
           <!-- What you're adding is hatched: ochre stripes over the basin, so it reads as not there yet. -->
@@ -242,7 +202,7 @@ const bubbles = [
           </circle>
         </g>
 
-        <circle cx="700" cy="158" r="60" fill="#c98a3d" />
+        <circle cx="700" cy="158" r="72" fill="#c98a3d" />
       </svg>
 
       <!-- Narrow: just the amounts, scaled with the picture and never below a readable size. -->
@@ -255,13 +215,8 @@ const bubbles = [
           <span v-if="crowded" class="block text-xs font-normal tracking-normal text-(--yf-flow-text)">Deposited</span>
           <TokenAmount :value="staked" :unit="unit" approx />
         </span>
-        <span class="absolute right-0 top-0 -translate-y-full pb-2 text-right text-[max(0.9375rem,4cqw)]">
-          <span class="block text-xs font-normal tracking-normal text-(--yf-flow-text)">Ready to pay out</span>
-          <TokenAmount v-if="readyValue !== undefined" :value="readyValue" :unit="unit" approx />
-          <template v-else>{{ readyLabel }}</template>
-        </span>
-        <span class="absolute left-[87.5%] top-[81%] -translate-x-1/2 whitespace-nowrap text-[max(0.9375rem,4cqw)]">
-          <TokenAmount :value="donated" :unit="unit" approx />
+        <span class="absolute left-[87.5%] top-[86%] -translate-x-1/2 whitespace-nowrap text-[max(0.9375rem,4cqw)]">
+          <TokenAmount :value="generated" :unit="unit" approx />
         </span>
       </div>
 
@@ -281,23 +236,9 @@ const bubbles = [
             </span>
           </p>
         </div>
-        <div class="absolute right-0 top-0 -translate-y-[38%] text-right">
-          <p class="mb-1 flex items-center justify-end gap-1 text-sm text-(--yf-flow-text)">
-            Ready to pay out
-            <UTooltip v-if="readyHint" :text="readyHint" :ui="{ content: 'h-auto max-w-64 py-1.5', text: 'whitespace-normal' }">
-              <button type="button" :aria-label="readyHint" class="inline-flex text-(--yf-flow-text) hover:text-white">
-                <UIcon name="i-lucide-info" class="size-3.5" />
-              </button>
-            </UTooltip>
-          </p>
-          <p class="text-3xl font-semibold tracking-tight">
-            <TokenAmount v-if="readyValue !== undefined" :value="readyValue" :unit="unit" approx />
-            <template v-else>{{ readyLabel }}</template>
-          </p>
-        </div>
         <p class="absolute left-[87.5%] top-[56.4%] -translate-x-1/2 -translate-y-1/2 text-center text-forest-950" style="--ui-bg-elevated: #e0ab5f">
-          <span class="mx-auto mb-0.5 block max-w-[6.5rem] text-sm font-medium leading-tight">Generated and given</span>
-          <span class="block text-lg font-semibold leading-tight"><TokenAmount :value="donated" :unit="unit" approx /></span>
+          <span class="mb-0.5 block text-sm font-medium">Generated</span>
+          <span class="block text-[0.9375rem] font-semibold leading-tight tracking-tight"><TokenAmount :value="generated" :unit="unit" approx /></span>
         </p>
       </div>
 
@@ -345,8 +286,7 @@ const bubbles = [
           <UTooltip v-if="aprTip && aprLabel" :text="aprTip"><button type="button" :aria-label="aprTip" class="ml-1 inline-flex align-[-0.125em] hover:text-white"><UIcon name="i-lucide-info" class="size-3.5" /></button></UTooltip>
         </span>
       </li>
-      <li class="flex items-center gap-1.5 @xl:hidden"><span class="size-2.5 rounded-[3px] bg-sage" />Ready to pay out</li>
-      <li class="flex items-center gap-1.5 @xl:hidden"><span class="size-2.5 rounded-full bg-ochre-500" />Generated and given</li>
+      <li class="flex items-center gap-1.5 @xl:hidden"><span class="size-2.5 rounded-full bg-ochre-500" />Generated for {{ communityName }}</li>
       <li v-if="yours" class="flex items-center gap-1.5">
         <span class="size-3 rounded-[3px] bg-ochre-500" />Your deposit <b class="font-semibold text-white">≈ <TokenAmount :value="yours" :unit="unit" approx /></b>
       </li>

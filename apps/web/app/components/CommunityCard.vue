@@ -3,6 +3,8 @@ import { chainLabel, sharedValueUnit, type Community } from '@yield-forward/core
 
 const props = defineProps<{ community: Community }>()
 const totals = useVaultTotals(() => props.community.vaults)
+// Yield already paid out plus what's waiting, like the community page's circle.
+const generated = computed(() => (totals.data.value?.donated ?? 0n) + (totals.data.value?.status === 'ready' ? totals.data.value.ready : 0n))
 const { isCurator } = useRoles(() => props.community)
 const reviewOpen = ref(false)
 const multichain = useMultichain()
@@ -39,17 +41,16 @@ const networks = computed(() => [...new Set(props.community.vaults.map((v) => ch
         </NuxtLink>
       </h3>
       <p class="mt-1.5 mb-5 line-clamp-2 text-[0.9375rem] text-muted">{{ community.profile.description }}</p>
-      <!-- Two figures: what's kept here and the yield already given. What's waiting to be paid out lives on
-           the community page, where the diagram explains it. -->
+      <!-- Two figures: what's kept here and everything it has generated for the community (paid out plus waiting). -->
       <dl class="mt-auto grid grid-cols-2 gap-3 border-t border-default pt-4 text-[0.9375rem]">
         <div>
           <dt class="text-xs text-muted">Deposited</dt>
           <dd class="font-semibold text-highlighted"><TokenAmount v-if="unit" :value="staked" :unit="unit" approx /><template v-else>—</template></dd>
         </div>
         <div>
-          <dt class="text-xs text-muted">Generated and given</dt>
+          <dt class="text-xs text-muted">Generated</dt>
           <dd class="font-semibold text-highlighted">
-            <TokenAmount v-if="unit" :value="totals.data.value?.donated ?? 0n" :unit="unit" approx /><template v-else>—</template>
+            <TokenAmount v-if="unit" :value="generated" :unit="unit" approx /><template v-else>—</template>
           </dd>
         </div>
       </dl>
