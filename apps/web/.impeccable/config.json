@@ -1,0 +1,244 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [
+      "**/.impeccable/mocks/**"
+    ],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r1-cistern.html"
+        ],
+        "createdAt": "2026-11-05T12:40:19.493Z",
+        "reason": "Decision sketch: the vessel's fill layers are decorative and its only text is inset 22px"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r1-allotment.html"
+        ],
+        "createdAt": "2026-11-05T12:40:19.520Z",
+        "reason": "Decision sketch: bars sit on the chart's baseline axis by design"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r1-transit.html"
+        ],
+        "createdAt": "2026-11-05T12:40:19.546Z",
+        "reason": "Decision sketch: full-bleed band whose content sits in a centered 1216px column"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r1-allotment.html"
+        ],
+        "createdAt": "2026-11-05T12:40:19.572Z",
+        "reason": "Decision sketch: kraft paper is the Allotment direction's named material"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r2-cycle.html"
+        ],
+        "createdAt": "2026-11-05T13:02:34.793Z",
+        "reason": "Decision sketch: the user pinned Allotment/Passbook's paper tones for this round"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r2-seeds.html"
+        ],
+        "createdAt": "2026-11-05T13:02:34.813Z",
+        "reason": "Decision sketch: the user pinned Allotment/Passbook's paper tones for this round"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r2-solar.html"
+        ],
+        "createdAt": "2026-11-05T13:02:34.829Z",
+        "reason": "Decision sketch: the user pinned Allotment/Passbook's paper tones for this round"
+      },
+      {
+        "rule": "shape-assembled-illustration",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r2-cycle.html"
+        ],
+        "createdAt": "2026-11-05T13:02:34.846Z",
+        "reason": "Decision sketch: the SVG is a data chart of yield and payouts, not an illustration"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r2-plate.html"
+        ],
+        "createdAt": "2026-11-05T13:02:34.861Z",
+        "reason": "Decision sketch: hairline cells, mono caps labels and Geist Mono are the Plate challenger's own catalog grammar"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r2-plate.html"
+        ],
+        "createdAt": "2026-11-05T13:02:34.879Z",
+        "reason": "Decision sketch: hairline cells, mono caps labels and Geist Mono are the Plate challenger's own catalog grammar"
+      },
+      {
+        "rule": "overused-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r2-plate.html"
+        ],
+        "createdAt": "2026-11-05T13:02:34.897Z",
+        "reason": "Decision sketch: hairline cells, mono caps labels and Geist Mono are the Plate challenger's own catalog grammar"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r2-rings.html"
+        ],
+        "createdAt": "2026-11-05T13:02:34.913Z",
+        "reason": "Decision sketch: chart and diagram shapes meet their card edges or baseline by design; text is inset"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r2-soil.html"
+        ],
+        "createdAt": "2026-11-05T13:02:34.930Z",
+        "reason": "Decision sketch: chart and diagram shapes meet their card edges or baseline by design; text is inset"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r2-solar.html"
+        ],
+        "createdAt": "2026-11-05T13:02:34.948Z",
+        "reason": "Decision sketch: chart and diagram shapes meet their card edges or baseline by design; text is inset"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r2-spring.html"
+        ],
+        "createdAt": "2026-11-05T13:02:34.964Z",
+        "reason": "Decision sketch: chart and diagram shapes meet their card edges or baseline by design; text is inset"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r3-a.html"
+        ],
+        "createdAt": "2026-11-05T13:10:07.604Z",
+        "reason": "Decision sketch: Seed Library's paper ground, a palette the user pinned from Allotment/Passbook"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r3-b.html"
+        ],
+        "createdAt": "2026-11-05T13:10:07.621Z",
+        "reason": "Decision sketch: Seed Library's paper ground, a palette the user pinned from Allotment/Passbook"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r3-c.html"
+        ],
+        "createdAt": "2026-11-05T13:10:07.639Z",
+        "reason": "Decision sketch: Seed Library's paper ground, a palette the user pinned from Allotment/Passbook"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r3-a.html"
+        ],
+        "createdAt": "2026-11-05T13:10:07.655Z",
+        "reason": "Decision sketch: the packet band and flow diagram meet their card edges by design; text is inset"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r3-b.html"
+        ],
+        "createdAt": "2026-11-05T13:10:07.674Z",
+        "reason": "Decision sketch: the packet band and flow diagram meet their card edges by design; text is inset"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r4-a.html"
+        ],
+        "createdAt": "2026-11-05T13:18:14.659Z",
+        "reason": "Decision sketch: Seed Library's paper ground, a palette the user pinned from Allotment/Passbook"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r4-a.html"
+        ],
+        "createdAt": "2026-11-05T13:18:14.677Z",
+        "reason": "Decision sketch: the packet band and flow diagram meet their card edges by design; text is inset"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r4-b.html"
+        ],
+        "createdAt": "2026-11-05T13:18:14.694Z",
+        "reason": "Decision sketch: Seed Library's paper ground, a palette the user pinned from Allotment/Passbook"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r4-b.html"
+        ],
+        "createdAt": "2026-11-05T13:18:14.715Z",
+        "reason": "Decision sketch: the packet band and flow diagram meet their card edges by design; text is inset"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r4-c.html"
+        ],
+        "createdAt": "2026-11-05T13:18:14.732Z",
+        "reason": "Decision sketch: Seed Library's paper ground, a palette the user pinned from Allotment/Passbook"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r4-c.html"
+        ],
+        "createdAt": "2026-11-05T13:18:14.752Z",
+        "reason": "Decision sketch: the packet band and flow diagram meet their card edges by design; text is inset"
+      }
+    ]
+  }
+}

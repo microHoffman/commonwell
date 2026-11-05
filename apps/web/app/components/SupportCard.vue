@@ -16,9 +16,9 @@ const tabs = [
 </script>
 
 <template>
-  <UCard :ui="{ header: 'border-b-0 p-2 sm:p-2', body: 'pt-3 sm:pt-4', footer: 'py-3 sm:py-3' }">
+  <UCard :ui="{ header: 'border-b-0 p-3 sm:p-3', body: 'pt-2 sm:pt-3', footer: 'bg-muted py-3.5 sm:py-3.5' }">
     <template #header>
-      <!-- A quiet segmented control, so the green deposit button stays the only loud element. -->
+      <!-- A quiet pill control, so the green deposit button stays the only loud element. -->
       <UTabs
         v-model="tab"
         :items="tabs"
@@ -27,8 +27,8 @@ const tabs = [
         size="lg"
         class="w-full"
         :ui="{
-          list: 'rounded-[calc(var(--ui-radius)*2)] bg-elevated/70',
-          indicator: 'rounded-[calc(var(--ui-radius)*1.5)] bg-default shadow-sm ring ring-default dark:bg-accented',
+          list: 'rounded-full bg-elevated',
+          indicator: 'rounded-full bg-default shadow-sm dark:bg-accented',
           trigger: 'data-[state=active]:text-highlighted',
         }"
       />

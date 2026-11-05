@@ -21,7 +21,7 @@ try {
       <WagmiProvider>
         <div class="min-h-screen">
           <AppHeader />
-          <main class="mx-auto max-w-5xl px-4 pb-20 pt-6 sm:px-6">
+          <main class="mx-auto max-w-[76rem] px-4 pb-20 pt-2 sm:px-6">
             <NuxtPage />
           </main>
         </div>

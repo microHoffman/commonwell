@@ -14,13 +14,21 @@ const tabs = computed(() => [
 
 <template>
   <div class="space-y-8">
-    <section class="space-y-2">
-      <h1 class="text-2xl font-semibold sm:text-3xl">Fund a community with your yield</h1>
-      <p class="text-muted">Deposit into a community's vault. The yield it earns goes to the community, and your deposit stays yours to withdraw anytime.</p>
+    <section class="max-w-2xl space-y-3 pt-6">
+      <h1 class="text-3xl font-semibold tracking-tight text-balance text-highlighted sm:text-4xl">Fund a community with your yield</h1>
+      <p class="text-lg text-muted">Deposit into a community's vault. The yield it earns goes to the community, and your deposit stays yours to withdraw anytime.</p>
     </section>
 
     <section class="space-y-4">
-      <UTabs v-if="unreviewed.length > 0" v-model="tab" :items="tabs" :content="false" />
+      <UTabs
+        v-if="unreviewed.length > 0"
+        v-model="tab"
+        :items="tabs"
+        :content="false"
+        color="neutral"
+        class="w-full sm:w-fit"
+        :ui="{ list: 'rounded-full bg-default ring ring-default', indicator: 'rounded-full bg-elevated', trigger: 'px-4 data-[state=active]:text-highlighted' }"
+      />
 
       <UAlert v-if="error" color="error" variant="subtle" title="Couldn't load communities" :description="errorMessage(error)" />
       <UAlert
@@ -31,8 +39,8 @@ const tabs = computed(() => [
         :title="`Couldn't read ${data.unavailable.join(' and ')}`"
         description="Communities there are missing until it responds again."
       />
-      <div v-else-if="isLoading" class="grid gap-4 sm:grid-cols-2">
-        <USkeleton v-for="i in 2" :key="i" class="h-40" />
+      <div v-else-if="isLoading" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <USkeleton v-for="i in 3" :key="i" class="h-60 rounded-[1.5rem]" />
       </div>
       <UEmpty
         v-else-if="shown.length === 0"
@@ -40,12 +48,12 @@ const tabs = computed(() => [
         title="No communities yet"
         :actions="[{ label: 'Create a community', to: '/new' }]"
       />
-      <div v-else class="grid gap-4 sm:grid-cols-2">
+      <div v-else class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         <CommunityCard v-for="community in shown" :key="community.id" :community="community" />
       </div>
     </section>
 
-    <p class="border-t border-default pt-4 text-sm text-muted">
+    <p class="border-t border-default pt-5 text-sm text-muted">
       Run a community?
       <ULink to="/new" class="font-medium text-primary">Add your community</ULink>
     </p>

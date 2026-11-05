@@ -63,7 +63,7 @@ const items = computed(() => {
 </script>
 
 <template>
-  <section class="space-y-1 px-4 pt-2 sm:px-6">
+  <section class="space-y-1 rounded-[1.5rem] border border-default bg-default px-5 pb-2 pt-4 sm:px-7 sm:pt-5">
     <h2 class="text-base font-semibold text-highlighted">Questions</h2>
     <UAccordion
       :items="items"

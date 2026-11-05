@@ -39,7 +39,7 @@ export const copy: KindCopy = {
   howItWorks: (name) => [
     `Your ETH is staked with Lido in ${name}'s vault.`,
     `The staking rewards are paid out to ${name}.`,
-    'You keep your deposit and can withdraw it anytime.',
+    'You keep your deposit and can withdraw it anytime, paid out in wstETH.',
   ],
   faq: (name, rate) => ({
     funding: {

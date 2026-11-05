@@ -54,7 +54,6 @@ async function submit() {
       :unit="unit"
       :balance="position.value"
       :max="position.value"
-      exact
       :error="inputError"
       :disabled="pending"
     />

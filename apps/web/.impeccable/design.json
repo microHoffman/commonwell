@@ -1,0 +1,680 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-05T16:00:00+00:00",
+  "title": "Design System: Yield Forward",
+  "extensions": {
+    "colorMeta": {
+      "bottle-green": {
+        "role": "primary",
+        "displayName": "Bottle Green",
+        "tonalRamp": [
+          "#0e2519",
+          "#183d2e",
+          "#1f4d3a",
+          "#2c6249",
+          "#5e9677",
+          "#8ab79c",
+          "#d9eadf",
+          "#eef5f0"
+        ],
+        "canonical": "var(--color-forest-800)"
+      },
+      "bottle-green-deep": {
+        "role": "primary",
+        "displayName": "Bottle Green Deep",
+        "tonalRamp": [
+          "#0e2519",
+          "#183d2e",
+          "#1f4d3a",
+          "#2c6249",
+          "#5e9677",
+          "#8ab79c",
+          "#d9eadf",
+          "#eef5f0"
+        ],
+        "canonical": "var(--color-forest-900)"
+      },
+      "bottle-green-night": {
+        "role": "primary",
+        "displayName": "Bottle Green Night",
+        "tonalRamp": [
+          "#0e2519",
+          "#183d2e",
+          "#1f4d3a",
+          "#2c6249",
+          "#5e9677",
+          "#8ab79c",
+          "#d9eadf",
+          "#eef5f0"
+        ],
+        "canonical": "var(--color-forest-950)"
+      },
+      "pale-moss": {
+        "role": "primary",
+        "displayName": "Pale Moss",
+        "tonalRamp": [
+          "#0e2519",
+          "#183d2e",
+          "#1f4d3a",
+          "#2c6249",
+          "#5e9677",
+          "#8ab79c",
+          "#d9eadf",
+          "#eef5f0"
+        ],
+        "canonical": "var(--color-forest-300)"
+      },
+      "mint-wash": {
+        "role": "primary",
+        "displayName": "Mint Wash",
+        "tonalRamp": [
+          "#0e2519",
+          "#183d2e",
+          "#1f4d3a",
+          "#2c6249",
+          "#5e9677",
+          "#8ab79c",
+          "#d9eadf",
+          "#eef5f0"
+        ],
+        "canonical": "var(--color-forest-50)"
+      },
+      "community-ochre": {
+        "role": "secondary",
+        "displayName": "Community Ochre",
+        "tonalRamp": [
+          "#2f1e0a",
+          "#573914",
+          "#8a5a1c",
+          "#a96f2c",
+          "#c98a3d",
+          "#e0ab5f",
+          "#f5e4c6",
+          "#fbf4e8"
+        ],
+        "canonical": "var(--color-ochre-500)"
+      },
+      "ochre-light": {
+        "role": "secondary",
+        "displayName": "Ochre Light",
+        "tonalRamp": [
+          "#2f1e0a",
+          "#573914",
+          "#8a5a1c",
+          "#a96f2c",
+          "#c98a3d",
+          "#e0ab5f",
+          "#f5e4c6",
+          "#fbf4e8"
+        ],
+        "canonical": "var(--color-ochre-300)"
+      },
+      "ochre-dusk": {
+        "role": "secondary",
+        "displayName": "Ochre Dusk",
+        "tonalRamp": [
+          "#2f1e0a",
+          "#573914",
+          "#8a5a1c",
+          "#a96f2c",
+          "#c98a3d",
+          "#e0ab5f",
+          "#f5e4c6",
+          "#fbf4e8"
+        ],
+        "canonical": "var(--color-ochre-400)"
+      },
+      "leaf": {
+        "role": "tertiary",
+        "displayName": "Leaf",
+        "tonalRamp": [
+          "#1c2c13",
+          "#2c4520",
+          "#3d5f2c",
+          "#4f7a36",
+          "#6a9450",
+          "#8aae72",
+          "#b5cda6",
+          "#e3ecdc"
+        ],
+        "canonical": "var(--color-leaf)"
+      },
+      "sage": {
+        "role": "tertiary",
+        "displayName": "Sage",
+        "tonalRamp": [
+          "#27331f",
+          "#3f5134",
+          "#5b7250",
+          "#7a956b",
+          "#9db88a",
+          "#b6cba7",
+          "#d0dec6",
+          "#eaf1e4"
+        ],
+        "canonical": "var(--color-sage)"
+      },
+      "stream-text": {
+        "role": "tertiary",
+        "displayName": "Stream Text",
+        "tonalRamp": [
+          "#27331f",
+          "#3f5134",
+          "#5b7250",
+          "#7a956b",
+          "#9db88a",
+          "#b6cba7",
+          "#d0dec6",
+          "#eaf1e4"
+        ],
+        "canonical": "var(--yf-flow-text)"
+      },
+      "band-mint": {
+        "role": "tertiary",
+        "displayName": "Band Mint",
+        "tonalRamp": [
+          "#0e2519",
+          "#183d2e",
+          "#1f4d3a",
+          "#2c6249",
+          "#5e9677",
+          "#8ab79c",
+          "#d9eadf",
+          "#eef5f0"
+        ]
+      },
+      "paper-ground": {
+        "role": "neutral",
+        "displayName": "Paper Ground",
+        "tonalRamp": [
+          "#131512",
+          "#2e2d27",
+          "#45433a",
+          "#5a574b",
+          "#77715f",
+          "#a39b8a",
+          "#e6dfd0",
+          "#f6f1e7"
+        ],
+        "canonical": "var(--color-kraft-100)"
+      },
+      "paper-light": {
+        "role": "neutral",
+        "displayName": "Paper Light",
+        "tonalRamp": [
+          "#131512",
+          "#2e2d27",
+          "#45433a",
+          "#5a574b",
+          "#77715f",
+          "#a39b8a",
+          "#e6dfd0",
+          "#f6f1e7"
+        ],
+        "canonical": "var(--color-kraft-50)"
+      },
+      "card-white": {
+        "role": "neutral",
+        "displayName": "Card White",
+        "tonalRamp": [
+          "#131512",
+          "#2e2d27",
+          "#45433a",
+          "#5a574b",
+          "#77715f",
+          "#a39b8a",
+          "#e6dfd0",
+          "#f6f1e7"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "tonalRamp": [
+          "#131512",
+          "#2e2d27",
+          "#45433a",
+          "#5a574b",
+          "#77715f",
+          "#a39b8a",
+          "#e6dfd0",
+          "#f6f1e7"
+        ],
+        "canonical": "var(--color-kraft-200)"
+      },
+      "ink-dimmed": {
+        "role": "neutral",
+        "displayName": "Ink Dimmed",
+        "tonalRamp": [
+          "#131512",
+          "#2e2d27",
+          "#45433a",
+          "#5a574b",
+          "#77715f",
+          "#a39b8a",
+          "#e6dfd0",
+          "#f6f1e7"
+        ],
+        "canonical": "var(--color-kraft-500)"
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Ink Muted",
+        "tonalRamp": [
+          "#131512",
+          "#2e2d27",
+          "#45433a",
+          "#5a574b",
+          "#77715f",
+          "#a39b8a",
+          "#e6dfd0",
+          "#f6f1e7"
+        ],
+        "canonical": "var(--color-kraft-600)"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "#131512",
+          "#2e2d27",
+          "#45433a",
+          "#5a574b",
+          "#77715f",
+          "#a39b8a",
+          "#e6dfd0",
+          "#f6f1e7"
+        ],
+        "canonical": "var(--color-kraft-800)"
+      },
+      "ink-strong": {
+        "role": "neutral",
+        "displayName": "Ink Strong",
+        "tonalRamp": [
+          "#131512",
+          "#2e2d27",
+          "#45433a",
+          "#5a574b",
+          "#77715f",
+          "#a39b8a",
+          "#e6dfd0",
+          "#f6f1e7"
+        ],
+        "canonical": "var(--color-kraft-900)"
+      },
+      "night-ground": {
+        "role": "neutral",
+        "displayName": "Night Ground",
+        "tonalRamp": [
+          "#0b0f0c",
+          "#121814",
+          "#1a211d",
+          "#1f2722",
+          "#26302a",
+          "#2e3832",
+          "#3b4740",
+          "#5a6a60"
+        ]
+      },
+      "night-card": {
+        "role": "neutral",
+        "displayName": "Night Card",
+        "tonalRamp": [
+          "#0b0f0c",
+          "#121814",
+          "#1a211d",
+          "#1f2722",
+          "#26302a",
+          "#2e3832",
+          "#3b4740",
+          "#5a6a60"
+        ]
+      },
+      "night-raised": {
+        "role": "neutral",
+        "displayName": "Night Raised",
+        "tonalRamp": [
+          "#0b0f0c",
+          "#121814",
+          "#1a211d",
+          "#1f2722",
+          "#26302a",
+          "#2e3832",
+          "#3b4740",
+          "#5a6a60"
+        ]
+      },
+      "night-hairline": {
+        "role": "neutral",
+        "displayName": "Night Hairline",
+        "tonalRamp": [
+          "#0b0f0c",
+          "#121814",
+          "#1a211d",
+          "#1f2722",
+          "#26302a",
+          "#2e3832",
+          "#3b4740",
+          "#5a6a60"
+        ]
+      },
+      "night-ink": {
+        "role": "neutral",
+        "displayName": "Night Ink",
+        "tonalRamp": [
+          "#131512",
+          "#2e2d27",
+          "#45433a",
+          "#5a574b",
+          "#77715f",
+          "#a39b8a",
+          "#e6dfd0",
+          "#f6f1e7"
+        ]
+      },
+      "foam": {
+        "role": "tertiary",
+        "displayName": "Foam",
+        "tonalRamp": [
+          "#27331f",
+          "#3f5134",
+          "#5b7250",
+          "#7a956b",
+          "#9db88a",
+          "#b6cba7",
+          "#d0dec6",
+          "#eaf1e4"
+        ]
+      },
+      "spray": {
+        "role": "tertiary",
+        "displayName": "Spray",
+        "tonalRamp": [
+          "#27331f",
+          "#3f5134",
+          "#5b7250",
+          "#7a956b",
+          "#9db88a",
+          "#b6cba7",
+          "#d0dec6",
+          "#eaf1e4"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Directory page heading only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Community name, My deposits heading, wide-diagram figures."
+      },
+      "amount-input": {
+        "displayName": "Amount Input",
+        "purpose": "The typed amount in the deposit and withdraw fields."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Packet names; section headings step down to 1.125rem."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Descriptions and FAQ answers at a 65ch measure."
+      },
+      "body-small": {
+        "displayName": "Body Small",
+        "purpose": "Packet descriptions and packet figures."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Fact lines, card headings, diagram labels, key entries, summary rows."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Term labels over figures, step lists, rate notes."
+      }
+    },
+    "shadows": [
+      {
+        "name": "packet-lift",
+        "value": "0 14px 32px -22px rgb(31 77 58 / 0.55)",
+        "purpose": "Directory packet on hover."
+      },
+      {
+        "name": "packet-small-lift",
+        "value": "0 10px 24px -18px rgb(31 77 58 / 0.6)",
+        "purpose": "Small packets on hover."
+      },
+      {
+        "name": "header-edge",
+        "value": "0 1px 0 var(--ui-border), 0 8px 20px -16px rgb(31 77 58 / 0.35)",
+        "purpose": "Sticky header once content scrolls under it."
+      },
+      {
+        "name": "cue-on-band",
+        "value": "0 4px 12px -6px rgb(0 0 0 / 0.45)",
+        "purpose": "Round open button on a packet's band."
+      }
+    ],
+    "motion": [
+      {
+        "name": "slice-ease",
+        "value": "200ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Yours and adding slices and the share bar easing their width; none under reduced motion."
+      },
+      {
+        "name": "wave-front",
+        "value": "7s linear infinite, translateX(-168px)",
+        "purpose": "Sage surface layer sliding as a seamless loop."
+      },
+      {
+        "name": "wave-back",
+        "value": "11s linear infinite reverse",
+        "purpose": "Foam surface layer sliding the opposite way."
+      },
+      {
+        "name": "bubble-rise",
+        "value": "4.8s / 5.5s / 6.2s cubic-bezier(0.42, 0, 0.58, 1) infinite",
+        "purpose": "Foam bubbles rising from the deposits."
+      },
+      {
+        "name": "ripple",
+        "value": "same duration as its bubble, ease-out, opens in the last 12%",
+        "purpose": "Bubble opening into a spray ripple at the surface."
+      },
+      {
+        "name": "droplet",
+        "value": "3.6s spline 0.42 0 0.58 1, three staggered 1.2s",
+        "purpose": "Spray droplets leaving the rim along the stream."
+      },
+      {
+        "name": "particle",
+        "value": "6s spline 0.42 0 0.58 1",
+        "purpose": "Solid ochre particle from your slice, dashed ochre ring from the adding slice."
+      },
+      {
+        "name": "hover",
+        "value": "200ms",
+        "purpose": "Packet border, shadow and open-button fill; header edge."
+      },
+      {
+        "name": "amount-hint",
+        "value": "150ms",
+        "purpose": "TokenAmount dotted underline softening into a highlight."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "40rem"
+      },
+      {
+        "name": "lg",
+        "value": "64rem"
+      },
+      {
+        "name": "xl",
+        "value": "80rem"
+      },
+      {
+        "name": "diagram-wide (container)",
+        "value": "36rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one loud action in the deposit card; full width, bottle green.",
+      "html": "<button class=\"ds-btn-primary\">Sign in to deposit</button>",
+      "css": ".ds-btn-primary{font-family: Onest, ui-sans-serif, system-ui, sans-serif;display:block;width:100%;height:48px;padding:0 20px;border:0;border-radius:var(--ui-radius,0.5rem);background:#1f4d3a;color:#fff;font-size:1.125rem;font-weight:500;cursor:pointer;transition:background-color 150ms}.ds-btn-primary:hover{background:#183d2e}.ds-btn-primary:focus-visible{outline:2px solid #c98a3d;outline-offset:2px}"
+    },
+    {
+      "name": "Header Sign-in Pill",
+      "kind": "button",
+      "refersTo": "button-header",
+      "description": "Pill sign-in at the end of the sticky header.",
+      "html": "<button class=\"ds-btn-pill\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4\"/><path d=\"m10 17 5-5-5-5\"/><path d=\"M15 12H3\"/></svg>Sign in</button>",
+      "css": ".ds-btn-pill{font-family: Onest, ui-sans-serif, system-ui, sans-serif;display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border:0;border-radius:9999px;background:#1f4d3a;color:#fff;font-size:1rem;font-weight:500;cursor:pointer;transition:background-color 150ms}.ds-btn-pill:hover{background:#183d2e}.ds-btn-pill:focus-visible{outline:2px solid #c98a3d;outline-offset:2px}"
+    },
+    {
+      "name": "Amount Field",
+      "kind": "input",
+      "refersTo": "input-amount",
+      "description": "Display-size amount input with trailing unit and an ochre focus ring.",
+      "html": "<label class=\"ds-amount\"><span class=\"ds-amount-label\">Amount</span><span class=\"ds-amount-box\"><input inputmode=\"decimal\" placeholder=\"0.0\" value=\"0.004\"><span class=\"ds-amount-unit\">ETH</span></span></label>",
+      "css": ".ds-amount{font-family: Onest, ui-sans-serif, system-ui, sans-serif;display:block;width:320px;color:#2e2d27}.ds-amount-label{display:block;margin-bottom:6px;font-size:0.875rem;font-weight:500}.ds-amount-box{display:flex;align-items:center;height:56px;padding:0 12px;border:1px solid #e6dfd0;border-radius:0.5rem;background:#fff}.ds-amount-box:focus-within{box-shadow:0 0 0 2px #c98a3d}.ds-amount input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:1.5rem;font-weight:600;letter-spacing:-0.025em;color:#1e1f1b;font-variant-numeric:tabular-nums}.ds-amount input::placeholder{font-weight:400;color:#a39b8a}.ds-amount-unit{font-size:0.875rem;color:#5a574b}"
+    },
+    {
+      "name": "Pill Tabs",
+      "kind": "nav",
+      "refersTo": "tabs-pill",
+      "description": "Quiet segmented control in the deposit card; the active segment is a white pill.",
+      "html": "<div class=\"ds-tabs\" role=\"tablist\"><button class=\"ds-tab\" aria-selected=\"true\">Deposit</button><button class=\"ds-tab\" aria-selected=\"false\">Withdraw</button></div>",
+      "css": ".ds-tabs{font-family: Onest, ui-sans-serif, system-ui, sans-serif;display:grid;grid-template-columns:1fr 1fr;gap:4px;width:340px;padding:4px;border-radius:9999px;background:#f6f1e7}.ds-tab{padding:8px 16px;border:0;border-radius:9999px;background:transparent;color:#5a574b;font:inherit;font-size:1rem;font-weight:500;cursor:pointer;transition:color 150ms,background-color 150ms}.ds-tab:hover{color:#2e2d27}.ds-tab[aria-selected=true]{background:#fff;color:#1e1f1b;box-shadow:0 1px 2px rgb(0 0 0/0.08)}.ds-tab:focus-visible{outline:2px solid #c98a3d;outline-offset:2px}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "description": "Sticky header on the paper ground with ghost links and a pill sign-in.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-nav-brand\" href=\"#\"><span class=\"ds-nav-logo\"></span>Yield Forward</a><nav><a class=\"ds-nav-link\" aria-current=\"page\" href=\"#\">Communities</a><a class=\"ds-nav-link\" href=\"#\">My deposits</a></nav></header>",
+      "css": ".ds-nav{font-family: Onest, ui-sans-serif, system-ui, sans-serif;display:flex;align-items:center;gap:24px;padding:16px 24px;background:#f6f1e7;box-shadow:0 1px 0 #e6dfd0,0 8px 20px -16px rgb(31 77 58/0.35)}.ds-nav-brand{display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:600;letter-spacing:-0.025em;color:#1e1f1b;text-decoration:none}.ds-nav-logo{width:32px;height:32px;border-radius:25%;background:#1f4d3a}.ds-nav nav{margin-left:auto;display:flex;gap:8px}.ds-nav-link{padding:8px 12px;border-radius:0.5rem;color:#5a574b;text-decoration:none;font-weight:500;transition:color 150ms,background-color 150ms}.ds-nav-link:hover{color:#2e2d27;background:#fbf9f4}.ds-nav-link[aria-current=page]{color:#1e1f1b}.ds-nav-link:focus-visible{outline:2px solid #c98a3d}"
+    },
+    {
+      "name": "Badge",
+      "kind": "chip",
+      "refersTo": "badge-reviewed",
+      "description": "Pill status badge beside a community's name.",
+      "html": "<span class=\"ds-badge\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"m9 12 2 2 4-4\"/></svg>Reviewed</span> <span class=\"ds-badge ds-badge-warn\">Unreviewed</span>",
+      "css": ".ds-badge{font-family: Onest, ui-sans-serif, system-ui, sans-serif;display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:9999px;background:#eef5f0;color:#1f4d3a;box-shadow:inset 0 0 0 1px #b5d4c0;font-size:0.75rem;font-weight:500}.ds-badge-warn{background:#fbf4e8;color:#8a5a1c;box-shadow:inset 0 0 0 1px #ecc98f}"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "White content card with 24px corners and a hairline on the paper ground.",
+      "html": "<section class=\"ds-card\"><h2>Recent payouts</h2><ul><li><b>0.0123 ETH</b><a href=\"#\">2 days ago</a></li><li><b>0.0098 ETH</b><a href=\"#\">9 days ago</a></li></ul></section>",
+      "css": ".ds-card{font-family: Onest, ui-sans-serif, system-ui, sans-serif;width:320px;padding:16px 20px;border:1px solid #e6dfd0;border-radius:1.5rem;background:#fff;color:#2e2d27;font-size:0.875rem;font-variant-numeric:tabular-nums}.ds-card h2{margin:0 0 8px;font-size:0.875rem;font-weight:600}.ds-card ul{margin:0;padding:0;list-style:none}.ds-card li{display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid #e6dfd0}.ds-card li:first-child{border-top:0}.ds-card b{font-weight:500;color:#1e1f1b}.ds-card a{color:#5a574b;text-decoration:none}.ds-card a:hover{color:#1f4d3a}"
+    },
+    {
+      "name": "Community Packet",
+      "kind": "card",
+      "description": "Directory packet: 80px seeded circle band, 56px overlapping seal, round arrow button in the band as the open cue, three figures.",
+      "html": "<a class=\"ds-packet\" href=\"#\"><span class=\"ds-packet-band\"><svg viewBox=\"0 0 800 96\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"800\" height=\"96\" fill=\"#4f7a36\"/><circle cx=\"140\" cy=\"0\" r=\"80\" fill=\"#9db88a\"/><circle cx=\"470\" cy=\"96\" r=\"64\" fill=\"#1f4d3a\"/><path d=\"M560 0 a44 44 0 0 0 88 0z\" fill=\"#c98a3d\"/><circle cx=\"320\" cy=\"40\" r=\"7\" fill=\"#e3eee6\"/></svg><span class=\"ds-packet-cue\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M7 17 17 7\"/><path d=\"M7 7h10v10\"/></svg></span></span><span class=\"ds-packet-body\"><span class=\"ds-packet-avatar\">CA</span><span class=\"ds-packet-name\">Community A</span><span class=\"ds-packet-desc\">Its staking yield funds neighbourhood projects.</span><span class=\"ds-packet-figs\"><span><small>Deposited</small>0.01 ETH</span><span><small>Donated</small>0 ETH</span><span><small>Ready to pay out</small>0 ETH</span></span></span></a>",
+      "css": ".ds-packet{font-family: Onest, ui-sans-serif, system-ui, sans-serif;display:flex;flex-direction:column;width:340px;overflow:hidden;border:1px solid #e6dfd0;border-radius:1.5rem;background:#fff;color:#2e2d27;text-decoration:none;font-variant-numeric:tabular-nums;transition:border-color 200ms,box-shadow 200ms}.ds-packet:hover{border-color:#cfc7b6;box-shadow:0 14px 32px -22px rgb(31 77 58/0.55)}.ds-packet:focus-visible{outline:2px solid #c98a3d;outline-offset:2px}.ds-packet-band{position:relative;display:block;height:80px}.ds-packet-band svg{display:block;width:100%;height:100%}.ds-packet-cue{position:absolute;right:12px;top:12px;display:grid;place-items:center;width:36px;height:36px;border-radius:9999px;background:rgb(255 255 255/0.9);color:#1f4d3a;box-shadow:0 4px 12px -6px rgb(0 0 0/0.45);transition:background-color 200ms,color 200ms}.ds-packet:hover .ds-packet-cue{background:#1f4d3a;color:#fff}.ds-packet-body{display:flex;flex-direction:column;padding:0 24px 20px}.ds-packet-avatar{display:grid;place-items:center;width:56px;height:56px;margin-top:-28px;border-radius:0.375rem;background:#eef5f0;color:#1f4d3a;font-weight:600;font-size:1.125rem;box-shadow:0 0 0 4px #fff;position:relative}.ds-packet-name{margin-top:12px;font-size:1.25rem;font-weight:600;letter-spacing:-0.025em;color:#1e1f1b}.ds-packet-desc{margin:6px 0 20px;font-size:0.9375rem;color:#5a574b}.ds-packet-figs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding-top:16px;border-top:1px solid #e6dfd0;font-size:0.9375rem;font-weight:600;color:#1e1f1b}.ds-packet-figs small{display:block;font-size:0.75rem;font-weight:400;color:#5a574b}"
+    },
+    {
+      "name": "Money Diagram",
+      "kind": "custom",
+      "refersTo": "flow-card",
+      "description": "Signature: basin of deposits under a moving sage surface, stream to the ochre community circle, solid 'yours' and hatched 'adding' slices, share bar and key.",
+      "html": "<section class=\"ds-flow\"><div class=\"ds-flow-head\"><h2>Where the yield goes</h2><button aria-label=\"Pause the animation\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"14\" y=\"4\" width=\"4\" height=\"16\" rx=\"1\"/><rect x=\"6\" y=\"4\" width=\"4\" height=\"16\" rx=\"1\"/></svg></button></div><svg viewBox=\"0 0 800 280\"><defs><pattern id=\"ds-hatch\" width=\"7\" height=\"7\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"2.6\" height=\"7\" fill=\"#e0ab5f\"/></pattern><clipPath id=\"ds-basin\"><path d=\"M24 60 H430 V214 Q430 268 376 268 H78 Q24 268 24 214 Z\"/></clipPath></defs><path d=\"M24 60 H430 V214 Q430 268 376 268 H78 Q24 268 24 214 Z\" fill=\"#4f7a36\"/><g clip-path=\"url(#ds-basin)\"><rect class=\"ds-slice\" x=\"250\" y=\"62\" width=\"180\" height=\"206\" fill=\"url(#ds-hatch)\" stroke=\"#e0ab5f\" stroke-width=\"2\" stroke-dasharray=\"5 4\"/><circle class=\"ds-bubble\" cx=\"120\" cy=\"262\" r=\"3\" fill=\"#b9d3a8\"/></g><path d=\"M24 48 Q110 40 200 48 T370 48 T430 48 V62 H24 Z\" fill=\"#9db88a\"/><path d=\"M428 54 C520 54 556 152 640 158\" fill=\"none\" stroke=\"#9db88a\" stroke-width=\"13\" stroke-linecap=\"round\"/><circle r=\"3.2\" fill=\"#e8f2df\"><animateMotion dur=\"3.6s\" repeatCount=\"indefinite\" path=\"M380 56 C400 56 418 55 428 54 C520 54 556 152 640 158\" calcMode=\"spline\" keyPoints=\"0;1\" keyTimes=\"0;1\" keySplines=\"0.42 0 0.58 1\"/></circle><circle cx=\"700\" cy=\"158\" r=\"60\" fill=\"#c98a3d\"/></svg><p class=\"ds-share\">You'd hold <b>83.3%</b> of this vault</p><div class=\"ds-bar\"><span style=\"width:16.7%\"></span><span class=\"ds-hatch\" style=\"width:83.3%\"></span></div><ul><li><i class=\"ds-k ds-k-adding\"></i>Adding <b>0.05 ETH</b></li><li><i class=\"ds-k ds-k-sage\"></i>Yield on all deposits <b>≈ 0.00114 ETH</b> a year to Community A</li></ul></section>",
+      "css": ".ds-flow{font-family: Onest, ui-sans-serif, system-ui, sans-serif;width:560px;padding:28px;border-radius:1.5rem;background:var(--yf-flow,#1f4d3a);color:#fff}.ds-flow-head{display:flex;justify-content:space-between;align-items:center}.ds-flow h2{margin:0;font-size:1rem;font-weight:600}.ds-flow-head button{display:inline-flex;padding:6px;border:0;border-radius:9999px;background:transparent;color:#d5e6cd;cursor:pointer;transition:color 150ms,background-color 150ms}.ds-flow-head button:hover{background:rgb(255 255 255/0.1);color:#fff}.ds-flow svg{display:block;width:100%;height:auto;margin-top:16px}.ds-slice{transition:x 200ms cubic-bezier(0.16,1,0.3,1),width 200ms cubic-bezier(0.16,1,0.3,1)}.ds-bubble{animation:ds-rise 5.5s cubic-bezier(0.42,0,0.58,1) infinite}@keyframes ds-rise{0%{transform:translateY(0);opacity:0}15%,88%{opacity:.85}100%{transform:translateY(-206px);opacity:0}}@media (prefers-reduced-motion:reduce){.ds-slice,.ds-bar span{transition:none}.ds-bubble{animation:none;display:none}}.ds-share{margin:20px 0 0;font-size:0.875rem}.ds-share b{font-weight:600}.ds-bar{display:flex;height:10px;margin-top:8px;overflow:hidden;border-radius:9999px;background:#4f7a36}.ds-bar span{height:100%;transition:width 200ms cubic-bezier(0.16,1,0.3,1)}.ds-hatch{background:#4f7a36 repeating-linear-gradient(45deg,#e0ab5f 0 1.6px,transparent 1.6px 4px);box-shadow:inset 0 0 0 1.5px #e0ab5f}.ds-flow ul{display:flex;flex-wrap:wrap;gap:6px 20px;margin:16px 0 0;padding:0;list-style:none;font-size:0.875rem;color:#d5e6cd}.ds-flow li{display:flex;align-items:center;gap:6px}.ds-flow li b{font-weight:600;color:#fff}.ds-k{display:inline-block;width:12px;height:12px;border-radius:3px;box-sizing:border-box}.ds-k-sage{background:#9db88a}.ds-k-adding{background:#4f7a36 repeating-linear-gradient(45deg,#e0ab5f 0 1.6px,transparent 1.6px 4px);border:1.5px dashed #e0ab5f}"
+    },
+    {
+      "name": "Deposit Summary",
+      "kind": "custom",
+      "refersTo": "summary-inset",
+      "description": "Two-row inset keyed to the diagram inks: a hatched swatch for what you keep, sage for what the community receives.",
+      "html": "<dl class=\"ds-summary\"><div><dt><i class=\"ds-sw ds-sw-adding\"></i>You keep</dt><dd><b>≈ 0.004 ETH</b></dd></div><div><dt><i class=\"ds-sw ds-sw-sage\"></i>To Community A</dt><dd><b>&lt; 0.0001 ETH</b> a year<small>at 1.9% Staking APR</small></dd></div></dl>",
+      "css": ".ds-summary{font-family: Onest, ui-sans-serif, system-ui, sans-serif;width:320px;margin:0;padding:0 16px;border-radius:1rem;background:#fbf9f4;font-size:0.875rem;font-variant-numeric:tabular-nums}.ds-summary div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-top:1px solid #e6dfd0}.ds-summary div:first-child{border-top:0}.ds-summary dt{display:flex;align-items:center;gap:8px;color:#5a574b}.ds-summary dd{margin:0;text-align:right;color:#2e2d27}.ds-summary b{font-weight:600;color:#1e1f1b}.ds-summary small{display:block;font-size:0.75rem;color:#5a574b}.ds-sw{display:inline-block;width:10px;height:10px;border-radius:3px;box-sizing:border-box}.ds-sw-adding{background:#4f7a36 repeating-linear-gradient(45deg,#e0ab5f 0 1.4px,transparent 1.4px 3.5px)}.ds-sw-sage{background:#9db88a}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Seed Library",
+    "overview": "**Creative North Star: \"The Seed Library\"**\n\nEvery community is a packet in one shared seed library, and each packet's page shows its money moving. Deposits rest in a basin that stays the depositors'; only the yield on top flows along a stream to the community's ochre circle. The system is calm, warm and exact: pale paper ground, white cards with large soft corners, one bottle-green field for the money picture and the primary action, and ochre reserved for the community and for \"you\".\n\nDensity is moderate. The community page is a two-column operating surface (packet header and money diagram on the left, a sticky deposit column on the right) rather than a marketing page, and it refuses the category's grid of stat tiles: the figures that matter sit on the part of the picture they describe. Proof (addresses, roles, records) stays one click away in Questions and Technical details, set in quieter type.\n\nIdentity comes from geometry, not imagery. Each community gets a seeded band of circles and half circles drawn from the palette's inks, so communities tell apart without uploads, and the same circle vocabulary carries into the diagram (the community is a circle; the stream ends in it).",
+    "keyCharacteristics": [
+      "Pale paper ground (#f6f1e7) with white cards on it; the token scale is named \"kraft\" but the ground reads as light paper, not brown kraft.",
+      "One loud element per view: the bottle-green primary button or the bottle-green money diagram.",
+      "Four semantic inks for money: leaf (deposited), sage (yield), solid ochre (community and you), hatched ochre with a dashed outline (what you are adding).",
+      "One sans (Onest) throughout, semibold and tightly tracked for figures and headings, tabular numerals everywhere.",
+      "Large soft corners (24px) on every top-level container; pills for tabs, badges and the header sign-in.",
+      "Soft, green-tinted diffuse shadows only on hover and scroll; flat at rest.",
+      "Slow, eased, forward-only motion in the money diagram, and only while there is money in the basin."
+    ],
+    "rules": [
+      {
+        "name": "The Four Inks Rule",
+        "body": "Money has exactly four inks: leaf is what everyone deposited, sage is yield, solid ochre is the community or your deposit, and what you are about to add is hatched: diagonal ochre-light stripes over leaf with a dashed ochre-light outline, so it reads as not there yet. Any summary that talks about the same money uses the same swatch (a small 3px-radius square, round for the community; the adding swatch is a small hatched square), so text and picture key to each other. Foam and spray are the yield in motion, not further inks.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ochre Means Someone Rule",
+        "body": "Ochre marks a who (the community, you) or focus; it never decorates. A screen with ochre on something that is neither a party nor a focus state is off-system.",
+        "section": "colors"
+      },
+      {
+        "name": "The Paper Not Kraft Rule",
+        "body": "The ground is pale paper (paper-ground). Never darken the page to a brown kraft tone because the token scale is called kraft.",
+        "section": "colors"
+      },
+      {
+        "name": "The Figures Lead Rule",
+        "body": "A figure is always heavier than its label: label at 0.875rem regular in a muted ink, value semibold in the strong ink beneath or beside it.",
+        "section": "typography"
+      },
+      {
+        "name": "The No Uppercase Rule",
+        "body": "Labels stay sentence case at normal tracking. There are no uppercase kickers or eyebrow lines above headings.",
+        "section": "typography"
+      },
+      {
+        "name": "The Lift On Response Rule",
+        "body": "Nothing casts a shadow at rest except an element floating on a coloured field. Cards lift only on hover; the header gains its edge only when content passes under it.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Forward Flow Rule",
+        "body": "The diagram's motion shows yield leaving the deposits and nothing else, so it obeys one grammar:\n- the surface is two layers of waves sliding slowly in opposite directions (7s sage front, 11s foam back), a seamless constant-speed loop under a clip so the basin never changes shape;\n- foam bubbles rise from the deposits (about 4.8 to 6.2s, eased in and out) and open into spray ripples at the surface;\n- three spray droplets leave the rim along the stream to the community (3.6s, eased in and out, growing in, shrinking out);\n- a solid ochre-light particle rises from your slice, and a dashed ochre-light ring from the adding slice, over the rim and down the stream (6s, eased in and out);\n- every travelling motion eases in and out and only moves forward: x never decreases along a path;\n- nothing moves when the vault has no deposits; under reduced motion all of it is removed and a still surface replaces the wave, and the pause button is hidden;\n- the pause/play button pauses everything (WCAG 2.2.2), and the animation also pauses while the diagram is off-screen;\n- slices and the share bar ease their width in 200ms on cubic-bezier(0.16, 1, 0.3, 1) and snap under reduced motion.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "**Do** set the page on paper ground (#f6f1e7) and put content on white cards with 24px corners and a hairline border.",
+      "**Do** keep one loud element per view: the bottle-green primary action or the bottle-green money field.",
+      "**Do** key every mention of deposits, yield, community and your amount to the four inks, with the same swatch shapes as the diagram key.",
+      "**Do** render every amount through TokenAmount with its unit from the vault type or network, exact on hover, and use exact values in inputs and Max.",
+      "**Do** set headings and figures in Onest semibold with -0.025em tracking and tabular numerals.",
+      "**Do** give each community its seeded circle band instead of an uploaded banner.",
+      "**Do** use pills for segmented tabs, badges and header account controls.",
+      "**Do** write labels in plain second-person sentences that say what happens and what doesn't, per PRODUCT.md's voice; button wording is still under discussion, so treat current labels as copy, not system.",
+      "**Do** ease the live slice and the share bar in 200ms and drop the transition under reduced motion.",
+      "**Do** keep diagram motion slow, eased in and out and forward-only, stopped when the vault is empty, pausable, and replaced by a still surface under reduced motion.",
+      "**Do** draw what you are adding as the hatch (ochre-light stripes over leaf, dashed outline) everywhere it appears: slice, bar, key and summary swatch."
+    ],
+    "donts": [
+      "**Don't** lay out key figures as a grid of stat tiles; put each figure on the part of the picture or packet it describes.",
+      "**Don't** use ochre for decoration; it marks the community, you, or focus.",
+      "**Don't** show a rounded amount with no exact value behind it, or assume 18 decimals.",
+      "**Don't** put \"Pay out now\" or other housekeeping actions in the money diagram.",
+      "**Don't** move anything in the diagram backwards, or animate it when there is nothing in the basin.",
+      "**Don't** cast shadows on cards at rest, and don't use black or hard offset shadows on paper.",
+      "**Don't** add uppercase kickers or eyebrow lines above headings.",
+      "**Don't** turn the ground brown or grey; neutrals stay warm, and dark mode stays green-tinted.",
+      "**Don't** use words like \"guaranteed\", \"safe\" or \"verified identity\" in any label."
+    ]
+  }
+}

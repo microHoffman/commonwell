@@ -29,6 +29,10 @@ export default defineNuxtConfig({
       rpcUrls: '',
     },
   },
+  // Self-hosted at build time, so visitors' browsers never call Google.
+  fonts: {
+    families: [{ name: 'Onest', provider: 'google', weights: [400, 500, 600, 700] }],
+  },
   icon: {
     clientBundle: { scan: true },
   },

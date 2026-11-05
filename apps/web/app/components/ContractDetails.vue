@@ -41,12 +41,11 @@ const links = computed(() => [
 </script>
 
 <template>
-  <!-- A soft reference panel, set apart from the questions by its surface rather than a divider.
-       Its padding matches the cards, so its chevron lines up with the questions above. -->
-  <UCollapsible class="rounded-xl bg-elevated/60">
+  <!-- A closed reference card; its padding matches the questions card, so the chevrons line up. -->
+  <UCollapsible class="rounded-[1.5rem] border border-default bg-default">
     <button
       type="button"
-      class="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left sm:px-6 transition-colors hover:bg-elevated"
+      class="group flex w-full items-center gap-3 rounded-[1.5rem] px-5 py-4 text-left transition-colors hover:bg-muted sm:px-7"
     >
       <UIcon name="i-lucide-file-code-2" class="size-5 shrink-0 text-muted" />
       <span class="min-w-0 flex-1">
@@ -56,7 +55,7 @@ const links = computed(() => [
       <UIcon name="i-lucide-chevron-down" class="size-5 shrink-0 text-dimmed transition-transform duration-200 group-data-[state=open]:rotate-180" />
     </button>
     <template #content>
-      <div class="space-y-4 px-4 pb-4 pt-2 sm:px-6">
+      <div class="space-y-4 px-5 pb-5 pt-2 sm:px-7">
         <ul v-if="view && view.problems.length > 0" class="text-sm text-error">
           <li v-for="problem in view.problems" :key="problem">{{ problem }}</li>
         </ul>

@@ -23,3 +23,7 @@ apps/web/dist
 # Claude Code: per-machine settings, and the Impeccable binary its launcher downloads on first run
 .claude/settings.local.json
 .claude/skills/impeccable/scripts/bin/
+
+# Impeccable: review screenshots and the design hook cache are per-run artefacts
+apps/web/.impeccable/review/
+apps/web/.impeccable/hook.cache.json

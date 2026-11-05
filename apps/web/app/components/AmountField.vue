@@ -10,8 +10,6 @@ const props = defineProps<{
   max?: bigint
   error?: string
   disabled?: boolean
-  /// Show the full balance instead of the rounded one.
-  exact?: boolean
 }>()
 
 
@@ -26,8 +24,7 @@ function fillMax() {
     <template v-if="balance !== undefined" #hint>
       <span class="inline-flex items-center gap-1">
         Balance
-        <span v-if="exact">{{ formatUnits(balance, unit.decimals) }} {{ unit.symbol }}</span>
-        <TokenAmount v-else :value="balance" :unit="unit" />
+        <TokenAmount :value="balance" :unit="unit" />
         <UButton v-if="max !== undefined" label="Max" size="xs" variant="link" class="px-1" :disabled="disabled" @click="fillMax" />
       </span>
     </template>
@@ -38,6 +35,7 @@ function fillMax() {
       placeholder="0.0"
       size="xl"
       class="w-full"
+      :ui="{ base: 'h-14 text-2xl font-semibold tracking-tight placeholder:font-normal focus-visible:ring-2 focus-visible:ring-ochre-500' }"
       :disabled="disabled"
     >
       <template #trailing>

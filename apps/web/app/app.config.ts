@@ -3,8 +3,12 @@ export default defineAppConfig({
   repoUrl: 'https://github.com/microHoffman/yield-forward',
   ui: {
     colors: {
-      primary: 'emerald',
-      neutral: 'zinc',
+      primary: 'forest',
+      secondary: 'ochre',
+      neutral: 'kraft',
+    },
+    card: {
+      slots: { root: 'rounded-[1.5rem]' },
     },
   },
 })

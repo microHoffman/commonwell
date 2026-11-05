@@ -158,7 +158,7 @@ The scripts (`deploy:core`, `seed`, `payout`) have been run end to end on a loca
 - **Permanent registrations.** Test communities stay listed as Unreviewed until a `--fresh` reset of that deployment.
 - **Admin actions in the CLI.** Shutdown, health-check override and retiring a link use `cast`, as described in the runbook.
 - **Curator list in the build.** Changing curators means editing the deployment file and redeploying the site.
-- **Deferred:** withdrawing in the token deposited, such as ETH from a Lido vault. Mainnet launches with withdrawals in each vault type's asset (wstETH for Lido), and the deposit form says so before the deposit. Also deferred: per-user donation totals, ownership handover, an automatic payout job.
+- **Deferred:** withdrawing in the token deposited, such as ETH from a Lido vault. Mainnet launches with withdrawals in each vault type's asset (wstETH for Lido), and the type's How it works step beside the deposit form says so before the deposit. Also deferred: per-user donation totals, ownership handover, an automatic payout job.
 
 ## 9. Networks and vault types
 

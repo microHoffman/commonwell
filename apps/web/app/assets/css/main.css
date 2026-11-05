@@ -1,6 +1,118 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+/* The Seed Library palette: bottle green for actions and the money diagram, leaf and sage for
+   deposits and yield, ochre for the community and for "you", on a pale paper ground. */
+@theme static {
+  --font-sans: "Onest", ui-sans-serif, system-ui, sans-serif;
+
+  --color-forest-50: #eef5f0;
+  --color-forest-100: #d9eadf;
+  --color-forest-200: #b5d4c0;
+  --color-forest-300: #8ab79c;
+  --color-forest-400: #5e9677;
+  --color-forest-500: #3f7a5b;
+  --color-forest-600: #2c6249;
+  --color-forest-700: #245540;
+  --color-forest-800: #1f4d3a;
+  --color-forest-900: #183d2e;
+  --color-forest-950: #0e2519;
+
+  --color-ochre-50: #fbf4e8;
+  --color-ochre-100: #f5e4c6;
+  --color-ochre-200: #ecc98f;
+  --color-ochre-300: #e0ab5f;
+  --color-ochre-400: #d4964a;
+  --color-ochre-500: #c98a3d;
+  --color-ochre-600: #a96f2c;
+  --color-ochre-700: #8a5a1c;
+  --color-ochre-800: #6e4718;
+  --color-ochre-900: #573914;
+  --color-ochre-950: #2f1e0a;
+
+  /* Warm neutrals that sit on kraft without turning grey. */
+  --color-kraft-50: #fbf9f4;
+  --color-kraft-100: #f6f1e7;
+  --color-kraft-200: #e6dfd0;
+  --color-kraft-300: #cfc7b6;
+  --color-kraft-400: #a39b8a;
+  --color-kraft-500: #77715f;
+  --color-kraft-600: #5a574b;
+  --color-kraft-700: #45433a;
+  --color-kraft-800: #2e2d27;
+  --color-kraft-900: #1e1f1b;
+  --color-kraft-950: #131512;
+
+  /* The money diagram's own inks. */
+  --color-leaf: #4f7a36;
+  --color-sage: #9db88a;
+}
+
 :root {
-  --ui-radius: 0.75rem;
+  --ui-radius: 0.5rem;
+  --ui-primary: var(--color-forest-800);
+  --ui-secondary: var(--color-ochre-500);
+  --ui-text-muted: var(--color-kraft-600);
+  --ui-text-dimmed: var(--color-kraft-500);
+  --ui-text: var(--color-kraft-800);
+  --ui-text-highlighted: var(--color-kraft-900);
+  --ui-border: var(--color-kraft-200);
+  --ui-border-muted: var(--color-kraft-200);
+  --ui-bg-muted: var(--color-kraft-50);
+  --ui-bg-elevated: var(--color-kraft-100);
+  /* The page itself is kraft; cards and inputs stay white on it. */
+  --yf-page: var(--color-kraft-100);
+  --yf-flow: var(--color-forest-800);
+  --yf-flow-text: #d5e6cd;
+  /* The sticky header's height: 4rem on phones (the links row below it scrolls away), 4.25rem from sm. */
+  --yf-header: 4rem;
+}
+@media (min-width: 40rem) {
+  :root {
+    --yf-header: 4.25rem;
+  }
+}
+
+.dark {
+  --ui-primary: var(--color-forest-300);
+  --ui-secondary: var(--color-ochre-400);
+  --ui-text-muted: #b3ad9d;
+  --ui-text-dimmed: #8d8878;
+  --ui-text: #e6e1d4;
+  --ui-text-highlighted: #f8f4ea;
+  --ui-text-inverted: var(--color-forest-950);
+  --ui-bg: #1a211d;
+  --ui-bg-muted: #1f2722;
+  --ui-bg-elevated: #26302a;
+  --ui-bg-accented: #313c35;
+  --ui-border: #2e3832;
+  --ui-border-muted: #2e3832;
+  --ui-border-accented: #3b4740;
+  --yf-page: #121814;
+  --yf-flow: #183d2e;
+  --yf-flow-text: #c4dbbb;
+}
+
+@layer base {
+  body {
+    background: var(--yf-page);
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--color-ochre-300) 55%, transparent);
+    color: var(--ui-text-highlighted);
+  }
+  :focus-visible {
+    outline-color: var(--color-ochre-500);
+  }
+  html {
+    scroll-padding-top: calc(var(--yf-header) + 1rem);
+    accent-color: var(--ui-primary);
+    caret-color: var(--ui-primary);
+    scrollbar-color: var(--color-kraft-300) transparent;
+  }
+  .dark {
+    scrollbar-color: #3b4740 transparent;
+  }
 }

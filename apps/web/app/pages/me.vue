@@ -59,9 +59,9 @@ function status(entry: Entry): string | undefined {
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="space-y-6 pt-6">
     <div class="space-y-1">
-      <h1 class="text-2xl font-semibold">My deposits</h1>
+      <h1 class="text-3xl font-semibold tracking-tight text-highlighted">My deposits</h1>
       <p v-if="rows.length > 0" class="text-muted">
         <template v-if="totalUnit">≈ <TokenAmount :value="total" :unit="totalUnit" /> across</template><template v-else>Deposits in</template> {{ rows.length }} {{ rows.length === 1 ? 'community' : 'communities' }}
       </p>

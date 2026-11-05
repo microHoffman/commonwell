@@ -7,6 +7,7 @@ import {
   depositWstEthViaRouter,
   depositWstEthWithPermit,
   formatAmount,
+  formatApprox,
   assetUnit,
   formatPercent,
   getKind,
@@ -111,6 +112,12 @@ const value = computed(() => {
   return (amount.value * (props.view.state?.exchangeRate ?? 0n)) / 10n ** 18n
 })
 const perYear = computed(() => (value.value && apr.data.value ? yearlyYield(value.value, apr.data.value) : undefined))
+// Dust already reads "< 0.0001", so it doesn't also get "≈".
+const perYearIsDust = computed(() => perYear.value !== undefined && formatApprox(perYear.value, unit.decimals).startsWith('<'))
+// The money diagram draws the amount being typed as a slice of the basin.
+const draft = useDepositDraft()
+watch([value, inputError], ([v, error]) => (draft.value = error ? undefined : v), { immediate: true })
+onBeforeUnmount(() => (draft.value = undefined))
 
 // Whether the connected wallet batches calls atomically (EIP-5792): wstETH then needs one confirmation.
 const canBatch = ref(false)
@@ -239,14 +246,28 @@ const buttonLabel = computed(() => {
       :disabled="current !== undefined"
     />
 
-    <p v-if="value" class="text-sm text-muted">
-      You keep ≈ <TokenAmount :value="value" :unit="unit" />. Its yield goes to {{ communityName }}<template v-if="perYear">:
-        about <TokenAmount :value="perYear" :unit="unit" approx /> a year at {{ formatPercent(apr.data.value!) }} APR</template>.
-    </p>
-    <!-- Said before the deposit: withdrawals pay out the vault's asset, not the token deposited. -->
-    <p v-if="asset.symbol && token.symbol !== asset.symbol" class="text-sm text-muted">
-      Withdrawals pay out {{ asset.symbol }}, {{ copy.assetDescription }}.
-    </p>
+    <!-- What the deposit does, in two rows keyed to the money diagram: the dashed ochre slice is what you
+         keep, the sage yield is what the community receives. What withdrawals pay out is in How it works. -->
+    <dl v-if="value" class="divide-y divide-default rounded-[1rem] bg-muted px-4 text-sm">
+      <div class="flex items-baseline justify-between gap-3 py-2.5">
+        <dt class="flex items-center gap-2 text-muted">
+          <svg viewBox="0 0 12 12" class="size-2.5 shrink-0 rounded-[3px]" aria-hidden="true"><rect width="12" height="12" fill="#4f7a36" /><path d="M-3 3 L3 -3 M-3 9 L9 -3 M-3 15 L15 -3 M3 15 L15 3 M9 15 L15 9" stroke="#e0ab5f" stroke-width="1.6" /></svg>You keep
+        </dt>
+        <dd class="font-semibold text-highlighted">≈ <TokenAmount :value="value" :unit="unit" /></dd>
+      </div>
+      <div class="flex items-baseline justify-between gap-3 py-2.5">
+        <dt class="flex min-w-0 items-center gap-2 text-muted">
+          <span class="size-2.5 shrink-0 rounded-[3px] bg-sage" /><span class="truncate">To {{ communityName }}</span>
+        </dt>
+        <dd class="shrink-0 text-right">
+          <template v-if="perYear">
+            <span class="font-semibold text-highlighted"><template v-if="!perYearIsDust">≈ </template><TokenAmount :value="perYear" :unit="unit" approx /></span> a year
+            <span class="block text-xs text-muted">at {{ formatPercent(apr.data.value!) }} {{ copy.rateLabel }}</span>
+          </template>
+          <span v-else class="text-muted">Its {{ copy.yieldNoun }}</span>
+        </dd>
+      </div>
+    </dl>
 
     <ol v-if="steps.length > 1" class="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
       <li v-for="(step, i) in steps" :key="step" class="flex items-center gap-2">

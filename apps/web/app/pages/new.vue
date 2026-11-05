@@ -116,9 +116,9 @@ async function create(resume?: Saved) {
 </script>
 
 <template>
-  <div class="mx-auto max-w-xl space-y-6">
+  <div class="mx-auto max-w-xl space-y-6 pt-6">
     <div class="space-y-2">
-      <h1 class="text-2xl font-semibold">Create a community</h1>
+      <h1 class="text-3xl font-semibold tracking-tight text-highlighted">Create a community</h1>
       <p class="text-muted">Deploys your community's vault and publishes its profile. You become its owner.</p>
     </div>
 

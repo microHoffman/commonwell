@@ -29,7 +29,7 @@ async function switchNetwork() {
 </script>
 
 <template>
-  <UButton v-if="!isConnected || !address" label="Sign in" icon="i-lucide-log-in" size="lg" class="px-4" :loading="loading" @click="connect()" />
+  <UButton v-if="!isConnected || !address" label="Sign in" icon="i-lucide-log-in" size="lg" class="rounded-full px-5" :loading="loading" @click="connect()" />
   <UPopover v-else>
     <UButton
       :label="shortAddress(address)"
@@ -37,7 +37,7 @@ async function switchNetwork() {
       :color="wrongNetwork ? 'warning' : 'neutral'"
       variant="outline"
       size="lg"
-      class="px-4"
+      class="rounded-full bg-default px-4"
     />
     <template #content>
       <div class="w-76 space-y-4 p-4">
