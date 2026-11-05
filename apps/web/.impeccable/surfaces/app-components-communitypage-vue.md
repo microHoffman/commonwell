@@ -29,3 +29,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
 - Owner decisions after the contract: the "Generated" wording (over Donated, shared, earned); no pause button (off-screen pausing and reduced motion remain); the waiting amount only in the Payouts card; the deposit button keeps 8px corners.
 - Dark mode values are derived from the light palette during the build.
+
+## Status
+
+Final, closed by the owner on 2026-11-05. The finish reviewer's last disposition was "fix", with one item partial: the Payouts card's waiting row (amount, "waiting", Pay out pill) has not been captured, because a payout had just been sent each time. The owner accepted the build as final without that capture. The missing pause control (WCAG 2.2.2) is a recorded owner decision.

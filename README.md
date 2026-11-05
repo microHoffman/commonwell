@@ -59,7 +59,7 @@ bunx wrangler login        # once
 bun run web:deploy         # uploads apps/web/.output/public to Cloudflare Pages (project yield-forward)
 ```
 
-Payouts appear after the next Lido report (daily). Send them with "Pay out now" next to the payout history on a community page, "Send all pending payouts" in the account menu (curators), or `bun run payout --deployment hoodi`.
+Payouts appear after the next Lido report (daily). Send them with "Pay out" in the Payouts box on a community page, "Send all pending payouts" in the account menu (curators), or `bun run payout --deployment hoodi`.
 
 ## How it works
 
