@@ -3,6 +3,9 @@
 export default defineNuxtConfig({
   compatibilityDate: '2026-11-01',
   ssr: false,
+  // Always plain static output in .output/public. On Cloudflare Pages, Nitro would otherwise switch to its
+  // cloudflare-pages-static preset and write to dist/, keeping the 404.html that breaks the SPA fallback.
+  nitro: { preset: 'static' },
   modules: ['@nuxt/ui'],
   css: ['~/assets/css/main.css'],
   devtools: { enabled: false },
