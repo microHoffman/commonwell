@@ -1,0 +1,45 @@
+{
+  "name": "hoodi-dev",
+  "chainId": 560048,
+  "deployBlock": 3949038,
+  "create2Deployer": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
+  "multicall3": "0xcA11bde05977b3631167028862bE2a173976CA11",
+  "eas": "0x3e9c750eA44C1AF3977721304425393e28cE3Eeb",
+  "schemaRegistry": "0x94c2e33cf4f70A318BdCda8daE38f7e878Fc8cae",
+  "schemas": {
+    "community": "0xda1bfcf89c135b05f9dc8ed7db1a04456d467b87b40a8e18fcd55819fbe297f4",
+    "communityVault": "0xfba13d8a2696c12c7e898ef24068d3e7550d0f5ccec1427d2276de79889fba7c",
+    "endorsement": "0xd08118f6b012220c6d742d1c18550e805a7f475fd32d8125f660b9fc37d66ff4"
+  },
+  "kinds": {
+    "lido-wsteth-v1": {
+      "asset": "0x7E99eE3C66636DE415D2d7C880938F2f40f94De4",
+      "implementation": "0x658481F96384B6274FA4cA69D2CFEA251F477C28",
+      "payoutTrigger": "0xF528D6a0e1361d0d68b4f6a390DB70e460e3D985",
+      "depositRouter": "0x12a07F0bFF7a7260F748b88afb9e052F3F2A876D"
+    }
+  },
+  "curators": [
+    "0x536f23cf99abef47132c6C771477C30ea8Dd8627",
+    "0xCD26e540F773dbC7abC46db7E2830Ad7f735Ce86"
+  ],
+  "explorer": "https://hoodi.etherscan.io",
+  "rpcUrls": [
+    "https://ethereum-hoodi-rpc.publicnode.com",
+    "https://rpc.hoodi.ethpandaops.io"
+  ],
+  "faucets": [
+    {
+      "name": "ethpandaops faucet",
+      "url": "https://faucet.hoodi.ethpandaops.io"
+    },
+    {
+      "name": "PoW faucet",
+      "url": "https://hoodi-faucet.pk910.de"
+    },
+    {
+      "name": "Google Cloud faucet",
+      "url": "https://cloud.google.com/application/web3/faucet/ethereum/hoodi"
+    }
+  ]
+}

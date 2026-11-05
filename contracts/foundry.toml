@@ -1,0 +1,24 @@
+# Compiler settings match Octant's pinned foundry.toml (v1.3.0, 06ae2b9) so the generated
+# bytecode is the code Octant tested. Changing any of them changes the frozen vault-type code.
+[profile.default]
+src = "src"
+test = "test"
+out = "out"
+libs = ["lib"]
+solc = "0.8.33"
+auto_detect_solc = false
+optimizer = true
+optimizer_runs = 1
+via_ir = false
+evm_version = "prague"
+remappings = [
+  "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+  "forge-std/=lib/forge-std/src/",
+  "octant/=lib/octant-v2-core/src/",
+  # Octant imports its own files as "src/..."; resolve those only from inside the Octant submodule.
+  "lib/octant-v2-core/:src/=lib/octant-v2-core/src/",
+]
+
+[lint]
+# forge's linter doesn't apply the context remapping above and fails on Octant's imports.
+lint_on_build = false

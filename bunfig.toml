@@ -1,0 +1,3 @@
+[install]
+# Classic node_modules layout: Vite (Nuxt dev) mis-resolves packages in the isolated layout.
+linker = "hoisted"

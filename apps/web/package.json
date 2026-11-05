@@ -1,0 +1,33 @@
+{
+  "name": "web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate && rm -f .output/public/404.html",
+    "preview": "nuxt preview",
+    "typecheck": "nuxt typecheck",
+    "deploy": "wrangler pages deploy .output/public --project-name yield-forward",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@yield-forward/core": "workspace:*",
+    "@nuxt/ui": "^4.12.0",
+    "@tanstack/vue-query": "^5.105.3",
+    "@wagmi/core": "^3.6.9",
+    "@wagmi/vue": "^0.5.34",
+    "@web3auth/modal": "^11.4.3",
+    "nuxt": "^4.6.4",
+    "tailwindcss": "^4.1.0",
+    "viem": "^2.57.16",
+    "vue": "^3.5.44",
+    "vue-router": "^5.4.0"
+  },
+  "devDependencies": {
+    "@iconify-json/lucide": "^1.2.151",
+    "typescript": "^5.9.3",
+    "vue-tsc": "^3.1.0",
+    "wrangler": "^4.157.0"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "yield-forward",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "contracts:build": "cd contracts && forge build && cd .. && bun packages/core/scripts/gen-contracts.ts",
+    "contracts:test": "cd contracts && forge test",
+    "keys": "bun scripts/keys.ts",
+    "deploy:core": "bun scripts/deploy-core.ts",
+    "seed": "bun scripts/seed.ts",
+    "payout": "bun scripts/payout.ts",
+    "test": "bun test packages/core",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "web:dev": "cd apps/web && bun run dev",
+    "web:generate": "cd apps/web && bun run generate",
+    "web:typecheck": "cd apps/web && bun run typecheck",
+    "web:deploy": "cd apps/web && bun run deploy"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.13",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "viem": "^2.57.16"
+  }
+}
