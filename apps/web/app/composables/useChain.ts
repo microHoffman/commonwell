@@ -71,6 +71,7 @@ export function useWeb3AuthConfig() {
   const list = useDeployments()
   return {
     web3AuthOptions: {
+      disableAnalytics: true,
       clientId: String(config.web3AuthClientId),
       web3AuthNetwork: String(config.web3AuthNetwork) as 'sapphire_devnet',
       // Skip Web3Auth's sign-in-with-wallet check after an external wallet connects: its server rejects

@@ -44,25 +44,26 @@ export const copy: KindCopy = {
   faq: (name, rate) => ({
     funding: {
       label: `How does my deposit fund ${name}?`,
-      content: `Your ETH is staked with Lido and held in ${name}'s vault, an Octant vault. Lido's staking rewards make staked ETH worth a little more every day. The vault keeps your deposit at the value you put in and passes everything it gains on to ${name}'s treasury.`,
+      content: `Your ETH is staked with Lido and held in ${name}'s vault. Lido's staking rewards make staked ETH worth a little more every day. The vault keeps your deposit at the value you put in and passes everything it gains on to ${name}'s treasury.`,
     },
     asset: {
       label: 'Why do I get wstETH back instead of ETH?',
       content:
-        "The vault holds wstETH, Lido's staked ETH, and withdrawals pay it out directly. You get fewer wstETH than you put in, worth the same ETH, because each wstETH has grown in value. You can keep it, swap it, or unstake it through Lido.",
+        "The vault holds wstETH, Lido's staked ETH, and withdrawals pay it out directly. Each wstETH grows in value, so you get back fewer wstETH than your deposit bought, worth the same ETH. You can keep it, swap it, or unstake it to ETH through Lido, which usually takes a few days.",
     },
     receives: {
       label: `How much does ${name} receive?`,
-      content: `Lido's staking APR on everything deposited, ${rate ?? 'which Lido publishes daily'}. Rewards build up with Lido's daily update, and anyone can then send them to ${name}.`,
+      content: `Lido's staking APR on everything deposited, ${rate ?? 'which Lido publishes daily'}. Rewards build up with Lido's daily update, and the deposit form shows what your amount would send in a year.`,
     },
     loss: {
       label: "What if Lido's rate drops?",
       content:
-        "It rarely does, for example after penalties on Lido's validators. While the vault is worth less than its deposits, payouts and new deposits pause until the rate recovers, and a withdrawal is worth slightly less than you put in.",
+        "Rarely, and only if Lido's validators are penalized more than they earn. While the vault is worth less than its deposits, payouts and new deposits pause until the rate recovers. Withdrawing during that time gets you slightly less than you put in; waiting until it recovers gets you the full value.",
     },
   }),
   risks:
-    "Your deposit relies on Lido's and Octant's contracts, and on this app's deposit router, working as intended. Lido's staked ETH can lose value if its validators are penalized.",
+    "Your deposit relies on Lido's and Octant's contracts, and on this app's deposit router, working as intended. Lido's staked ETH can lose value if its validators are penalized, and if you swap wstETH instead of unstaking it, its market price can sit below its ETH value.",
+  fees: 'Lido keeps 10% of staking rewards, as it does for every staker, and the APR shown is already after that.',
 }
 /// The pinned Octant code this type's frozen bytecode is built from.
 export const sourceUrl = 'https://github.com/golemfoundation/octant-v2-core/tree/06ae2b9fa2e4443a3d9f6148498d4ada4f9861e8'

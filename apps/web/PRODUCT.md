@@ -77,7 +77,7 @@ You give the yield and keep the deposit, and every claim the app makes can be ch
 
 **States the UI must carry:** Unreviewed, Not taking deposits, Payout address change pending, Loss pause, Nothing to pay out yet, Network unavailable, and vaults that are retired or fail the check (missing from the community page, still withdrawable under My deposits). Warnings are for states that change a depositor's decision.
 
-**Terminology in the UI:** community, vault, deposit, position, payout, treasury, network (not "chain"), Reviewed / Unreviewed, curator, owner, automatic check, short name, "Pay out now", "My deposits".
+**Terminology in the UI:** community, vault, deposit, position, payout, treasury, network (not "chain"), Reviewed / Unreviewed, curator, owner, automatic check, short name, "Pay out", "Generated", "My deposits".
 
 **Language and access:** English only, with no i18n planned. No formal accessibility standard has been set.
 
@@ -111,7 +111,7 @@ You give the yield and keep the deposit, and every claim the app makes can be ch
   - the fork tests in `contracts/test`;
   - per-chain addresses in `deployments/`;
   - each community's Technical details (contracts, roles, EAS records).
-- **Live figures:** total deposited, donated so far, ready to pay out, payout history and APR, all read from the chain or the vault type's APR source.
+- **Live figures:** total deposited, generated (paid out plus waiting), what is waiting to be paid out, payout history and APR, all read from the chain or the vault type's APR source.
 - **Absent, so never fabricate:**
   - testimonials and user or depositor counts;
   - TVL or funding claims beyond what the chain shows;

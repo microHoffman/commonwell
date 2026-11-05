@@ -25,6 +25,8 @@ export type KindCopy = {
   }
   /// The type's own risks, the start of "What are the risks?".
   risks: string
+  /// Fees the protocol takes, for "What does it cost me?", when it takes any.
+  fees?: string
 }
 
 export type FaqItem = { label: string; content: string }
@@ -50,7 +52,7 @@ export const genericCopy: KindCopy = {
     },
     receives: {
       label: `How much does ${name} receive?`,
-      content: `The yield on everything deposited. Anyone can send it to ${name} once it has built up.`,
+      content: `The yield on everything deposited. The deposit form shows what your amount would send in a year.`,
     },
   }),
   risks: "Your deposit relies on the vault's contracts, and on this app's deposit router, working as intended.",

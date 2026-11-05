@@ -18,31 +18,25 @@ const items = computed(() => {
   return [
     own.funding,
     {
+      label: 'What does it cost me?',
+      content: `You give ${name} the ${copy.yieldNoun} your deposit earns, and you pay the network fees for depositing and withdrawing. Your deposit itself stays yours. Neither this app nor Octant takes a fee.${copy.fees ? ` ${copy.fees}` : ''}`,
+    },
+    {
       label: 'Can I get my deposit back?',
-      content: `Yes, anytime, from this page or under My deposits. You withdraw the same value you deposited. Nobody else, including ${name}, can withdraw it or send it anywhere.`,
+      content: `Yes, anytime and right away, from this page or under My deposits. There's no lock-up, and you can withdraw all of it or part. You get back the value you deposited${
+        own.loss ? `, or in rare cases slightly less (see "${own.loss.label}")` : ''
+      }. Nobody else, including ${name}, can withdraw it or send it anywhere.`,
     },
     ...(own.asset ? [own.asset] : []),
     own.receives,
     {
       label: 'Who sends the payouts?',
-      content: `Anyone, with "Pay out now" next to the payout history. Payouts go through a public contract (the payout trigger) that can only send the yield earned so far, and only to ${name}'s treasury. No server or private key is involved.`,
+      content: `Anyone can, with "Pay out" in the Payouts box when something is waiting. A payout can only send what has been earned so far, and only to ${name}'s treasury. Nothing is lost between payouts: everything earned goes out with the next one.`,
     },
     {
-      label: `What can ${name}'s owner change?`,
-      content:
-        "The owner can stop new deposits for good, adjust the vault's loss check, change its admin roles, and propose a new treasury. A new treasury can take over 14 days after it's proposed at the earliest, and this page warns about it in the meantime. The owner can't touch your deposit, and stopping deposits never blocks withdrawals or payouts. If a role is changed, the vault fails the automatic check and is no longer listed, but deposits stay withdrawable under My deposits.",
+      label: 'Do I need a crypto wallet?',
+      content: 'No. You can sign in with email or a social account, and a wallet is created for you. You can also connect a wallet you already have.',
     },
-    {
-      label: 'What does "Reviewed" mean?',
-      content:
-        "A curator has checked who runs the community and vouches for it in a public record. It doesn't change the vault or where the money goes. Unreviewed communities work the same way, so check who runs one before depositing.",
-    },
-    {
-      label: 'How do I know the vault is genuine?',
-      content:
-        "Each time the page loads, the app rebuilds the vault's address from its settings and the unmodified Octant v1.3.0 code, then reads its live roles: the owner manages it, payouts go to this community's forwarder, and no public contract holds a role. Vaults that fail aren't listed. Technical details lists every contract, with links to the source.",
-    },
-    ...(own.loss ? [own.loss] : []),
     {
       label: 'Which network is this on?',
       content:
@@ -53,10 +47,33 @@ const items = computed(() => {
             }`,
     },
     {
+      label: `What can ${name}'s owner change?`,
+      content:
+        "The owner can't touch your deposit. They can stop new deposits for good, which never blocks withdrawals or payouts. They can also move payouts to a new address: the change takes at least 14 days, this page warns about it in the meantime, and you can withdraw before it happens. Once it does, the vault is no longer listed, and your deposit stays withdrawable under My deposits. The same happens if the owner hands over management of the vault. The owner can also adjust the vault's loss check and change who can stop deposits.",
+    },
+    {
+      label: 'What does "Reviewed" mean?',
+      content:
+        "One of this site's curators has checked who runs the community and vouches for it in a public record. It doesn't change the vault or where the money goes. Unreviewed communities work the same way, so check who runs one before depositing.",
+    },
+    {
+      label: 'How do I know the vault is genuine?',
+      content: `Every time the page loads, the app checks that the vault runs Octant's original, unmodified code, that ${name}'s owner still manages it, and that it pays out only to ${name}. Vaults that fail aren't listed. Technical details lists every contract, with links to the source.`,
+    },
+    {
+      label: 'Has the code been audited?',
+      content:
+        "Octant's vault code has been audited by Spearbit, Bailsec and Cantina, and in a public audit competition. This app's two small contracts, the deposit router and the payout trigger, haven't had a security review yet.",
+    },
+    {
+      label: 'What if this website goes away?',
+      content:
+        'Your deposit is held by the vault contract, not by this website, so it stays withdrawable. You, or anyone who knows how to call a contract, can withdraw it directly, for example on a block explorer, using the vault address in Technical details.',
+    },
+    ...(own.loss ? [own.loss] : []),
+    {
       label: 'What are the risks?',
-      content: `${copy.risks} This is a proof of concept${
-        testnet ? ' on a test network' : ''
-      }: only deposit what you can afford to lose.`,
+      content: `${copy.risks} ${testnet ? 'This is a proof of concept on a test network, where the tokens have no value.' : 'This is a proof of concept: only deposit what you can afford to lose.'}`,
     },
   ]
 })

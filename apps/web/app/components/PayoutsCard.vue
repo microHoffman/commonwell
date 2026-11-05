@@ -12,17 +12,6 @@ const { preview, value: ready } = usePayoutPreview(() => props.view)
 // The waiting row only appears when something is actually waiting (or payouts are paused); never "0 ETH waiting".
 const readyValue = computed(() => (preview.value?.status === 'ready' ? (ready.value ?? 0n) : preview.value?.status === 'nothing' ? 0n : undefined))
 const showWaiting = computed(() => (readyValue.value !== undefined && readyValue.value > 0n) || preview.value?.status === 'paused-loss')
-const readyLabel = computed(() => {
-  switch (preview.value?.status) {
-    case 'paused-loss':
-      return 'Paused'
-    case 'no-deposits':
-    case 'error':
-      return '—'
-    default:
-      return '…'
-  }
-})
 const readyHint = computed(() => {
   switch (preview.value?.status) {
     case 'ready':
@@ -48,11 +37,11 @@ const readyHint = computed(() => {
     <ul class="mt-2 divide-y divide-default text-sm">
       <li v-if="showWaiting" class="flex min-h-11 items-center justify-between gap-3 py-2">
         <span class="flex min-w-0 items-center gap-2">
-          <span class="font-medium text-highlighted">
-            <TokenAmount v-if="readyValue !== undefined" :value="readyValue" :unit="unit" approx />
-            <template v-else>{{ readyLabel }}</template>
-          </span>
-          <span class="flex items-center gap-1 text-muted">waiting <InfoTip v-if="readyHint" :text="readyHint" /></span>
+          <template v-if="readyValue !== undefined">
+            <span class="font-medium text-highlighted"><TokenAmount :value="readyValue" :unit="unit" approx /></span>
+            <span class="flex items-center gap-1 text-muted">waiting <InfoTip v-if="readyHint" :text="readyHint" /></span>
+          </template>
+          <span v-else class="flex items-center gap-1 font-medium text-highlighted">Payouts paused <InfoTip v-if="readyHint" :text="readyHint" /></span>
         </span>
         <PayOutAction :view="view" :community-name="communityName" />
       </li>

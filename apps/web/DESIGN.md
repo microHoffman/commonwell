@@ -226,7 +226,7 @@ A warm paper-and-garden palette: bottle green carries action and the money field
 
 ## Layout
 
-A centred column capped at 76rem with 16px gutters on phones and 24px from sm (40rem). The community page is a two-column grid from lg (64rem): a flexible left column and a fixed 24rem right column with a 32px gap. The right column (deposit card, How it works, Recent payouts) is sticky under the header and scrolls on its own when taller than the viewport. On phones everything stacks in reading order: who the community is, where the yield goes, How it works (moved above the deposit card, so what withdrawals pay out is read before the deposit button), then the deposit card and Recent payouts.
+A centred column capped at 76rem with 16px gutters on phones and 24px from sm (40rem). The community page is a two-column grid from lg (64rem): a flexible left column and a fixed 24rem right column with a 32px gap. The right column (deposit card, How it works, Payouts) is sticky under the header and scrolls on its own when taller than the viewport. On phones everything stacks in reading order: who the community is, where the yield goes, How it works (moved above the deposit card, so what withdrawals pay out is read before the deposit button), then the deposit card and Payouts.
 
 The directory is a one-, two- or three-column grid of packets (20px gap). "More communities" under a community page uses smaller packets in the same grid rhythm.
 
@@ -234,7 +234,7 @@ Vertical rhythm: 16px between stacked cards in a column, 24px between page secti
 
 The header is sticky on every width. Its height is carried as a variable (--yf-header: 4rem on phones, 4.25rem from sm); anchor scrolling and the sticky deposit column offset by that height plus 16px, and the column caps its own height at the viewport minus the header. On phones the nav links sit on their own row under the header and scroll away, so only the top row stays pinned.
 
-The money diagram is a container-query component: below a 36rem container it shows only the three amounts, scaled with the picture (never below 0.9375rem), and the key underneath names them; any figure sitting above the picture carries its own small label. At 36rem and wider every figure sits on its part of the picture with its own label.
+The money diagram is a container-query component: below a 36rem container it shows only the two amounts (Deposited and Generated), scaled with the picture (never below 0.9375rem), and the key underneath names them; any figure sitting above the picture carries its own small label. At 36rem and wider every figure sits on its part of the picture with its own label.
 
 ## Elevation & Depth
 
@@ -251,7 +251,7 @@ Flat at rest. Depth comes from the white-on-paper contrast and hairline borders.
 
 ## Shapes
 
-Every top-level container (cards, the packet header, the money diagram, FAQ, Technical details, skeletons standing in for them) uses large soft corners (24px). Smaller nested surfaces step down: small packets (18px), insets like the deposit summary (16px), the leaf label chip on the wide diagram (12px), controls such as buttons and inputs and the narrow diagram's label chip (8px, the Nuxt UI base radius), legend swatches (3px). Pills (fully round) are reserved for segmented tabs, badges, the header sign-in and account buttons, the phone nav links, the packet's open button, the diagram's APR pill, pause button and share bar.
+Every top-level container (cards, the packet header, the money diagram, FAQ, Technical details, skeletons standing in for them) uses large soft corners (24px). Smaller nested surfaces step down: small packets (18px), insets like the deposit summary (16px), the leaf label chip on the wide diagram (12px), controls such as buttons and inputs and the narrow diagram's label chip (8px, the Nuxt UI base radius), legend swatches (3px). Pills (fully round) are reserved for segmented tabs, badges, the header sign-in and account buttons, the phone nav links, the packet's open button, the Payouts card's "Pay out" button, the diagram's APR pill and share bar.
 
 The signature geometry is the circle and half circle: community bands are seeded arrangements of three large circles, two half circles and three small dots on a ground of bottle green, leaf or ochre; the diagram's community is a circle; the basin is a rectangle with rounded bottom corners. Community avatars are rounded squares (logo, not person), overlapping the band with a 4px ring in the card colour.
 
@@ -262,7 +262,7 @@ Quiet everywhere except the one action that moves money.
 - **Shape:** gently rounded (8px) for the full-width primary action in the deposit card; fully round for the header sign-in and account button. The difference is intended (confirmed by the user): the money-moving action is a control, the header account entry is a pill like the other header controls.
 - **Primary:** bottle green with white text, 48px tall, full width in the deposit card. Dark mode: pale moss with near-black green text.
 - **Hover / Focus:** Nuxt UI's darker primary on hover; focus outline is community ochre.
-- **Secondary / Ghost:** neutral outline or ghost buttons for Sign in inside the withdraw empty state, Edit, and nav links (muted text, strong text when current). Inline links like "See all" are small, muted text links. The Payouts card's "Pay out" is an extra-small outline pill beside the amount, never louder than the deposit button.
+- **Secondary / Ghost:** neutral outline or ghost buttons for Sign in inside the withdraw empty state, Edit, and nav links (muted text, strong text when current). Inline links like "See all" are small, muted text links. The Payouts card's "Pay out" is an extra-small neutral outline pill beside the waiting amount, shown only when something is ready to send, never louder than the deposit button.
 
 ### Chips
 - **Badges:** pill, subtle variant. Reviewed is primary (mint wash, bottle-green text, check icon); Unreviewed is the warning colour with an alert icon.
@@ -289,13 +289,13 @@ Quiet everywhere except the one action that moves money.
 ### The Money Diagram (signature)
 A dark bottle-green card titled "Where the yield goes". An 800 by 280 drawing: the leaf basin (everyone's deposits, which stay theirs), a wavy sage surface of yield on top, a sage stream from the rim to the ochre community circle. With no deposits the basin dims to 40% and nothing moves.
 
-- **Figures:** "Deposited" and its amount with the APR pill sit in the basin's open leaf area; when the slices take more than about 70 of the basin's 406 diagram units, the figure moves above the basin's left rim as a plain label, and the picture gains top space only then. Everything generated for the community (paid out plus waiting) sits inside the enlarged community circle in dark green, labelled "Generated" with an info tip explaining it (generated by everyone's deposits, paid out or waiting; the deposits stay with their owners). On narrow cards the figures stand alone and the key names them ("Deposited · 1.9% APR", "Generated for {community}").
+- **Figures:** "Deposited" and its amount with the APR pill sit in the basin's open leaf area; when the slices take more than about 70 of the basin's 406 diagram units, the figure moves above the basin's left rim as a plain label, and the picture gains top space only then. Everything generated for the community (paid out plus waiting) sits inside the enlarged community circle (radius 72 of the 800 by 280 drawing; the stream ends at its left edge) in Bottle Green Night, labelled "Generated" with an info tip explaining it (generated by everyone's deposits, paid out or waiting; the deposits stay with their owners). On narrow cards the figures stand alone (Generated just under the circle) and the key names them: a leaf swatch for "Deposited · 1.9% APR" (with the rate tip) and a round ochre swatch for "Generated for {community}" (with the same Generated tip). There is no separate ready-to-pay-out figure and no control on the diagram.
 - **Slices:** the visitor's own deposit is a solid ochre slice at the basin's right edge, to scale (never thinner than a sliver); the amount being typed is the hatched adding slice beside it and grows live. Slice edges are redrawn above the labels so a label never hides where a slice begins.
 - **Share line and bar:** under the picture while you hold or are adding: "You'd hold X% of this vault · Y% now, +Z% with this deposit" while typing (no "now" part when you hold nothing; "+<0.1%" for tiny additions), "You hold Y% of this vault" otherwise. Beneath it a 10px pill bar on leaf repeats the slices: solid ochre for yours, the hatch (stripes plus an inset ochre-light outline) for adding.
 - **Key:** names only the inks currently shown, each with its amount: "Your deposit ≈ …", "Adding …", and "Yield on all deposits ≈ … a year to {community}", the whole vault's yearly yield including the typed amount, so it moves as you type ("Yield, sent on to {community}" until a rate is known).
-- **Kept out:** the amount ready to pay out and the action that sends it are deliberately not part of the diagram. They live in the Payouts card: one list whose first row, only when something is waiting (or payouts are paused), is the waiting amount, a muted "waiting" with an info tip, and a small "Pay out" button, followed by the payouts already sent.
+- **Kept out:** the waiting amount gets no figure of its own in the diagram (the circle counts it inside "Generated"), and the action that sends it is not part of the diagram. Both live in the Payouts card (see below).
 
-The labels are copy, not system. The vocabulary: deposits *generate* yield; "Generated" is everything produced for the community (paid out plus waiting); what is waiting is "Ready to pay out", shown only in the Payouts card. "Generated" was chosen over "Donated", "shared" and "earned" because nobody is cast as giving, sharing or working for it.
+The labels are copy, not system. The vocabulary: deposits *generate* yield; "Generated" is everything produced for the community (paid out plus waiting); what has not been sent yet is simply "waiting", shown only in the Payouts card. "Generated" was chosen over "Donated", "shared" and "earned" because nobody is cast as giving, sharing or working for it.
 
 **The Forward Flow Rule.** The diagram's motion shows yield leaving the deposits and nothing else, so it obeys one grammar:
 - the surface is two layers of waves sliding slowly in opposite directions (7s sage front, 11s foam back), a seamless constant-speed loop under a clip so the basin never changes shape;
@@ -304,8 +304,11 @@ The labels are copy, not system. The vocabulary: deposits *generate* yield; "Gen
 - a solid ochre-light particle rises from your slice, and a dashed ochre-light ring from the adding slice, over the rim and down the stream (6s, eased in and out);
 - every travelling motion eases in and out and only moves forward: x never decreases along a path;
 - nothing moves when the vault has no deposits; under reduced motion all of it is removed and a still surface replaces the wave;
-- the animation pauses while the diagram is off-screen; there is no pause button (the owner chose to leave it out, so reduced motion is the way to stop it);
+- the animation pauses while the diagram is off-screen; there is no pause control on the page. The owner removed the pause button deliberately, so the only ways to stop the motion are the system reduced-motion setting or scrolling the diagram away. Because the motion starts automatically, runs longer than five seconds beside other content and has no on-page pause, the diagram does not meet WCAG 2.2.2 (Pause, Stop, Hide); this is a recorded owner decision, not a pattern to copy into new moving surfaces;
 - slices and the share bar ease their width in 200ms on cubic-bezier(0.16, 1, 0.3, 1) and snap under reduced motion.
+
+### Payouts Card
+A compact card (24px corners, 20px by 16px padding) headed "Payouts" in label semibold, holding one hairline-divided list in label size. When something is waiting, the first row is that amount (medium weight, rounded through TokenAmount), a muted "waiting" with an info tip (generated since the last payout, anyone can send it and pays the fee), and the small outline "Pay out" pill on the right with its own tooltip. When payouts are on a loss pause the row reads "Payouts paused" with the tip saying when they resume, and has no button. When nothing is waiting the row is absent; the card never shows "0 waiting". Below it come up to five payouts already sent, amount left and a muted explorer link with the relative time right, or "No payouts sent yet." in muted text.
 
 ### Deposit Summary
 A paper-light inset (16px radius) under the amount field with two rows keyed to the diagram: a small hatched swatch for what you keep, a sage swatch for what the community receives a year at the current rate (with the rate and the type's rate name in caption beneath). It appears only once a valid amount is typed. The form carries no note about what withdrawals pay out; the vault type's How it works step says it.
@@ -331,7 +334,7 @@ My deposits rows, the Withdraw tab with a position, the "Your deposit" card foot
 - **Do** use pills for segmented tabs, badges and header account controls.
 - **Do** write labels in plain second-person sentences that say what happens and what doesn't, per PRODUCT.md's voice; button wording is still under discussion, so treat current labels as copy, not system.
 - **Do** ease the live slice and the share bar in 200ms and drop the transition under reduced motion.
-- **Do** keep diagram motion slow, eased in and out and forward-only, stopped when the vault is empty, pausable, and replaced by a still surface under reduced motion.
+- **Do** keep diagram motion slow, eased in and out and forward-only, still when the vault is empty, paused while off-screen, and replaced by a still surface under reduced motion.
 - **Do** draw what you are adding as the hatch (ochre-light stripes over leaf, dashed outline) everywhere it appears: slice, bar, key and summary swatch.
 
 ### Don't:
