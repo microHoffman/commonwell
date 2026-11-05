@@ -11,11 +11,6 @@ const multichain = useMultichain()
 const unit = computed(() => sharedValueUnit(props.community.vaults.map((v) => v.link.kind)))
 const staked = computed(() => props.community.vaults.reduce((sum, v) => sum + (v.state?.depositorValue ?? 0n), 0n))
 const networks = computed(() => [...new Set(props.community.vaults.map((v) => chainLabel(v.chainId)))].join(' · '))
-const nextLabel = computed(() => {
-  if (totals.data.value?.status === 'paused-loss') return 'Paused'
-  if (totals.data.value?.status === 'nothing' && unit.value) return `0 ${unit.value.symbol}`
-  return '—'
-})
 </script>
 
 <template>
@@ -44,22 +39,17 @@ const nextLabel = computed(() => {
         </NuxtLink>
       </h3>
       <p class="mt-1.5 mb-5 line-clamp-2 text-[0.9375rem] text-muted">{{ community.profile.description }}</p>
-      <dl class="mt-auto grid grid-cols-3 gap-3 border-t border-default pt-4 text-[0.9375rem]">
+      <!-- Two figures: what's kept here and the yield already given. What's waiting to be paid out lives on
+           the community page, where the diagram explains it. -->
+      <dl class="mt-auto grid grid-cols-2 gap-3 border-t border-default pt-4 text-[0.9375rem]">
         <div>
           <dt class="text-xs text-muted">Deposited</dt>
           <dd class="font-semibold text-highlighted"><TokenAmount v-if="unit" :value="staked" :unit="unit" approx /><template v-else>—</template></dd>
         </div>
         <div>
-          <dt class="text-xs text-muted">Donated</dt>
+          <dt class="text-xs text-muted">Generated and given</dt>
           <dd class="font-semibold text-highlighted">
             <TokenAmount v-if="unit" :value="totals.data.value?.donated ?? 0n" :unit="unit" approx /><template v-else>—</template>
-          </dd>
-        </div>
-        <div>
-          <dt class="text-xs text-muted">Ready to pay out</dt>
-          <dd class="font-semibold text-highlighted">
-            <TokenAmount v-if="unit && totals.data.value?.status === 'ready'" :value="totals.data.value.ready" :unit="unit" approx />
-            <template v-else>{{ nextLabel }}</template>
           </dd>
         </div>
       </dl>

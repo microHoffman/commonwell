@@ -296,7 +296,7 @@ const bubbles = [
           </p>
         </div>
         <p class="absolute left-[87.5%] top-[56.4%] -translate-x-1/2 -translate-y-1/2 text-center text-forest-950" style="--ui-bg-elevated: #e0ab5f">
-          <span class="mb-0.5 block text-sm font-medium">Donated</span>
+          <span class="mx-auto mb-0.5 block max-w-[6.5rem] text-sm font-medium leading-tight">Generated and given</span>
           <span class="block text-lg font-semibold leading-tight"><TokenAmount :value="donated" :unit="unit" approx /></span>
         </p>
       </div>
@@ -346,7 +346,7 @@ const bubbles = [
         </span>
       </li>
       <li class="flex items-center gap-1.5 @xl:hidden"><span class="size-2.5 rounded-[3px] bg-sage" />Ready to pay out</li>
-      <li class="flex items-center gap-1.5 @xl:hidden"><span class="size-2.5 rounded-full bg-ochre-500" />Donated so far</li>
+      <li class="flex items-center gap-1.5 @xl:hidden"><span class="size-2.5 rounded-full bg-ochre-500" />Generated and given</li>
       <li v-if="yours" class="flex items-center gap-1.5">
         <span class="size-3 rounded-[3px] bg-ochre-500" />Your deposit <b class="font-semibold text-white">≈ <TokenAmount :value="yours" :unit="unit" approx /></b>
       </li>
