@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   app: {
     head: {
-      title: 'Yield Forward',
+      title: 'Commonwell',
       htmlAttrs: { lang: 'en' },
       meta: [{ name: 'description', content: 'Deposit crypto and let the yield it earns fund a community you care about. Withdraw anytime.' }],
       link: [

@@ -16,7 +16,7 @@ import {
   type PayoutPreview,
   type Position,
   type VaultView,
-} from '@yield-forward/core'
+} from '@commonwell/core'
 import { useQuery } from '@tanstack/vue-query'
 import type { Address } from 'viem'
 

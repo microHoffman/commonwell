@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { kindCopy, type VaultView } from '@yield-forward/core'
+import { kindCopy, type VaultView } from '@commonwell/core'
 
 const props = defineProps<{ view: VaultView; communityName: string }>()
 const steps = computed(() => kindCopy(props.view.link.kind).howItWorks(props.communityName))

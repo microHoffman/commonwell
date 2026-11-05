@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { sharedValueUnit, type Community } from '@yield-forward/core'
+import { sharedValueUnit, type Community } from '@commonwell/core'
 
 /// A small packet for another community: its band, name, and what's deposited there.
 const props = defineProps<{ community: Community }>()

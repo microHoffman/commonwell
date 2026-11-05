@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { chainFor, chainLabel, formatPercent, getKind, kindCopy, nativeUnit, type Community, type VaultView } from '@yield-forward/core'
+import { chainFor, chainLabel, formatPercent, getKind, kindCopy, nativeUnit, type Community, type VaultView } from '@commonwell/core'
 
 /// Plain answers to what a depositor wants to know before trusting a vault.
 const props = defineProps<{ community: Community; view?: VaultView }>()

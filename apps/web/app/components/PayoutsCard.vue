@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { kindCopy, timeAgo, valueUnit, type VaultView } from '@yield-forward/core'
+import { kindCopy, timeAgo, valueUnit, type VaultView } from '@commonwell/core'
 
 /// Everything about payouts in one place: what's ready to send now, with the action beside it, then the
 /// payouts already sent, newest first.

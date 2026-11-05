@@ -11,7 +11,6 @@ contracts/broadcast/
 apps/web/.nuxt/
 apps/web/.output/
 apps/web/.data/
-apps/web/.wrangler/
 
 *.log
 .DS_Store

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { chainLabel, sharedValueUnit, valueUnit, type Community, type VaultView } from '@yield-forward/core'
+import { chainLabel, sharedValueUnit, valueUnit, type Community, type VaultView } from '@commonwell/core'
 import { useWeb3AuthConnect } from '@web3auth/modal/vue'
 
-useHead({ title: 'My deposits · Yield Forward' })
+useHead({ title: 'My deposits · Commonwell' })
 
 const { data, isLoading } = useDirectory()
 const { isConnected } = useWallet()

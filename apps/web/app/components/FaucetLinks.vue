@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nativeUnit } from '@yield-forward/core'
+import { nativeUnit } from '@commonwell/core'
 
 const props = defineProps<{ chainId: number }>()
 const deployment = computed(() => useDeployment(props.chainId))

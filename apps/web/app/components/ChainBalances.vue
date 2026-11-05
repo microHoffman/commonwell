@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { assetUnit, chainLabel, nativeUnit } from '@yield-forward/core'
+import { assetUnit, chainLabel, nativeUnit } from '@commonwell/core'
 
 /// The connected wallet's balances on one chain, with faucet links when it has none of the chain's own currency.
 const props = defineProps<{ chainId: number; labelled?: boolean }>()

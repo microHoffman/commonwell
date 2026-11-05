@@ -20,7 +20,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
     <div class="mx-auto flex max-w-[76rem] items-center gap-3 px-4 py-3.5 sm:gap-6 sm:px-6 sm:py-4">
       <NuxtLink to="/" class="flex items-center gap-2.5 text-[1.05rem] font-semibold tracking-tight">
         <img src="/icon.svg" alt="" class="size-8">
-        <span class="hidden sm:inline">Yield Forward</span>
+        <span class="hidden sm:inline">Commonwell</span>
       </NuxtLink>
       <nav class="ml-auto hidden items-center gap-2 sm:flex">
         <UButton

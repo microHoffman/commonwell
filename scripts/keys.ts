@@ -28,7 +28,7 @@ const added = KEYS.filter(([name]) => !new RegExp(`^${name}=`, 'm').test(existin
 
 if (added.length > 0) {
   const lines = added.map(([name, purpose]) => `# ${purpose}\n${name}=${generatePrivateKey()}`)
-  const header = existing ? '\n' : '# Testnet-only keys for the Yield Forward scripts. Never use them on mainnet.\n'
+  const header = existing ? '\n' : '# Testnet-only keys for the Commonwell scripts. Never use them on mainnet.\n'
   appendFileSync(path, `${header}${lines.join('\n')}\n`)
   console.log(`Added ${added.map(([name]) => name).join(', ')} to .env.local`)
 }

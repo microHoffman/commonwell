@@ -1,4 +1,4 @@
-import { chainFor, chainLabel, type Deployment, type Wallet } from '@yield-forward/core'
+import { chainFor, chainLabel, type Deployment, type Wallet } from '@commonwell/core'
 import { getWalletClient, switchChain } from '@wagmi/core'
 import { useConfig, useConnection } from '@wagmi/vue'
 import { createPublicClient, fallback, http, numberToHex, type PublicClient } from 'viem'

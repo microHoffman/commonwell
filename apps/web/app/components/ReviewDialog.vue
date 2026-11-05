@@ -9,7 +9,7 @@ import {
   shortAddress,
   slugify,
   type Community,
-} from '@yield-forward/core'
+} from '@commonwell/core'
 
 const open = defineModel<boolean>('open', { default: false })
 const props = defineProps<{ community: Community }>()

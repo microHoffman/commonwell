@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Profile } from '@yield-forward/core'
+import type { Profile } from '@commonwell/core'
 
 defineProps<{ errors: Partial<Record<keyof Profile, string>>; disabled?: boolean }>()
 const profile = defineModel<Profile>({ required: true })

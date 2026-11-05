@@ -1,5 +1,5 @@
 {
-  "name": "yield-forward",
+  "name": "commonwell",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -17,8 +17,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "web:dev": "cd apps/web && bun run dev",
     "web:generate": "cd apps/web && bun run generate",
-    "web:typecheck": "cd apps/web && bun run typecheck",
-    "web:deploy": "cd apps/web && bun run deploy"
+    "web:typecheck": "cd apps/web && bun run typecheck"
   },
   "devDependencies": {
     "@types/bun": "^1.3.13",

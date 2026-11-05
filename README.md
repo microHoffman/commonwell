@@ -1,4 +1,4 @@
-# Yield Forward
+# Commonwell
 
 Deposit into a community's vault, keep your position, and let its yield fund the community. The first vault type is Lido's: deposit ETH or wstETH, and the staking rewards go to the community. The first community, Commons Hub Brussels, uses it.
 
@@ -53,11 +53,10 @@ bun test                 # core unit tests
 ```sh
 bun run deploy:core --deployment hoodi
 bun run seed --deployment hoodi
-# apps/web/.env: NUXT_PUBLIC_DEPLOYMENTS=hoodi
-bun run web:generate
-bunx wrangler login        # once
-bun run web:deploy         # uploads apps/web/.output/public to Cloudflare Pages (project yield-forward)
+git add deployments/hoodi.json && git commit -m "Update the hoodi deployment" && git push
 ```
+
+The site is hosted on Cloudflare Pages (project `commonwell`), which is connected to this GitHub repo: every push to `main` builds the site (`apps/web/.output/public`) and publishes it. There is no manual upload. The build takes its settings from the project's environment variables, the same names as in `apps/web/.env.example`: `NUXT_PUBLIC_DEPLOYMENTS=hoodi` for the shared demo, `NUXT_PUBLIC_WEB3_AUTH_CLIENT_ID`, and optionally `NUXT_PUBLIC_RPC_URLS`.
 
 Payouts appear after the next Lido report (daily). Send them with "Pay out" in the Payouts box on a community page, "Send all pending payouts" in the account menu (curators), or `bun run payout --deployment hoodi`.
 

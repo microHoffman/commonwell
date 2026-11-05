@@ -23,7 +23,7 @@ Other roles:
 
 ## Product Purpose
 
-Yield Forward lets people fund a community with the yield on money they keep. You deposit into the community's vault and hold your position as vault shares. You can withdraw the same value at any time, and the vault's yield goes to the community's treasury.
+Commonwell lets people fund a community with the yield on money they keep. You deposit into the community's vault and hold your position as vault shares. You can withdraw the same value at any time, and the vault's yield goes to the community's treasury.
 
 It runs on the Hoodi testnet today. Ethereum mainnet is next, and it will be the first deployment with real users and real money. Success means people trust it with real funds: they understand what they keep, what the community receives and how to get out, and they can always get their deposit back.
 
@@ -88,7 +88,7 @@ You give the yield and keep the deposit, and every claim the app makes can be ch
 
 ## Brand Commitments
 
-- **Name:** "Yield Forward" is a working name and may change. Keep it in few places, and build nothing that depends on it.
+- **Name:** "Commonwell" is a working name and may change. Keep it in few places, and build nothing that depends on it. Vaults created before the rename keep their on-chain names ("… · Yield Forward wstETH", symbol `yfWSTETH`); new vaults are named "… · Commonwell wstETH", symbol `cwWSTETH`.
 - **Independent product.** Octant and Lido are credited as the technology underneath (in copy, Technical details and source links), never as a brand, partner or endorsement.
 - **Existing assets:** the logo `public/icon.svg` (a leaf basin whose spray arcs over and falls as a drop into the ochre community circle, on a bottle-green tile), with `public/apple-touch-icon.png` and `public/favicon.ico` rendered from it.
 - **Stated goal:** a clean, calm, trustworthy app that holds up when real funds are at stake.

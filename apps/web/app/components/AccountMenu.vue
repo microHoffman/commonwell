@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { chainLabel, isCurator, shortAddress } from '@yield-forward/core'
+import { chainLabel, isCurator, shortAddress } from '@commonwell/core'
 import { useWeb3AuthConnect, useWeb3AuthDisconnect } from '@web3auth/modal/vue'
 
 const { connect, loading } = useWeb3AuthConnect()

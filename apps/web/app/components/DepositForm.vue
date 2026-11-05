@@ -22,7 +22,7 @@ import {
   type Unit,
   type VaultView,
   type Wallet,
-} from '@yield-forward/core'
+} from '@commonwell/core'
 import { useQueryClient } from '@tanstack/vue-query'
 import { useWeb3AuthConnect } from '@web3auth/modal/vue'
 import { parseEther, parseUnits } from 'viem'

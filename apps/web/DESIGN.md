@@ -1,5 +1,5 @@
 ---
-name: Yield Forward
+name: Commonwell
 description: Fund a community with the yield on money you keep, shown as money moving from a basin to the community.
 colors:
   bottle-green: "#1f4d3a"
@@ -145,7 +145,7 @@ components:
     rounded: "{rounded.pill}"
 ---
 
-# Design System: Yield Forward
+# Design System: Commonwell
 
 ## Overview
 

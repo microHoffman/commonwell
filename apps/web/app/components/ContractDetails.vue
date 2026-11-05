@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { attestationUrl, chainLabel, getKind, kindCopy, recordOf, type Community, type VaultView } from '@yield-forward/core'
+import { attestationUrl, chainLabel, getKind, kindCopy, recordOf, type Community, type VaultView } from '@commonwell/core'
 
 const props = defineProps<{ community: Community; view?: VaultView }>()
 const appConfig = useAppConfig()

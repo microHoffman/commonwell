@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { valueUnit, type VaultView } from '@yield-forward/core'
+import { valueUnit, type VaultView } from '@commonwell/core'
 import { useWeb3AuthConnect } from '@web3auth/modal/vue'
 
 const props = defineProps<{ view: VaultView; communityName: string }>()

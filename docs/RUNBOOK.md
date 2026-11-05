@@ -97,4 +97,4 @@ cast send $EAS "revoke((bytes32,(bytes32,uint256)))" "($SCHEMA,($LINK_UID,0))" -
 
 ## Curators
 
-The curator list is `curators` in `deployments/<name>.json`. To add or remove one, edit the list and rebuild and redeploy the site. Removing a curator voids every review they gave. Only the curator who gave a review can remove it (an EAS rule). On mainnet, curators should be Safes or hardware wallets.
+The curator list is `curators` in `deployments/<name>.json`. To add or remove one, edit the list and push it to `main`; Cloudflare Pages rebuilds the site. Removing a curator voids every review they gave. Only the curator who gave a review can remove it (an EAS rule). On mainnet, curators should be Safes or hardware wallets.

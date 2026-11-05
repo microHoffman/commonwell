@@ -11,7 +11,7 @@ export function newSalt(owner: Address): Hex {
 
 /// Default vault settings for a new community: the owner is also the emergency admin.
 export function communityVaultParams(name: string, treasury: Address, owner: Address): Params {
-  return { treasury, emergencyAdmin: owner, vaultName: `${name} · Yield Forward wstETH`.slice(0, 64), vaultSymbol: 'yfWSTETH' }
+  return { treasury, emergencyAdmin: owner, vaultName: `${name} · Commonwell wstETH`.slice(0, 64), vaultSymbol: 'cwWSTETH' }
 }
 
 /// What creating a vault deploys. Both addresses are known before anything is sent.

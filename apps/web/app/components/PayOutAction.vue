@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { sendPayout, type VaultView } from '@yield-forward/core'
+import { sendPayout, type VaultView } from '@commonwell/core'
 import { useWeb3AuthConnect } from '@web3auth/modal/vue'
 
 /// Payouts are permissionless but rarely what a visitor came for, so this is a small, quiet button beside the

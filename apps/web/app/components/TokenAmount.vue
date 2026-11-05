@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatAmount, formatApprox, type Unit } from '@yield-forward/core'
+import { formatAmount, formatApprox, type Unit } from '@commonwell/core'
 import { formatUnits } from 'viem'
 
 /// A rounded amount that shows the exact value on hover, so no rounded figure is ever the only one shown.

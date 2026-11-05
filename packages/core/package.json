@@ -1,5 +1,5 @@
 {
-  "name": "@yield-forward/core",
+  "name": "@commonwell/core",
   "private": true,
   "type": "module",
   "exports": {

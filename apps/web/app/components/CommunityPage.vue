@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { chainLabel, getKind, kindCopy, safeHttpUrl, shortAddress, vaultFlags, type VaultView } from '@yield-forward/core'
+import { chainLabel, getKind, kindCopy, safeHttpUrl, shortAddress, vaultFlags, type VaultView } from '@commonwell/core'
 
 const props = defineProps<{ idOrSlug: string }>()
 const { directory, community } = useCommunity(() => props.idOrSlug)
@@ -48,7 +48,7 @@ const pendingChange = computed(() => (vault.value?.state ? vaultFlags(vault.valu
 // A few other communities, so the page reads as one packet in a shared library.
 const others = computed(() => listed(directory.data.value?.communities).filter((c) => c.id !== community.value?.id).slice(0, 6))
 
-useHead({ title: () => (community.value ? `${community.value.profile.name} · Yield Forward` : 'Yield Forward') })
+useHead({ title: () => (community.value ? `${community.value.profile.name} · Commonwell` : 'Commonwell') })
 </script>
 
 <template>

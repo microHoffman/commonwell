@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { chainLabel, updateProfile, type Community, type Profile } from '@yield-forward/core'
+import { chainLabel, updateProfile, type Community, type Profile } from '@commonwell/core'
 
 const open = defineModel<boolean>('open', { default: false })
 const props = defineProps<{ community: Community }>()

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { chainLabel, previewPayout, sendAllPayouts, type Community } from '@yield-forward/core'
+import { chainLabel, previewPayout, sendAllPayouts, type Community } from '@commonwell/core'
 import { useWeb3AuthConnect } from '@web3auth/modal/vue'
 
 const props = defineProps<{ communities: Community[] }>()

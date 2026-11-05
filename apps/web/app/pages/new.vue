@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { chainLabel, createCommunity, MULTICALL3, newSalt, type Profile, type Progress, type Step } from '@yield-forward/core'
+import { chainLabel, createCommunity, MULTICALL3, newSalt, type Profile, type Progress, type Step } from '@commonwell/core'
 import { useQueryClient } from '@tanstack/vue-query'
 import { useWeb3AuthConnect } from '@web3auth/modal/vue'
 import { getAddress, isAddress } from 'viem'
 
-useHead({ title: 'Create a community · Yield Forward' })
+useHead({ title: 'Create a community · Commonwell' })
 
 const deployments = useDeployments()
 const multichain = useMultichain()

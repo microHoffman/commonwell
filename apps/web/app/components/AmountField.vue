@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Unit } from '@yield-forward/core'
+import type { Unit } from '@commonwell/core'
 import { formatUnits } from 'viem'
 
 const model = defineModel<string>({ required: true })

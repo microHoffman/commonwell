@@ -1,4 +1,4 @@
-# Yield Forward: architecture
+# Commonwell: architecture
 
 ## 1. Objective
 
@@ -31,7 +31,7 @@ This is a standalone repository. The earlier [meliopolis/community-yield prototy
 | Curation | Open registration. Any vault that passes the automatic check accepts deposits. A curator review adds the "Reviewed" label, the default view and a short URL (`/brussels`). |
 | Frontend | Nuxt 4 static single-page app, Nuxt UI 4, `@wagmi/vue`, viem, Web3Auth (MetaMask Embedded Wallets) modal, Bun. Not React/Vite with ConnectKit, which doesn't support React 19 or wagmi 3. |
 | Test ETH | Faucet links in the app, only on chains whose deployment lists faucets. |
-| Hosting | Cloudflare Pages, static upload. |
+| Hosting | Cloudflare Pages (project `commonwell`), connected to the GitHub repo: every push to `main` builds and publishes the static site. |
 | Environments | `deployments/hoodi-dev.json` for development and `deployments/hoodi.json` for the shared demo (written by its first `deploy:core`). |
 
 ## 3. Contracts
@@ -157,7 +157,7 @@ The scripts (`deploy:core`, `seed`, `payout`) have been run end to end on a loca
 - **Treasury changes.** A contract-level forwarder migration works, but the app doesn't relist the migrated vault. To change treasuries, create a new vault and retire the old link (see the runbook); until it's retired, the community page offers both.
 - **Permanent registrations.** Test communities stay listed as Unreviewed until a `--fresh` reset of that deployment.
 - **Admin actions in the CLI.** Shutdown, health-check override and retiring a link use `cast`, as described in the runbook.
-- **Curator list in the build.** Changing curators means editing the deployment file and redeploying the site.
+- **Curator list in the build.** Changing curators means editing the deployment file and pushing it to `main`, which rebuilds the site.
 - **Deferred:** withdrawing in the token deposited, such as ETH from a Lido vault. Mainnet launches with withdrawals in each vault type's asset (wstETH for Lido), and the type's How it works step beside the deposit form says so before the deposit. Also deferred: per-user donation totals, ownership handover, an automatic payout job.
 
 ## 9. Networks and vault types

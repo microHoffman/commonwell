@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { assetUnit, formatAmount, kindCopy, redeemAll, valueUnit, withdraw, type VaultView } from '@yield-forward/core'
+import { assetUnit, formatAmount, kindCopy, redeemAll, valueUnit, withdraw, type VaultView } from '@commonwell/core'
 
 const props = defineProps<{ view: VaultView }>()
 const { getWallet } = useWallet()

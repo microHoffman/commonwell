@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatApprox, formatPercent, getKind, kindCopy, valueUnit, yearlyYield, type VaultView } from '@yield-forward/core'
+import { formatApprox, formatPercent, getKind, kindCopy, valueUnit, yearlyYield, type VaultView } from '@commonwell/core'
 
 /// Where the yield goes, drawn: deposits rest in the basin and stay the depositors', the yield they generate
 /// rises to the surface (bubbles that open into ripples), and droplets carry it over the rim and down the

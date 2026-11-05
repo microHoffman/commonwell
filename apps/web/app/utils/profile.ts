@@ -1,4 +1,4 @@
-import { safeHttpUrl, type Profile } from '@yield-forward/core'
+import { safeHttpUrl, type Profile } from '@commonwell/core'
 
 export function emptyProfile(): Profile {
   return { name: '', description: '', website: '', imageURI: '' }

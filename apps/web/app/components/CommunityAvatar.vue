@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { safeHttpUrl, type Profile } from '@yield-forward/core'
+import { safeHttpUrl, type Profile } from '@commonwell/core'
 
 const props = withDefaults(defineProps<{ profile: Profile; size?: 'md' | 'lg' | 'hero' }>(), { size: 'lg' })
 const image = computed(() => safeHttpUrl(props.profile.imageURI))

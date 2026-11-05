@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { chainLabel, sharedValueUnit, type Community } from '@yield-forward/core'
+import { chainLabel, sharedValueUnit, type Community } from '@commonwell/core'
 
 const props = defineProps<{ community: Community }>()
 const totals = useVaultTotals(() => props.community.vaults)
