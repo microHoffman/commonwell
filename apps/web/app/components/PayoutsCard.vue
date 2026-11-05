@@ -7,10 +7,11 @@ const props = defineProps<{ view: VaultView; communityName: string }>()
 const payouts = usePayouts(() => props.view)
 const unit = computed(() => valueUnit(props.view.link.kind))
 const copy = computed(() => kindCopy(props.view.link.kind))
-const { preview, value: ready, isLoading } = usePayoutPreview(() => props.view)
+const { preview, value: ready } = usePayoutPreview(() => props.view)
 
-// The amount ready to pay out, when there is one to show (zero counts); otherwise a word or a dash.
+// The waiting row only appears when something is actually waiting (or payouts are paused); never "0 ETH waiting".
 const readyValue = computed(() => (preview.value?.status === 'ready' ? (ready.value ?? 0n) : preview.value?.status === 'nothing' ? 0n : undefined))
+const showWaiting = computed(() => (readyValue.value !== undefined && readyValue.value > 0n) || preview.value?.status === 'paused-loss')
 const readyLabel = computed(() => {
   switch (preview.value?.status) {
     case 'paused-loss':
@@ -45,10 +46,9 @@ const readyHint = computed(() => {
     <h2 class="text-sm font-semibold">Payouts</h2>
     <!-- One list: what's waiting comes first as an ordinary row with its action, then the payouts already sent. -->
     <ul class="mt-2 divide-y divide-default text-sm">
-      <li class="flex min-h-11 items-center justify-between gap-3 py-2">
+      <li v-if="showWaiting" class="flex min-h-11 items-center justify-between gap-3 py-2">
         <span class="flex min-w-0 items-center gap-2">
-          <USkeleton v-if="isLoading" class="h-4 w-20" />
-          <span v-else class="font-medium text-highlighted">
+          <span class="font-medium text-highlighted">
             <TokenAmount v-if="readyValue !== undefined" :value="readyValue" :unit="unit" approx />
             <template v-else>{{ readyLabel }}</template>
           </span>
