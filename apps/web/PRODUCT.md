@@ -90,7 +90,7 @@ You give the yield and keep the deposit, and every claim the app makes can be ch
 
 - **Name:** "Yield Forward" is a working name and may change. Keep it in few places, and build nothing that depends on it.
 - **Independent product.** Octant and Lido are credited as the technology underneath (in copy, Technical details and source links), never as a brand, partner or endorsement.
-- **Existing assets:** `public/icon.svg` and `public/apple-touch-icon.png`.
+- **Existing assets:** the logo `public/icon.svg` (a leaf basin whose spray arcs over and falls as a drop into the ochre community circle, on a bottle-green tile), with `public/apple-touch-icon.png` and `public/favicon.ico` rendered from it.
 - **Stated goal:** a clean, calm, trustworthy app that holds up when real funds are at stake.
 - **Copy rules (ARCHITECTURE §6, binding):**
   - Values lead.

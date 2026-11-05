@@ -15,6 +15,8 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'en' },
       meta: [{ name: 'description', content: 'Deposit crypto and let the yield it earns fund a community you care about. Withdraw anytime.' }],
       link: [
+        // favicon.ico is a 32px fallback for browsers without SVG favicons.
+        { rel: 'icon', href: '/favicon.ico', sizes: '32x32' },
         { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' },
         // iOS home screen; a full-bleed PNG of icon.svg, since iOS rounds the corners itself.
         { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
