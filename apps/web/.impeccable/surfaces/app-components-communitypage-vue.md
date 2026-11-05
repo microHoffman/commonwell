@@ -21,11 +21,11 @@ STORY: A newcomer sees who the community is, sees that their deposit stays their
 
 FIRST VIEWPORT: Left column: the packet header (band, seal overlapping it, name, Reviewed, facts), then the dark "Where the yield goes" card: the basin labelled "Deposited" with the amount and an APR pill (moving above the left rim when the slices are wide), a waving sage surface with rising bubbles, droplets down the stream to the enlarged ochre circle labelled "Generated" (paid out plus waiting, with an info tip), your deposit as a to-scale ochre slice, the amount being typed as a hatched slice, a share bar and a key with amounts. Right: the deposit card (the primary action), How it works, then Payouts: the waiting amount as a plain first row with a small "Pay out" pill (only when something is waiting), then the payouts sent. Below the left column: questions, technical details, other communities as small packets.
 
-FORM: Seed Library, candidate 7 of the grounded list (the roll's assignment on re-roll 2), merged with Wellspring's flow at the user's direction; seed:043df0fa1074a453. Signature interaction: typing in the deposit field grows the dashed slice in the basin live; it eases in 200ms and snaps under reduced motion.
+FORM: Seed Library, candidate 7 of the grounded list (the roll's assignment on re-roll 2), merged with Wellspring's flow at the user's direction; seed:043df0fa1074a453. Signature interaction: typing in the deposit field grows the hatched slice in the basin live; it eases in 200ms and snaps under reduced motion.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
 ## Unresolved
 
-- Owner decisions after the contract: the "Generated" wording (over Donated, shared, earned); no pause button (off-screen pausing and reduced motion remain); "Ready to pay out" only in the Payouts card; the deposit button keeps 8px corners.
+- Owner decisions after the contract: the "Generated" wording (over Donated, shared, earned); no pause button (off-screen pausing and reduced motion remain); the waiting amount only in the Payouts card; the deposit button keeps 8px corners.
 - Dark mode values are derived from the light palette during the build.
