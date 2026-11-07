@@ -17,9 +17,9 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 
 <template>
   <header class="sticky top-0 z-40 bg-(--yf-page) transition-shadow duration-200" :class="scrolled && 'shadow-[0_1px_0_var(--ui-border),0_8px_20px_-16px_rgb(31_77_58/0.35)]'">
-    <div class="mx-auto flex max-w-[76rem] items-center gap-3 px-4 py-3.5 sm:gap-6 sm:px-6 sm:py-4">
-      <NuxtLink to="/" class="flex items-center gap-2.5 text-[1.05rem] font-semibold tracking-tight">
-        <img src="/icon.svg" alt="" class="size-8">
+    <div class="mx-auto flex max-w-[76rem] items-center gap-3 px-4 py-3.5 max-[22.5rem]:gap-2 sm:gap-6 sm:px-6 sm:py-4">
+      <NuxtLink to="/" class="flex shrink-0 items-center gap-2.5 text-[1.05rem] font-semibold tracking-tight">
+        <img src="/icon.svg" alt="" class="size-8 max-[22.5rem]:size-7">
         <span class="hidden sm:inline">Commonwell</span>
       </NuxtLink>
       <nav class="ml-auto hidden items-center gap-2 sm:flex">
@@ -35,21 +35,23 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
           :aria-current="route.path === link.to ? 'page' : undefined"
         />
       </nav>
-      <AccountMenu class="ml-auto sm:ml-0" />
+      <!-- On phones the links sit beside the logo as small pills; the account control turns compact to make room,
+           and under 360px everything tightens a little so both still fit at 320px. -->
+      <nav class="flex min-w-0 items-center gap-1 max-[22.5rem]:gap-0.5 sm:hidden">
+        <UButton
+          v-for="link in links"
+          :key="link.to"
+          :to="link.to"
+          :label="link.label"
+          color="neutral"
+          :class="route.path === link.to ? 'rounded-full bg-default text-highlighted' : 'rounded-full text-muted hover:text-default'"
+          variant="ghost"
+          size="sm"
+          class="px-2.5 max-[22.5rem]:px-2"
+          :aria-current="route.path === link.to ? 'page' : undefined"
+        />
+      </nav>
+      <AccountMenu class="ml-auto shrink-0 sm:ml-0" />
     </div>
   </header>
-  <!-- On phones the links get their own row, which scrolls away so only the top row stays pinned. -->
-  <nav class="flex gap-2 px-3 pb-3 sm:hidden">
-    <UButton
-      v-for="link in links"
-      :key="link.to"
-      :to="link.to"
-      :label="link.label"
-      color="neutral"
-      :class="route.path === link.to ? 'rounded-full bg-default text-highlighted' : 'rounded-full text-muted hover:text-default'"
-      variant="ghost"
-      size="sm"
-      :aria-current="route.path === link.to ? 'page' : undefined"
-    />
-  </nav>
 </template>

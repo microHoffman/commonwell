@@ -232,7 +232,7 @@ The directory is a one-, two- or three-column grid of packets (20px gap). "More 
 
 Vertical rhythm: 16px between stacked cards in a column, 24px between page sections, 32px between directory sections. Cards pad 20px on phones and 28px from sm.
 
-The header is sticky on every width. Its height is carried as a variable (--yf-header: 4rem on phones, 4.25rem from sm); anchor scrolling and the sticky deposit column offset by that height plus 16px, and the column caps its own height at the viewport minus the header. On phones the nav links sit on their own row under the header and scroll away, so only the top row stays pinned.
+The header is sticky on every width. Its height is carried as a variable (--yf-header: 4rem on phones, 4.25rem from sm); anchor scrolling and the sticky deposit column offset by that height plus 16px, and the column caps its own height at the viewport minus the header. On phones the header is a single row: the nav links sit beside the logo tile as small pills, and the account control turns compact (Sign in drops its icon, the account button shows only its wallet icon) so both links fit down to 320px.
 
 The money diagram is a container-query component: below a 36rem container it shows only the two amounts (Deposited and Generated), scaled with the picture (never below 0.9375rem), and the key underneath names them; any figure sitting above the picture carries its own small label. At 36rem and wider every figure sits on its part of the picture with its own label.
 
@@ -283,7 +283,7 @@ Quiet everywhere except the one action that moves money.
 
 ### Navigation
 - **Header:** sticky, paper-ground background, logo tile (25% radius) and wordmark at 1.05rem semibold; ghost links in muted ink, strong ink when current; pill Sign in in bottle green at the end.
-- **Phones:** links move to a second row of small pill links that scrolls away; the current one sits on a white pill.
+- **Phones:** the wordmark hides and the links stay in the header row as small pill links beside the logo tile; the current one sits on a white pill. Sign in drops its icon and the account button shows only its icon (the address is in its popover). Under 360px the gaps, pill padding and logo tile tighten slightly so the row still fits at 320px.
 - **Segmented tabs:** pill track. In the deposit card the track is paper ground and the active segment is a white pill with a light shadow; on the page (vault tabs, directory filter) the track is white with a ring and the active segment is paper ground.
 
 ### The Money Diagram (signature)
