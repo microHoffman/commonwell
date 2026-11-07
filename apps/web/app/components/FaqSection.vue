@@ -4,8 +4,11 @@ import { chainFor, chainLabel, formatPercent, getKind, kindCopy, nativeUnit, typ
 /// Plain answers to what a depositor wants to know before trusting a vault.
 const props = defineProps<{ community: Community; view?: VaultView }>()
 const apr = useApr(() => props.view)
+// Phones show the first few questions until asked for the rest; wider screens always show all of them.
+const SHORT_LIST = 5
+const showAll = ref(false)
 
-const items = computed(() => {
+const all = computed(() => {
   const name = props.community.profile.name
   const chains = [...new Set(props.community.vaults.map((v) => v.chainId))]
   const testnet = chains.length > 0 && chains.every((c) => chainFor(c).testnet)
@@ -77,6 +80,7 @@ const items = computed(() => {
     },
   ]
 })
+const items = computed(() => all.value.map((item, i) => (showAll.value || i < SHORT_LIST ? item : { ...item, class: 'max-sm:hidden' })))
 </script>
 
 <template>
@@ -91,6 +95,16 @@ const items = computed(() => {
         trailingIcon: 'text-dimmed',
         body: 'max-w-prose pb-4 text-sm leading-relaxed text-muted',
       }"
+    />
+    <UButton
+      v-if="!showAll && items.length > SHORT_LIST"
+      :label="`Show all ${items.length} questions`"
+      trailing-icon="i-lucide-chevron-down"
+      color="neutral"
+      variant="link"
+      size="sm"
+      class="-ml-2.5 mb-2 text-muted hover:text-default sm:hidden"
+      @click="showAll = true"
     />
   </section>
 </template>

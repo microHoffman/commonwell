@@ -52,7 +52,7 @@ useHead({ title: () => (community.value ? `${community.value.profile.name} · Co
 </script>
 
 <template>
-  <div v-if="directory.isLoading.value" class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-x-8">
+  <div v-if="directory.isLoading.value" class="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-x-8">
     <div class="space-y-4">
       <USkeleton class="h-56 rounded-[1.5rem]" />
       <USkeleton class="h-80 rounded-[1.5rem]" />
@@ -69,15 +69,16 @@ useHead({ title: () => (community.value ? `${community.value.profile.name} · Co
   <!-- Phones read top to bottom: who it is, where the money goes, then the deposit card, so the slice for the
        amount being typed is the last thing seen before the field. On wide screens the deposit column sits on
        the right and stays in view. -->
-  <div v-else class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_24rem] lg:grid-rows-[auto_auto_1fr] lg:gap-x-8">
+  <div v-else class="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_24rem] lg:grid-rows-[auto_auto_1fr] lg:gap-x-8">
     <div class="space-y-4 lg:col-start-1 lg:row-start-1">
       <header class="overflow-hidden rounded-[1.5rem] border border-default bg-default">
         <div class="h-20 sm:h-24">
           <CommunityBand :seed="community.id + community.profile.name" />
         </div>
-        <div class="flex gap-4 px-5 pb-5 sm:gap-5 sm:px-7 sm:pb-6">
+        <!-- On phones the avatar sits alone on the band and the text runs full width below it. -->
+        <div class="relative flex flex-col gap-3 px-5 pb-5 sm:flex-row sm:gap-5 sm:px-7 sm:pb-6">
           <CommunityAvatar :profile="community.profile" size="hero" class="-mt-8 shrink-0 ring-4 ring-(--ui-bg) sm:-mt-9" />
-          <div class="min-w-0 flex-1 space-y-1 pt-3">
+          <div class="min-w-0 flex-1 space-y-1 sm:pt-3">
             <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
               <h1 class="text-2xl font-semibold tracking-tight text-balance sm:text-3xl">{{ community.profile.name }}</h1>
               <!-- Curators open the review dialog from the badge itself. -->
@@ -118,7 +119,7 @@ useHead({ title: () => (community.value ? `${community.value.profile.name} · Co
             color="neutral"
             variant="ghost"
             size="sm"
-            class="mt-3 shrink-0 self-start"
+            class="shrink-0 self-start max-sm:absolute max-sm:right-4 max-sm:top-3 sm:mt-3"
             @click="editOpen = true"
           />
         </div>
@@ -166,11 +167,12 @@ useHead({ title: () => (community.value ? `${community.value.profile.name} · Co
       <aside
         class="flex flex-col gap-4 self-start lg:sticky lg:top-[calc(var(--yf-header)+1rem)] lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:max-h-[calc(100dvh-var(--yf-header)-2rem)] lg:overflow-y-auto lg:overscroll-contain lg:[scrollbar-width:thin]"
       >
-        <SupportCard :key="vaultKey(vault)" :view="vault" :community-name="community.profile.name" />
+        <SupportCard id="deposit" :key="vaultKey(vault)" :view="vault" :community-name="community.profile.name" />
         <!-- On phones it comes first, so what withdrawals pay out is read before the deposit button. -->
         <HowItWorks :view="vault" :community-name="community.profile.name" class="max-lg:order-first" />
         <PayoutsCard :view="vault" :community-name="community.profile.name" />
       </aside>
+      <DepositBar :key="vaultKey(vault)" :view="vault" target="deposit" />
     </template>
 
     <div class="space-y-6 lg:col-start-1" :class="vault ? 'lg:row-start-3' : 'lg:row-start-2'">

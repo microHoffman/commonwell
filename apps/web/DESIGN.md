@@ -226,7 +226,7 @@ A warm paper-and-garden palette: bottle green carries action and the money field
 
 ## Layout
 
-A centred column capped at 76rem with 16px gutters on phones and 24px from sm (40rem). The community page is a two-column grid from lg (64rem): a flexible left column and a fixed 24rem right column with a 32px gap. The right column (deposit card, How it works, Payouts) is sticky under the header and scrolls on its own when taller than the viewport. On phones everything stacks in reading order: who the community is, where the yield goes, How it works (moved above the deposit card, so what withdrawals pay out is read before the deposit button), then the deposit card and Payouts.
+A centred column capped at 76rem with 16px gutters on phones and 24px from sm (40rem). The community page is a two-column grid from lg (64rem): a flexible left column and a fixed 24rem right column with a 32px gap. The right column (deposit card, How it works, Payouts) is sticky under the header and scrolls on its own when taller than the viewport. On phones everything stacks in reading order: who the community is, where the yield goes, How it works (moved above the deposit card, so what withdrawals pay out is read before the deposit button), then the deposit card and Payouts. Because the deposit card starts more than a screen down, phones get a deposit bar (see Deposit Bar). The phone grid column is `minmax(0, 1fr)`, so no child can widen the page past the screen.
 
 The directory is a one-, two- or three-column grid of packets (20px gap). "More communities" under a community page uses smaller packets in the same grid rhythm.
 
@@ -260,7 +260,7 @@ The signature geometry is the circle and half circle: community bands are seeded
 ### Buttons
 Quiet everywhere except the one action that moves money.
 - **Shape:** gently rounded (8px) for the full-width primary action in the deposit card; fully round for the header sign-in and account button. The difference is intended (confirmed by the user): the money-moving action is a control, the header account entry is a pill like the other header controls.
-- **Primary:** bottle green with white text, 48px tall, full width in the deposit card. Dark mode: pale moss with near-black green text.
+- **Primary:** bottle green with white text, 48px tall, full width in the deposit card and in the phone deposit bar. Dark mode: pale moss with near-black green text.
 - **Hover / Focus:** Nuxt UI's darker primary on hover; focus outline is community ochre.
 - **Secondary / Ghost:** neutral outline or ghost buttons for Sign in inside the withdraw empty state, Edit, and nav links (muted text, strong text when current). Inline links like "See all" are small, muted text links. The Payouts card's "Pay out" is an extra-small neutral outline pill beside the waiting amount, shown only when something is ready to send, never louder than the deposit button.
 
@@ -312,6 +312,15 @@ A compact card (24px corners, 20px by 16px padding) headed "Payouts" in label se
 
 ### Deposit Summary
 A paper-light inset (16px radius) under the amount field with two rows keyed to the diagram: a small hatched swatch for what you keep, a sage swatch for what the community receives a year at the current rate (with the rate and the type's rate name in caption beneath). It appears only once a valid amount is typed. The form carries no note about what withdrawals pay out; the vault type's How it works step says it.
+
+### Deposit Bar
+Phones and tablets only (below lg). A paper-ground bar fixed to the bottom with a hairline top edge and safe-area padding, holding one full-width primary "Deposit" button. Tapping it scrolls the deposit card under the header and focuses the amount field, so the keyboard opens. It slides away (200ms) whenever the deposit card is on screen, so it and the card's own button are never both visible, and it is absent when deposits are closed. It skips How it works on the way down; reading the page in order still passes it.
+
+### Community Header Card
+The community's own packet header: a band (80px on phones, 96px from sm), the hero avatar overlapping it with a 4px ring, then the name with its Reviewed badge, one muted line of facts (stacked on phones), and the description. From sm the avatar sits to the left of the text. On phones the avatar stands alone on the band and the text runs full width below it, so long names, facts and website addresses keep the whole card width; the owner's Edit button sits in the top-right corner beside the avatar.
+
+### Questions
+A white card headed "Questions" with a hairline-divided accordion; several answers can be open at once. On phones only the first five questions show, followed by a muted "Show all N questions" link that reveals the rest for the visit; from sm every question is listed.
 
 ### Community Packet
 Directory card: an 80px band, a 56px seal (the avatar) overlapping it with a 4px ring in the card colour, a round white arrow button (36px, arrow up-right) in the band's top-right as the open cue that fills bottle green on hover and nudges its arrow, the name as a title, a two-line description, and a two-figure row (Deposited, Generated with the same info tip: paid out plus waiting, matching the circle) above a hairline. The whole card is the link. Small packets keep only a 32px band, the name and the deposited figure.
