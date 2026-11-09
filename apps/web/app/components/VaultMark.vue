@@ -6,8 +6,7 @@ const props = defineProps<{ view: VaultView }>()
 
 const symbol = computed(() => valueUnit(props.view.link.kind).symbol)
 const chain = computed(() => chainFor(props.view.chainId))
-// Ξ for ETH and its staked forms, $ for dollars, else the symbol's first letter.
-const glyph = computed(() => (/ETH$/i.test(symbol.value) ? 'Ξ' : /^(USD|DAI)/i.test(symbol.value) ? '$' : symbol.value.charAt(0)))
+const glyph = computed(() => tokenGlyph(symbol.value))
 </script>
 
 <template>

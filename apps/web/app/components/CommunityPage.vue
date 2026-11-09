@@ -43,7 +43,7 @@ useHead({ title: () => (community.value ? `${community.value.profile.name} · Co
 </script>
 
 <template>
-  <div v-if="directory.isLoading.value" class="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-x-8">
+  <div v-if="directory.isLoading.value" class="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_25rem] lg:gap-x-8">
     <div class="space-y-4">
       <USkeleton class="h-56 rounded-[1.5rem]" />
       <USkeleton class="h-80 rounded-[1.5rem]" />
@@ -60,7 +60,7 @@ useHead({ title: () => (community.value ? `${community.value.profile.name} · Co
   <!-- Phones read top to bottom: who it is, where the money goes, then the deposit card, so the slice for the
        amount being typed is the last thing seen before the field. On wide screens the deposit column sits on
        the right and stays in view. -->
-  <div v-else class="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_24rem] lg:grid-rows-[auto_auto_1fr] lg:gap-x-8">
+  <div v-else class="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_25rem] lg:grid-rows-[auto_auto_1fr] lg:gap-x-8">
     <div class="space-y-4 lg:col-start-1 lg:row-start-1">
       <header class="overflow-hidden rounded-[1.5rem] border border-default bg-default">
         <div class="relative h-20 sm:h-24">
@@ -152,8 +152,6 @@ useHead({ title: () => (community.value ? `${community.value.profile.name} · Co
         class="flex flex-col gap-4 self-start lg:sticky lg:top-[calc(var(--yf-header)+1rem)] lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:max-h-[calc(100dvh-var(--yf-header)-2rem)] lg:overflow-y-auto lg:overscroll-contain lg:[scrollbar-width:thin]"
       >
         <SupportCard id="deposit" :vaults="vaults" :view="vault" :community-name="community.profile.name" @select="selectedKey = $event" />
-        <!-- On phones it comes first, so what withdrawals pay out is read before the deposit button. -->
-        <HowItWorks :view="vault" :community-name="community.profile.name" class="max-lg:order-first" />
         <PayoutsCard :view="vault" :community-name="community.profile.name" />
       </aside>
       <DepositBar :key="vaultKey(vault)" :view="vault" target="deposit" />

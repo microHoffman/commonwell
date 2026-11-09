@@ -16,8 +16,6 @@ export type KindCopy = {
   yieldCadence: string
   /// What ends a loss pause: "until Lido's rate recovers".
   recovery: string
-  /// "How it works", three short steps.
-  howItWorks: (name: string) => string[]
   /// The type's questions, placed among the general ones. `rate` is the live APR text, when loaded.
   faq: (name: string, rate?: string) => {
     funding: FaqItem
@@ -42,11 +40,6 @@ export const genericCopy: KindCopy = {
   depositOptions: {},
   yieldCadence: 'Yield builds up over time.',
   recovery: "the vault's value recovers",
-  howItWorks: (name) => [
-    `Your deposit earns yield in ${name}'s vault.`,
-    `The yield is paid out to ${name}.`,
-    'You keep your deposit and can withdraw it anytime.',
-  ],
   faq: (name) => ({
     funding: {
       label: `How does my deposit fund ${name}?`,

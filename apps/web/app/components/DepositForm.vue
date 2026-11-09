@@ -87,6 +87,12 @@ const option = (r: Route) => copy.depositOptions[r] ?? { symbol: r, description:
 const routeUnit = (r: Route): Unit => ({ symbol: option(r).symbol, decimals: r === 'eth' ? native.decimals : asset.decimals })
 const token = computed(() => routeUnit(route.value))
 const routes = ['eth', 'wsteth'] as const
+// The keep row's tip. Withdrawals pay out the vault's asset; when you deposit something else, it says what comes back.
+const keepTip = computed(() =>
+  token.value.symbol === asset.symbol
+    ? 'Take it out anytime.'
+    : `Take it out anytime, as ${asset.symbol}: ${copy.assetDescription}, worth the ${unit.symbol} you put in.${copy.payoutNote ? ` ${copy.payoutNote}` : ''}`,
+)
 const tokenMenu = ref(false)
 function pickRoute(r: Route) {
   route.value = r
@@ -116,8 +122,9 @@ const value = computed(() => {
   return (amount.value * (props.view.state?.exchangeRate ?? 0n)) / 10n ** 18n
 })
 const perYear = computed(() => (value.value && apr.data.value ? yearlyYield(value.value, apr.data.value) : undefined))
-// Where the yield is earned, beside the rate it explains. Your ETH earns it, so the protocol isn't cast as the payer.
+// The gets row's tip: where the yield is earned. Your ETH earns it, so the protocol isn't cast as the payer.
 const protocol = getKind(props.view.link.kind)?.protocol
+const getsTip = `The ${copy.yieldNoun} your deposit earns${protocol ? ` with ${protocol}` : ''}. Your deposit itself stays yours.`
 // Dust already reads "< 0.0001", so it doesn't also get "≈".
 const perYearIsDust = computed(() => perYear.value !== undefined && formatApprox(perYear.value, unit.decimals).startsWith('<'))
 // The money diagram draws the amount being typed as a slice of the basin.
@@ -246,22 +253,23 @@ const buttonLabel = computed(() => {
       label="Amount"
       :unit="token"
       :balance="isConnected ? balance : undefined"
-      :where="`on ${chainLabel(chainId)}`"
       :max="isConnected ? max : undefined"
       :error="inputError"
       :disabled="current !== undefined"
     >
-      <template v-if="holdsWsteth" #trailing>
-        <UPopover v-model:open="tokenMenu" :content="{ align: 'end' }">
-          <UButton
-            :label="token.symbol"
-            trailing-icon="i-lucide-chevron-down"
-            color="neutral"
-            variant="soft"
-            class="rounded-full"
+      <!-- The token names its network; when the wallet also holds wstETH, it opens the token menu. -->
+      <template #trailing>
+        <span v-if="!holdsWsteth" class="flex rounded-full bg-elevated py-1 pr-3 pl-1"><TokenChip :symbol="token.symbol" :chain-id="chainId" /></span>
+        <UPopover v-else v-model:open="tokenMenu" :content="{ align: 'end' }">
+          <button
+            type="button"
+            class="flex items-center gap-1.5 rounded-full bg-elevated py-1 pr-2.5 pl-1 transition-colors hover:bg-accented focus-visible:outline-2 focus-visible:outline-primary disabled:opacity-75"
             :disabled="current !== undefined"
-            :aria-label="`Deposit with ${token.symbol}`"
-          />
+            :aria-label="`Deposit with ${token.symbol} on ${chainLabel(chainId)}`"
+          >
+            <TokenChip :symbol="token.symbol" :chain-id="chainId" />
+            <UIcon name="i-lucide-chevron-down" class="size-4 shrink-0 text-muted" />
+          </button>
           <template #content>
             <div role="listbox" aria-label="Deposit with" class="w-72 py-1">
               <button
@@ -287,30 +295,30 @@ const buttonLabel = computed(() => {
     </AmountField>
 
     <!-- What the deposit does, in two rows keyed to the money diagram: the hatched slice is what you keep, the
-         sage yield is what the community receives. In words until an amount is typed, then in figures. -->
+         sage yield is what the community receives. In words until an amount is typed, then in figures; what each
+         means (what withdrawals pay out, where the yield is earned) sits behind an info tip after the figure. -->
     <dl class="divide-y divide-default rounded-[1rem] bg-muted px-4 text-sm">
-      <div class="flex items-baseline justify-between gap-3 py-2.5">
+      <div class="flex items-center justify-between gap-3 py-2.5">
         <dt class="flex min-w-0 items-center gap-2 text-muted">
-          <svg viewBox="0 0 12 12" class="size-2.5 shrink-0 rounded-[3px]" aria-hidden="true"><rect width="12" height="12" fill="#4f7a36" /><path d="M-3 3 L3 -3 M-3 9 L9 -3 M-3 15 L15 -3 M3 15 L15 3 M9 15 L15 9" stroke="#e0ab5f" stroke-width="1.6" /></svg>You keep
+          <svg viewBox="0 0 12 12" class="size-2.5 shrink-0 rounded-[3px]" aria-hidden="true"><rect width="12" height="12" fill="#4f7a36" /><path d="M-3 3 L3 -3 M-3 9 L9 -3 M-3 15 L15 -3 M3 15 L15 3 M9 15 L15 9" stroke="#e0ab5f" stroke-width="1.6" /></svg>
+          You keep
         </dt>
-        <dd class="shrink-0 whitespace-nowrap text-right">
-          <span class="font-semibold text-highlighted">
-            <template v-if="value">all <template v-if="route !== 'eth'">≈ </template><TokenAmount :value="value" :unit="unit" /></template>
-            <template v-else>all of it</template>
-          </span>
-          <span class="block text-xs text-muted">Take it out anytime</span>
+        <dd class="shrink-0 whitespace-nowrap text-right font-semibold text-highlighted">
+          <template v-if="value">all <template v-if="route !== 'eth'">≈ </template><TokenAmount :value="value" :unit="unit" /></template>
+          <template v-else>all of it</template>
+          <InfoTip :text="keepTip" class="ms-1" />
         </dd>
       </div>
       <!-- A long community name wraps on the left; the figures stay on one line. -->
-      <div class="flex items-baseline justify-between gap-3 py-2.5">
+      <div class="flex items-center justify-between gap-3 py-2.5">
         <dt class="flex min-w-0 items-center gap-2 text-muted">
           <span class="size-2.5 shrink-0 rounded-[3px] bg-sage" /><span>{{ communityName }} gets</span>
         </dt>
-        <dd class="shrink-0 whitespace-nowrap text-right">
-          <span v-if="perYear" class="font-semibold text-highlighted"><template v-if="!perYearIsDust">≈ </template><TokenAmount :value="perYear" :unit="unit" approx /><span class="font-normal text-default"> a year</span></span>
-          <span v-else-if="apr.data.value" class="font-semibold text-highlighted">{{ formatPercent(apr.data.value) }} a year</span>
-          <span v-else class="font-semibold text-highlighted">Its {{ copy.yieldNoun }}</span>
-          <span class="block text-xs text-muted">{{ protocol ? `What it earns with ${protocol}` : 'What it earns' }}</span>
+        <dd class="shrink-0 whitespace-nowrap text-right font-semibold text-highlighted">
+          <span v-if="perYear"><template v-if="!perYearIsDust">≈ </template><TokenAmount :value="perYear" :unit="unit" approx /><span class="font-normal text-default"> a year</span></span>
+          <span v-else-if="apr.data.value">{{ formatPercent(apr.data.value) }} a year</span>
+          <span v-else>Its {{ copy.yieldNoun }}</span>
+          <InfoTip :text="getsTip" class="ms-1" />
         </dd>
       </div>
     </dl>

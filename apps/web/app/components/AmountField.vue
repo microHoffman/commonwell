@@ -7,13 +7,13 @@ const props = defineProps<{
   label: string
   unit: Unit
   balance?: bigint
-  /// Where the balance is, after it on the label row: "on Hoodi testnet", "in Lido on Ethereum". Shown alone when signed out.
+  /// Where the balance is, after it on the label row: "in Lido".
   where?: string
   max?: bigint
   error?: string
   disabled?: boolean
 }>()
-// A `trailing` slot replaces the unit label, e.g. with a token menu, and needs more room at the field's end.
+// A `trailing` slot replaces the unit label, e.g. with the token and its network, and needs more room at the field's end.
 const slots = useSlots()
 
 /// Fills the exact maximum, so the field always shows what will be sent.
@@ -42,7 +42,7 @@ function fillMax() {
       size="xl"
       class="w-full"
       :ui="{
-        base: ['h-14 text-2xl font-semibold tracking-tight placeholder:font-normal focus-visible:ring-2 focus-visible:ring-ochre-500', slots.trailing && 'pe-32'],
+        base: ['h-14 text-2xl font-semibold tracking-tight placeholder:font-normal focus-visible:ring-2 focus-visible:ring-ochre-500', slots.trailing && 'pe-48'],
       }"
       :disabled="disabled"
     >

@@ -10,10 +10,10 @@ const { run, pending } = useTx()
 const copy = computed(() => kindCopy(props.view.link.kind))
 const asset = computed(() => assetUnit(props.view.link.kind))
 const unit = computed(() => valueUnit(props.view.link.kind))
-// Beside the position on the label row: "in Lido on Hoodi testnet".
+// Beside the position on the label row: "in Lido". The network is on the token chip, as on deposit.
 const where = computed(() => {
   const protocol = getKind(props.view.link.kind)?.protocol
-  return `${protocol ? `in ${protocol} ` : ''}on ${chainLabel(props.view.chainId)}`
+  return protocol ? `in ${protocol}` : undefined
 })
 
 // The amount is entered as value in the type's unit, like the deposit; withdrawals pay the matching amount of
@@ -67,7 +67,11 @@ async function submit() {
       :max="position.value"
       :error="inputError"
       :disabled="pending"
-    />
+    >
+      <template #trailing>
+        <span class="flex rounded-full bg-elevated py-1 pr-3 pl-1"><TokenChip :symbol="unit.symbol" :chain-id="view.chainId" /></span>
+      </template>
+    </AmountField>
     <p v-if="belowDeposit" class="text-sm text-warning">Worth less than you deposited until {{ copy.recovery }}.</p>
     <p class="text-sm text-muted">
       <template v-if="assets">Paid out as <TokenAmount :value="assets" :unit="asset" />, {{ copy.assetDescription }}.</template>

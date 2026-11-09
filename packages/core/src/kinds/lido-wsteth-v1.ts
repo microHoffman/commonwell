@@ -37,11 +37,6 @@ export const copy: KindCopy = {
   },
   yieldCadence: "Rewards build up with Lido's daily update.",
   recovery: "Lido's rate recovers",
-  howItWorks: (name) => [
-    `Your ETH is staked with Lido in ${name}'s vault.`,
-    `The staking rewards are paid out to ${name}.`,
-    'You keep your deposit and can withdraw it anytime, paid out in wstETH.',
-  ],
   faq: (name, rate) => ({
     funding: {
       label: `How does my deposit fund ${name}?`,

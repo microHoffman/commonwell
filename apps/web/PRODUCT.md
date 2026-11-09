@@ -73,7 +73,7 @@ You give the yield and keep the deposit, and every claim the app makes can be ch
 **Flow facts:**
 - Every deposit is one router transaction, and a failed one changes nothing. The minimum deposit is 0.0001. Max leaves gas on the native asset.
 - Withdrawals return the same value as the deposit, paid in the vault's asset. For Lido that means fewer wstETH than you put in, worth the same ETH.
-- **Withdrawals pay out the vault's own asset, which each vault type sets (decided for the mainnet launch).** Nothing is converted back to the token deposited. A Lido vault pays out wstETH, so someone who deposits ETH gets wstETH back, and another type pays out its own asset. The community page says so before the deposit, in the type's How it works step beside the deposit form (for Lido: "paid out in wstETH"). The FAQ explains what to do with it (for Lido: keep it, swap it, or unstake it through Lido).
+- **Withdrawals pay out the vault's own asset, which each vault type sets (decided for the mainnet launch).** Nothing is converted back to the token deposited. A Lido vault pays out wstETH, so someone who deposits ETH gets wstETH back, and another type pays out its own asset. The community page says so before the deposit, in the info tip on the deposit form's "You keep" row (for Lido: "Take it out anytime, as wstETH…"). The FAQ explains what to do with it (for Lido: keep it, swap it, or unstake it through Lido).
 
 **States the UI must carry:** Unreviewed, Not taking deposits, Payout address change pending, Loss pause, Nothing to pay out yet, Network unavailable, and vaults that are retired or fail the check (missing from the community page, still withdrawable under My deposits). Warnings are for states that change a depositor's decision.
 
