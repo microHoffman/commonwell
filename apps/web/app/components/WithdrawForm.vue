@@ -1,14 +1,20 @@
 <script setup lang="ts">
-import { assetUnit, formatAmount, kindCopy, redeemAll, valueUnit, withdraw, type VaultView } from '@commonwell/core'
+import { assetUnit, chainLabel, formatAmount, getKind, kindCopy, redeemAll, valueUnit, withdraw, type VaultView } from '@commonwell/core'
 
 const props = defineProps<{ view: VaultView }>()
-const { getWallet } = useWallet()
+const { getWallet, isConnected, chainId: walletChain } = useWallet()
+const wrongNetwork = computed(() => isConnected.value && walletChain.value !== props.view.chainId)
 const positions = usePositions(() => [props.view])
 const position = computed(() => positions.data.value?.[0])
 const { run, pending } = useTx()
 const copy = computed(() => kindCopy(props.view.link.kind))
 const asset = computed(() => assetUnit(props.view.link.kind))
 const unit = computed(() => valueUnit(props.view.link.kind))
+// Beside the position on the label row: "in Lido on Hoodi testnet".
+const where = computed(() => {
+  const protocol = getKind(props.view.link.kind)?.protocol
+  return `${protocol ? `in ${protocol} ` : ''}on ${chainLabel(props.view.chainId)}`
+})
 
 // The amount is entered as value in the type's unit, like the deposit; withdrawals pay the matching amount of
 // the vault's asset (for Lido: entered in ETH, paid in wstETH).
@@ -29,6 +35,10 @@ const inputError = computed(() => {
   if (position.value && amount.value > position.value.value) return 'More than your deposit'
   if (assets.value === 0n) return 'Too small to withdraw'
   return undefined
+})
+const buttonLabel = computed(() => {
+  const what = everything.value ? 'withdraw everything' : 'withdraw'
+  return wrongNetwork.value ? `Switch to ${chainLabel(props.view.chainId)} and ${what}` : what.charAt(0).toUpperCase() + what.slice(1)
 })
 // Shares are the stETH value deposited; the position is worth less only after a Lido rate dip.
 const belowDeposit = computed(() => position.value !== undefined && position.value.value + 2n < position.value.shares)
@@ -53,6 +63,7 @@ async function submit() {
       label="Amount"
       :unit="unit"
       :balance="position.value"
+      :where="where"
       :max="position.value"
       :error="inputError"
       :disabled="pending"
@@ -61,11 +72,12 @@ async function submit() {
     <p class="text-sm text-muted">
       <template v-if="assets">Paid out as <TokenAmount :value="assets" :unit="asset" />, {{ copy.assetDescription }}.</template>
       <template v-else>Paid out as {{ asset.symbol || 'the vault asset' }}, {{ copy.assetDescription }}.</template>
+      <template v-if="copy.payoutNote"> {{ copy.payoutNote }}</template>
     </p>
     <UButton
       block
       size="xl"
-      :label="everything ? 'Withdraw everything' : 'Withdraw'"
+      :label="buttonLabel"
       :loading="pending"
       :disabled="!amount || !!inputError"
       @click="submit"

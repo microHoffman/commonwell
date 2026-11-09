@@ -7,11 +7,14 @@ const props = defineProps<{
   label: string
   unit: Unit
   balance?: bigint
+  /// Where the balance is, after it on the label row: "on Hoodi testnet", "in Lido on Ethereum". Shown alone when signed out.
+  where?: string
   max?: bigint
   error?: string
   disabled?: boolean
 }>()
-
+// A `trailing` slot replaces the unit label, e.g. with a token menu, and needs more room at the field's end.
+const slots = useSlots()
 
 /// Fills the exact maximum, so the field always shows what will be sent.
 function fillMax() {
@@ -20,12 +23,15 @@ function fillMax() {
 </script>
 
 <template>
-  <UFormField :label="label" :error="error">
-    <template v-if="balance !== undefined" #hint>
-      <span class="inline-flex items-center gap-1">
-        Balance
-        <TokenAmount :value="balance" :unit="unit" />
-        <UButton v-if="max !== undefined" label="Max" size="xs" variant="link" class="px-1" :disabled="disabled" @click="fillMax" />
+  <UFormField :label="label" :error="error" :ui="{ labelWrapper: 'flex-wrap gap-x-3' }">
+    <template v-if="balance !== undefined || where" #hint>
+      <span class="inline-flex flex-wrap items-center justify-end gap-x-1">
+        <TokenAmount v-if="balance !== undefined" :value="balance" :unit="unit" class="text-default" />
+        <span v-if="where">{{ where }}</span>
+        <template v-if="max !== undefined">
+          <span class="text-dimmed" aria-hidden="true">·</span>
+          <UButton label="Max" size="xs" variant="link" class="px-0.5" :disabled="disabled" @click="fillMax" />
+        </template>
       </span>
     </template>
     <UInput
@@ -35,11 +41,15 @@ function fillMax() {
       placeholder="0.0"
       size="xl"
       class="w-full"
-      :ui="{ base: 'h-14 text-2xl font-semibold tracking-tight placeholder:font-normal focus-visible:ring-2 focus-visible:ring-ochre-500' }"
+      :ui="{
+        base: ['h-14 text-2xl font-semibold tracking-tight placeholder:font-normal focus-visible:ring-2 focus-visible:ring-ochre-500', slots.trailing && 'pe-32'],
+      }"
       :disabled="disabled"
     >
       <template #trailing>
-        <span class="text-sm text-muted">{{ unit.symbol }}</span>
+        <slot name="trailing">
+          <span class="text-sm text-muted">{{ unit.symbol }}</span>
+        </slot>
       </template>
     </UInput>
   </UFormField>

@@ -8,6 +8,8 @@ export type KindCopy = {
   yieldNoun: string
   /// What the vault holds, after its symbol: "wstETH, Lido's staked ETH".
   assetDescription: string
+  /// What to do with a withdrawal's payout, after "Paid out as …", when it isn't the deposit token.
+  payoutNote?: string
   /// The deposit form's options, by deposit route ("eth", "wsteth"): the token's symbol and a short line under it.
   depositOptions: Record<string, { symbol: string; description: string }>
   /// When new yield shows up, for "nothing to pay out yet".

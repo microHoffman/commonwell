@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { chainLabel, getKind, kindCopy, safeHttpUrl, shortAddress, vaultFlags, type VaultView } from '@commonwell/core'
+import { chainLabel, kindCopy, safeHttpUrl, shortAddress, vaultFlags } from '@commonwell/core'
 
 const props = defineProps<{ idOrSlug: string }>()
 const { directory, community } = useCommunity(() => props.idOrSlug)
@@ -10,8 +10,9 @@ provideDepositDraft()
 const editOpen = ref(false)
 
 const website = computed(() => (community.value ? safeHttpUrl(community.value.profile.website) : undefined))
+const websiteLabel = computed(() => website.value?.replace(/^https?:\/\//, '').replace(/\/$/, ''))
 
-// A community can have several vaults, on one chain or several. Tabs show only then; `?vault=` preselects one.
+// A community can have several vaults, on one chain or several. The switcher shows only then; `?vault=` preselects one.
 const route = useRoute()
 const router = useRouter()
 const vaults = computed(() => community.value?.vaults ?? [])
@@ -24,24 +25,14 @@ const selectedKey = computed({
 })
 const vault = computed(() => vaults.value.find((v) => vaultKey(v) === selectedKey.value))
 
-const protocolOf = (v: VaultView) => getKind(v.link.kind)?.protocol ?? v.link.kind
 const chains = computed(() => [...new Set(vaults.value.map((v) => v.chainId))])
-const protocols = computed(() => [...new Set(vaults.value.map(protocolOf))])
-// A tab names only what tells the vaults apart: the network, the protocol, then the address of same-network, same-protocol twins.
-const vaultTabs = computed(() =>
-  vaults.value.map((v) => {
-    const twin = vaults.value.some((o) => o !== v && o.chainId === v.chainId && protocolOf(o) === protocolOf(v))
-    const parts = [chains.value.length > 1 && chainLabel(v.chainId), protocols.value.length > 1 && protocolOf(v), twin && shortAddress(v.vault)]
-    return { label: parts.filter((p): p is string => typeof p === 'string').join(' · '), value: vaultKey(v) }
-  }),
-)
-// The details line covers every vault: "Staked with Lido on Hoodi testnet" for one type, which words it itself;
-// several types are just listed ("Lido, Rocket Pool, and Sky on 2 networks"), since not all of them stake.
-const how = computed(() => {
-  const only = protocols.value.length === 1 ? vaults.value[0] : undefined
-  return only ? kindCopy(only.link.kind).earning : new Intl.ListFormat('en', { type: 'conjunction' }).format(protocols.value)
-})
 const where = computed(() => (chains.value.length > 1 ? `${chains.value.length} networks` : chains.value[0] && chainLabel(chains.value[0])))
+// The facts chip: one vault words itself ("Staked with Lido on Hoodi testnet"); several are counted, since the
+// switcher below names each one ("5 vaults on 3 networks").
+const facts = computed(() => {
+  const only = vaults.value.length === 1 ? vaults.value[0] : undefined
+  return only ? `${kindCopy(only.link.kind).earning} on ${where.value}` : `${vaults.value.length} vaults on ${where.value}`
+})
 const unlisted = computed(() => community.value !== undefined && vault.value === undefined)
 const pendingChange = computed(() => (vault.value?.state ? vaultFlags(vault.value.state).pendingChange : undefined))
 
@@ -72,8 +63,21 @@ useHead({ title: () => (community.value ? `${community.value.profile.name} · Co
   <div v-else class="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_24rem] lg:grid-rows-[auto_auto_1fr] lg:gap-x-8">
     <div class="space-y-4 lg:col-start-1 lg:row-start-1">
       <header class="overflow-hidden rounded-[1.5rem] border border-default bg-default">
-        <div class="h-20 sm:h-24">
+        <div class="relative h-20 sm:h-24">
           <CommunityBand :seed="community.id + community.profile.name" />
+          <!-- The website sits on the band as an outline pill, clear of the facts and description: bottle-green text and
+               hairline over a frosted pale wash, readable on any band. -->
+          <ULink
+            v-if="website"
+            :to="website"
+            target="_blank"
+            raw
+            class="absolute right-3 top-3 inline-flex max-w-[calc(100%-1.5rem)] items-center gap-1.5 rounded-full border border-forest-900/35 bg-white/60 py-1 pr-2 pl-2.5 text-xs font-medium text-forest-900 backdrop-blur-sm transition-colors hover:border-forest-900/60 hover:bg-white/80"
+          >
+            <UIcon name="i-lucide-globe" class="size-3.5 shrink-0" />
+            <span class="truncate">{{ websiteLabel }}</span>
+            <UIcon name="i-lucide-arrow-up-right" class="size-3.5 shrink-0" />
+          </ULink>
         </div>
         <!-- On phones the avatar sits alone on the band and the text runs full width below it. -->
         <div class="relative flex flex-col gap-3 px-5 pb-5 sm:flex-row sm:gap-5 sm:px-7 sm:pb-6">
@@ -94,21 +98,16 @@ useHead({ title: () => (community.value ? `${community.value.profile.name} · Co
                 @click="isCurator && (reviewOpen = true)"
               />
             </div>
-            <!-- One muted line of facts, dot-separated; stacked on phones, where a wrapped line would start with a stray dot. -->
-            <p
-              class="flex flex-col gap-0.5 text-sm text-muted sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-2 sm:[&>*+*]:before:mr-2 sm:[&>*+*]:before:text-dimmed sm:[&>*+*]:before:content-['·']"
-            >
-              <span v-if="!community.reviewed" class="text-warning">Check who runs it before depositing</span>
-              <span v-if="vault">
-                {{ how }} on <span class="text-default">{{ where }}</span>
+            <!-- The facts as chips, then a hairline, so they don't read as the description's first line. -->
+            <div v-if="!community.reviewed || vault" class="flex flex-wrap gap-2 pt-1.5 text-xs">
+              <span v-if="!community.reviewed" class="inline-flex items-center gap-1.5 rounded-full bg-warning/10 px-2.5 py-1 text-warning">
+                <UIcon name="i-lucide-circle-alert" class="size-3.5 shrink-0" />Check who runs it before depositing
               </span>
-              <span v-if="website" class="inline-flex items-center">
-                <ULink :to="website" target="_blank" class="inline-flex items-center gap-1 text-muted hover:text-default">
-                  {{ website.replace(/^https?:\/\//, '').replace(/\/$/, '') }} <UIcon name="i-lucide-arrow-up-right" class="size-3.5" />
-                </ULink>
+              <span v-if="vault" class="inline-flex items-center gap-1.5 rounded-full bg-elevated px-2.5 py-1 text-default">
+                <UIcon name="i-lucide-layers" class="size-3.5 shrink-0 text-muted" />{{ facts }}
               </span>
-            </p>
-            <p v-if="community.profile.description" class="max-w-prose whitespace-pre-line pt-1 text-muted">
+            </div>
+            <p v-if="community.profile.description" class="mt-3 max-w-prose whitespace-pre-line border-t border-default pt-3 text-muted">
               {{ community.profile.description }}
             </p>
           </div>
@@ -134,23 +133,8 @@ useHead({ title: () => (community.value ? `${community.value.profile.name} · Co
         description="This community has no active vault. Existing deposits can be withdrawn under My deposits."
       />
 
-      <!-- Everything below shows the selected vault. Past four vaults, tabs get too wide and a select takes over. -->
-      <template v-if="vaults.length > 1">
-        <UTabs
-          v-if="vaults.length <= 4"
-          v-model="selectedKey"
-          :items="vaultTabs"
-          :content="false"
-          color="neutral"
-          class="w-full sm:w-fit"
-          :ui="{
-            list: 'overflow-x-auto rounded-full bg-default ring ring-default',
-            indicator: 'rounded-full bg-elevated',
-            trigger: 'shrink-0 px-4 data-[state=active]:text-highlighted',
-          }"
-        />
-        <USelect v-else v-model="selectedKey" :items="vaultTabs" icon="i-lucide-layers" aria-label="Vault" class="w-full sm:w-72" />
-      </template>
+      <!-- Everything below shows the selected vault. -->
+      <VaultSwitcher v-if="vaults.length > 1 && vault" :vaults="vaults" :view="vault" @select="selectedKey = $event" />
 
       <UAlert
         v-if="pendingChange"
@@ -167,7 +151,7 @@ useHead({ title: () => (community.value ? `${community.value.profile.name} · Co
       <aside
         class="flex flex-col gap-4 self-start lg:sticky lg:top-[calc(var(--yf-header)+1rem)] lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:max-h-[calc(100dvh-var(--yf-header)-2rem)] lg:overflow-y-auto lg:overscroll-contain lg:[scrollbar-width:thin]"
       >
-        <SupportCard id="deposit" :key="vaultKey(vault)" :view="vault" :community-name="community.profile.name" />
+        <SupportCard id="deposit" :vaults="vaults" :view="vault" :community-name="community.profile.name" @select="selectedKey = $event" />
         <!-- On phones it comes first, so what withdrawals pay out is read before the deposit button. -->
         <HowItWorks :view="vault" :community-name="community.profile.name" class="max-lg:order-first" />
         <PayoutsCard :view="vault" :community-name="community.profile.name" />
