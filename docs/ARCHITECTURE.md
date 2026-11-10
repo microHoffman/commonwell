@@ -31,7 +31,7 @@ This is a standalone repository. The earlier [meliopolis/community-yield prototy
 | Curation | Open registration. Any vault that passes the automatic check accepts deposits. A curator review adds the "Reviewed" label, the default view and a short URL (`/brussels`). |
 | Frontend | Nuxt 4 static single-page app, Nuxt UI 4, `@wagmi/vue`, viem, Web3Auth (MetaMask Embedded Wallets) modal, Bun. Not React/Vite with ConnectKit, which doesn't support React 19 or wagmi 3. |
 | Test ETH | Faucet links in the app, only on chains whose deployment lists faucets. |
-| Hosting | Cloudflare Pages (project `commonwell`), connected to the GitHub repo: every push to `main` builds and publishes the static site. |
+| Hosting | Cloudflare Pages (project `commonwell`), connected to the GitHub repo: every push to `main` builds and publishes the static site. `main` takes changes only through pull requests that pass CI. |
 | Environments | `deployments/hoodi-dev.json` for development and `deployments/hoodi.json` for the shared demo (written by its first `deploy:core`). |
 
 ## 3. Contracts
@@ -142,8 +142,11 @@ The web app reads one or more deployments, one per chain (`NUXT_PUBLIC_DEPLOYMEN
 | Command | What it covers |
 |---|---|
 | `bun run contracts:test` | Hoodi fork tests at a pinned block (yield and loss use a mocked rate): wiring, deposits through the router, withdrawals, payouts, losses, forwarder migration |
-| `bun test` | Core unit tests: EAS encoding, CREATE2 vectors cross-checked against Solidity, discovery rules, validation reject cases, short names, link filtering, multi-chain merging, formatting, the frozen-code guard |
+| `bun run test` | Core unit tests: EAS encoding, CREATE2 vectors cross-checked against Solidity, discovery rules, validation reject cases, short names, link filtering, multi-chain merging, formatting, the frozen-code guard |
 | `bun run typecheck`, `bun run web:typecheck`, `bun run web:generate` | Types and the static build |
+| `bun run contracts:check` | The committed ABIs and bytecode equal a fresh build with the pinned Foundry; writes nothing |
+
+CI (`.github/workflows/ci.yml`) runs all of these on every pull request and push to `main`; the fork tests only when `contracts/`, `.gitmodules` or the workflow change.
 
 The scripts (`deploy:core`, `seed`, `payout`) have been run end to end on a local Hoodi fork, and the pages checked in a browser against seeded data.
 

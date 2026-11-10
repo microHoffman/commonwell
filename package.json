@@ -2,12 +2,14 @@
   "name": "commonwell",
   "private": true,
   "type": "module",
+  "packageManager": "bun@1.3.13",
   "workspaces": [
     "packages/*",
     "apps/*"
   ],
   "scripts": {
     "contracts:build": "cd contracts && forge build && cd .. && bun packages/core/scripts/gen-contracts.ts",
+    "contracts:check": "cd contracts && forge build && cd .. && bun packages/core/scripts/gen-contracts.ts --check",
     "contracts:test": "cd contracts && forge test",
     "keys": "bun scripts/keys.ts",
     "deploy:core": "bun scripts/deploy-core.ts",

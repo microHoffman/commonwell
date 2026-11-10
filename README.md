@@ -23,13 +23,14 @@ Design and decisions: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Operations: 
 
 ## Setup
 
-Needs Bun 1.3+, Foundry 1.x and git.
+Needs Bun 1.3+, Foundry v1.7.1 (`foundryup --install v1.7.1`; CI uses the same) and git.
 
 ```sh
-git submodule update --init
+git submodule update --init   # not --recursive: that layout reproduces the committed contract artifacts
 bun install
 bun run contracts:test   # Hoodi fork tests (uses an archive RPC, by default ethpandaops)
-bun test                 # core unit tests
+bun run test             # core unit tests (bare `bun test` would also pick up the submodules' tests)
+bun run contracts:check  # the committed ABIs and bytecode match a fresh build
 ```
 
 ## Run it on Hoodi
@@ -56,7 +57,7 @@ bun run seed --deployment hoodi
 git add deployments/hoodi.json && git commit -m "Update the hoodi deployment" && git push
 ```
 
-The site is hosted on Cloudflare Pages (project `commonwell`), which is connected to this GitHub repo: every push to `main` builds the site (`apps/web/.output/public`) and publishes it. There is no manual upload. The build takes its settings from the project's environment variables, the same names as in `apps/web/.env.example`: `NUXT_PUBLIC_DEPLOYMENTS=hoodi` for the shared demo, `NUXT_PUBLIC_WEB3_AUTH_CLIENT_ID`, and optionally `NUXT_PUBLIC_RPC_URLS`.
+The site is hosted on Cloudflare Pages (project `commonwell`), which is connected to this GitHub repo: every push to `main` builds the site (`apps/web/.output/public`) and publishes it. There is no manual upload. `main` is protected: changes land through pull requests once CI (`.github/workflows/ci.yml`) passes. The build takes its settings from the project's environment variables, the same names as in `apps/web/.env.example`: `NUXT_PUBLIC_DEPLOYMENTS=hoodi` for the shared demo, `NUXT_PUBLIC_WEB3_AUTH_CLIENT_ID`, and optionally `NUXT_PUBLIC_RPC_URLS`.
 
 Payouts appear after the next Lido report (daily). Send them with "Pay out" in the Payouts box on a community page, "Send all pending payouts" in the account menu (curators), or `bun run payout --deployment hoodi`.
 
