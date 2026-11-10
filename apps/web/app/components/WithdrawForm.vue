@@ -76,7 +76,8 @@ async function submit() {
     <p class="text-sm text-muted">
       <template v-if="assets">Paid out as <TokenAmount :value="assets" :unit="asset" />, {{ copy.assetDescription }}.</template>
       <template v-else>Paid out as {{ asset.symbol || 'the vault asset' }}, {{ copy.assetDescription }}.</template>
-      <template v-if="copy.payoutNote"> {{ copy.payoutNote }}</template>
+      <!-- The space is in the interpolation: Vue drops it as leading whitespace of the template. -->
+      <template v-if="copy.payoutNote">{{ ` ${copy.payoutNote}` }}</template>
     </p>
     <UButton
       block
