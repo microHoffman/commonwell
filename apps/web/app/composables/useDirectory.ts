@@ -77,14 +77,14 @@ export function usePayouts(view: MaybeRefOrGetter<VaultView | undefined>) {
     queryFn: async (): Promise<PayoutWithTime[]> => {
       const v = toValue(view)!
       const client = usePublicClient(v.chainId)
-      const payouts = (await payoutHistory(client, v.vault, BigInt(useDeployment(v.chainId).deployBlock))).reverse()
+      const payouts = (await payoutHistory(client, v.vault, v.forwarder, BigInt(useDeployment(v.chainId).deployBlock))).reverse()
       const recent = await Promise.all(payouts.slice(0, 10).map((p) => client.getBlock({ blockNumber: p.blockNumber })))
       return payouts.map((p, i) => ({ ...p, timestamp: recent[i]?.timestamp }))
     },
   })
 }
 
-export function totalDonated(payouts: PayoutWithTime[] | undefined): bigint {
+export function totalPaidOut(payouts: PayoutWithTime[] | undefined): bigint {
   return (payouts ?? []).reduce((sum, p) => sum + p.amount, 0n)
 }
 
@@ -133,7 +133,7 @@ export function usePayoutPreview(view: MaybeRefOrGetter<VaultView | undefined>) 
   return { preview, value, isLoading: query.isLoading }
 }
 
-/// Totals across several vaults (a community's vaults on every chain): what was donated and what's
+/// Totals across several vaults (a community's vaults on every chain): what was paid out to the treasury and what's
 /// ready to pay out, both in the vaults' value unit (stETH value, ≈ ETH, for Lido). `status` explains an empty `ready`.
 export function useVaultTotals(views: MaybeRefOrGetter<VaultView[]>) {
   return useQuery({
@@ -143,7 +143,7 @@ export function useVaultTotals(views: MaybeRefOrGetter<VaultView[]>) {
       const list = toValue(views)
       const [histories, previews] = await Promise.all([
         Promise.all(
-          list.map((v) => payoutHistory(usePublicClient(v.chainId), v.vault, BigInt(useDeployment(v.chainId).deployBlock))),
+          list.map((v) => payoutHistory(usePublicClient(v.chainId), v.vault, v.forwarder, BigInt(useDeployment(v.chainId).deployBlock))),
         ),
         Promise.all(
           list.map((v) =>
@@ -157,7 +157,7 @@ export function useVaultTotals(views: MaybeRefOrGetter<VaultView[]>) {
       })
       const statuses = previews.map((p) => p?.status)
       const status = statuses.includes('ready') ? 'ready' : statuses.every((s) => s === 'paused-loss') ? 'paused-loss' : statuses.includes('nothing') ? 'nothing' : 'none'
-      return { donated: histories.flat().reduce((sum, p) => sum + p.amount, 0n), ready, status }
+      return { paidOut: histories.flat().reduce((sum, p) => sum + p.amount, 0n), ready, status }
     },
     refetchInterval: 60_000,
   })
