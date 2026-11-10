@@ -156,6 +156,21 @@ function payoutCall({ trigger, forwarder, vault }: Target) {
   }
 }
 
+/// Gas for a batch of payouts. Estimating the batch itself isn't enough: with allowFailure, the lowest gas at
+/// which the batch succeeds can be too little for the payouts inside it, which then run out of gas while the
+/// batch still succeeds. So each payout is estimated on its own; a payout that wouldn't go through gets a
+/// fixed allowance. The headroom covers the 63/64 gas passed into each call and the batch's own cost.
+export async function payoutBatchGas(client: PublicClient, account: Address, targets: Target[]): Promise<bigint> {
+  const estimates = await Promise.all(
+    targets.map(({ trigger, forwarder, vault }) =>
+      client
+        .estimateContractGas({ account, address: trigger, abi: payoutTriggerAbi, functionName: 'sendPayout', args: [forwarder, vault] })
+        .catch(() => 100_000n),
+    ),
+  )
+  return (estimates.reduce((sum, gas) => sum + gas, 0n) * 5n) / 4n + 50_000n
+}
+
 /// Every payout in one Multicall3 transaction; a vault with nothing to send doesn't stop the rest. The
 /// transaction succeeds even when single payouts fail, so `sent` and `missed` say which went through.
 export async function sendAllPayouts<T extends Target>(
@@ -168,6 +183,7 @@ export async function sendAllPayouts<T extends Target>(
     abi: multicall3Abi,
     functionName: 'aggregate3',
     args: [targets.map(payoutCall)],
+    gas: await payoutBatchGas(client, wallet.account.address, targets),
   })
   const receipt = await successfulReceipt(client, hash, 'Payouts')
   const went = targets.map((t) => forwardedIn(receipt.logs, t) > 0n)
