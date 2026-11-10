@@ -1,0 +1,83 @@
+# Checks every change to main: core tests, both typechecks, the static site, and that the committed contract
+# artifacts match a build with the pinned Foundry. The Hoodi fork tests run when contracts change.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Must reproduce the committed artifacts (`bun run contracts:check`); README names the same version.
+  FOUNDRY_VERSION: v1.7.1
+
+jobs:
+  app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - run: bun run test
+      - run: bun run typecheck
+      - run: bun run web:typecheck
+      - run: bun run web:generate
+
+  contracts:
+    runs-on: ubuntu-latest
+    steps:
+      # Not recursive, as documented: that layout reproduces the committed artifacts.
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: ${{ env.FOUNDRY_VERSION }}
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - run: bun run contracts:check
+
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      contracts: ${{ steps.filter.outputs.contracts }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dorny/paths-filter@v4
+        id: filter
+        with:
+          filters: |
+            contracts:
+              - 'contracts/**'
+              - '.gitmodules'
+              - '.github/workflows/ci.yml'
+
+  # A job skipped by `if` counts as passed, so this can be a required check without blocking other changes.
+  fork-tests:
+    needs: changes
+    if: needs.changes.outputs.contracts == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+      # Caches the pinned fork's RPC data between runs.
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: ${{ env.FOUNDRY_VERSION }}
+      # Without the secret, HoodiForkTest.sol falls back to the public Hoodi archive RPC. An empty variable
+      # would count as set, so it's only exported when the secret exists.
+      - run: |
+          if [ -n "$ARCHIVE_RPC" ]; then export HOODI_ARCHIVE_RPC_URL="$ARCHIVE_RPC"; fi
+          forge test
+        working-directory: contracts
+        env:
+          ARCHIVE_RPC: ${{ secrets.HOODI_ARCHIVE_RPC_URL }}
