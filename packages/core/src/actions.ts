@@ -11,6 +11,7 @@ import {
   type Address,
   type Hex,
   type PublicClient,
+  type TransactionReceipt,
 } from 'viem'
 import { MULTICALL3 } from './config.ts'
 import type { Wallet } from './create2.ts'
@@ -38,16 +39,21 @@ export async function stakedAmount(client: PublicClient, hash: Hex, wstETH: Addr
   return mint.args.value
 }
 
-async function confirmed(client: PublicClient, hash: Hex, label: string): Promise<Hex> {
+/// The receipt of a mined transaction; throws if it reverted, so a failure never reads as success.
+export async function successfulReceipt(client: PublicClient, hash: Hex, label: string): Promise<TransactionReceipt> {
   const receipt = await client.waitForTransactionReceipt({ hash })
   if (receipt.status !== 'success') throw new Error(`${label} failed (${hash})`)
+  return receipt
+}
+
+async function confirmed(client: PublicClient, hash: Hex, label: string): Promise<Hex> {
+  await successfulReceipt(client, hash, label)
   return hash
 }
 
 export async function approve(client: PublicClient, wallet: Wallet, token: Address, spender: Address, amount: bigint): Promise<Hex> {
   const hash = await wallet.writeContract({ address: token, abi: erc20Abi, functionName: 'approve', args: [spender, amount] })
-  await client.waitForTransactionReceipt({ hash })
-  return hash
+  return confirmed(client, hash, 'Approval')
 }
 
 export async function deposit(client: PublicClient, wallet: Wallet, vault: Address, assets: bigint): Promise<Hex> {
@@ -187,8 +193,7 @@ export async function withdraw(client: PublicClient, wallet: Wallet, vault: Addr
     functionName: 'withdraw',
     args: [assets, account, account, 0n],
   })
-  await client.waitForTransactionReceipt({ hash })
-  return hash
+  return confirmed(client, hash, 'Withdrawal')
 }
 
 /// Full withdrawal: redeems every share (no dust left behind).
@@ -200,8 +205,7 @@ export async function redeemAll(client: PublicClient, wallet: Wallet, vault: Add
     functionName: 'redeem',
     args: [shares, account, account, 0n],
   })
-  await client.waitForTransactionReceipt({ hash })
-  return hash
+  return confirmed(client, hash, 'Withdrawal')
 }
 
 export type Position = {

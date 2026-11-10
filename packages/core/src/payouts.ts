@@ -3,13 +3,17 @@ import {
   ContractFunctionRevertedError,
   encodeFunctionData,
   getAbiItem,
+  isAddressEqual,
+  parseEventLogs,
   type Address,
   type Hex,
+  type Log,
   type PublicClient,
 } from 'viem'
+import { successfulReceipt } from './actions.ts'
 import { MULTICALL3 } from './config.ts'
 import type { Wallet } from './create2.ts'
-import { payoutTriggerAbi, vaultAbi } from './generated/kinds/lido-wsteth-v1.ts'
+import { forwarderAbi, payoutTriggerAbi, vaultAbi } from './generated/kinds/lido-wsteth-v1.ts'
 import { getLogsChunked } from './logs.ts'
 
 const multicall3Abi = [
@@ -97,18 +101,35 @@ export async function previewPayout(
   }
 }
 
-export async function sendPayout(client: PublicClient, wallet: Wallet, trigger: Address, forwarder: Address, vault: Address): Promise<Hex> {
+type Target = { trigger: Address; forwarder: Address; vault: Address }
+
+/// The wstETH a payout transaction sent from `forwarder` for `vault`, from its YieldForwarded log; 0n when
+/// it sent nothing. Anyone can make a forwarder emit YieldForwarded for a made-up strategy, so only a log
+/// naming the vault counts.
+export function forwardedIn(logs: Log[], { forwarder, vault }: Pick<Target, 'forwarder' | 'vault'>): bigint {
+  const log = parseEventLogs({ abi: forwarderAbi, eventName: 'YieldForwarded', logs }).find(
+    (l) => isAddressEqual(l.address, forwarder) && isAddressEqual(l.args.strategy, vault),
+  )
+  return log?.args.assets ?? 0n
+}
+
+/// `assets` is the wstETH sent to the treasury: 0n if there was nothing to send by the time it was mined.
+export async function sendPayout(
+  client: PublicClient,
+  wallet: Wallet,
+  trigger: Address,
+  forwarder: Address,
+  vault: Address,
+): Promise<{ hash: Hex; assets: bigint }> {
   const hash = await wallet.writeContract({
     address: trigger,
     abi: payoutTriggerAbi,
     functionName: 'sendPayout',
     args: [forwarder, vault],
   })
-  await client.waitForTransactionReceipt({ hash })
-  return hash
+  const receipt = await successfulReceipt(client, hash, 'Payout')
+  return { hash, assets: forwardedIn(receipt.logs, { forwarder, vault }) }
 }
-
-type Target = { trigger: Address; forwarder: Address; vault: Address }
 
 function payoutCall({ trigger, forwarder, vault }: Target) {
   return {
@@ -118,14 +139,20 @@ function payoutCall({ trigger, forwarder, vault }: Target) {
   }
 }
 
-/// Every payout in one Multicall3 transaction; a vault with nothing to send doesn't stop the rest.
-export async function sendAllPayouts(client: PublicClient, wallet: Wallet, targets: Target[]): Promise<Hex> {
+/// Every payout in one Multicall3 transaction; a vault with nothing to send doesn't stop the rest. The
+/// transaction succeeds even when single payouts fail, so `sent` and `missed` say which went through.
+export async function sendAllPayouts<T extends Target>(
+  client: PublicClient,
+  wallet: Wallet,
+  targets: T[],
+): Promise<{ hash: Hex; sent: T[]; missed: T[] }> {
   const hash = await wallet.writeContract({
     address: MULTICALL3,
     abi: multicall3Abi,
     functionName: 'aggregate3',
     args: [targets.map(payoutCall)],
   })
-  await client.waitForTransactionReceipt({ hash })
-  return hash
+  const receipt = await successfulReceipt(client, hash, 'Payouts')
+  const went = targets.map((t) => forwardedIn(receipt.logs, t) > 0n)
+  return { hash, sent: targets.filter((_, i) => went[i]), missed: targets.filter((_, i) => !went[i]) }
 }
