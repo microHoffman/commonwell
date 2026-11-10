@@ -12,8 +12,11 @@ const toast = useToast()
 async function sendAll() {
   if (!isConnected.value || !address.value) return connect()
   try {
-    const views = props.communities.flatMap((c) => c.vaults).filter((v) => v.forwarder)
-    const targets = views.map((v) => ({ chainId: v.chainId, trigger: triggerFor(v), forwarder: v.forwarder!, vault: v.vault }))
+    const targets = props.communities.flatMap((c) =>
+      c.vaults
+        .filter((v) => v.forwarder)
+        .map((v) => ({ name: c.profile.name, chainId: v.chainId, trigger: triggerFor(v), forwarder: v.forwarder!, vault: v.vault })),
+    )
     const previews = await Promise.all(
       targets.map((t) => previewPayout(usePublicClient(t.chainId), address.value!, t.trigger, t.forwarder, t.vault)),
     )
@@ -24,8 +27,20 @@ async function sendAll() {
     }
     for (const chainId of new Set(ready.map((t) => t.chainId))) {
       const batch = ready.filter((t) => t.chainId === chainId)
-      const label = `Sent ${batch.length} payout${batch.length === 1 ? '' : 's'}${useMultichain() ? ` on ${chainLabel(chainId)}` : ''}`
-      await run(label, async () => sendAllPayouts(usePublicClient(chainId), await getWallet(chainId), batch))
+      const on = useMultichain() ? ` on ${chainLabel(chainId)}` : ''
+      // The batch succeeds even when single payouts fail, so the toast counts what actually went through.
+      await run(
+        ({ sent, missed }) =>
+          missed.length === 0
+            ? `Sent ${sent.length} payout${sent.length === 1 ? '' : 's'}${on}`
+            : {
+                title: `Sent ${sent.length} of ${batch.length} payouts${on}`,
+                description: `${[...new Set(missed.map((t) => t.name))].join(', ')} didn't go through. Try again later.`,
+                color: 'warning',
+                icon: 'i-lucide-triangle-alert',
+              },
+        async () => sendAllPayouts(usePublicClient(chainId), await getWallet(chainId), batch),
+      )
     }
   } catch (error) {
     toast.add({ title: errorMessage(error), color: 'error', icon: 'i-lucide-circle-alert' })
