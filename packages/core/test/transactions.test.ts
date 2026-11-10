@@ -1,6 +1,16 @@
 import { describe, expect, test } from 'bun:test'
 import { encodeAbiParameters, encodeEventTopics, pad, type Address, type Hex, type Log, type PublicClient } from 'viem'
-import { approve, forwarderAbi, forwardedIn, redeemAll, sendAllPayouts, sendPayout, withdraw, type Wallet } from '../src/index.ts'
+import {
+  approve,
+  forwarderAbi,
+  forwardedIn,
+  payoutHistory,
+  redeemAll,
+  sendAllPayouts,
+  sendPayout,
+  withdraw,
+  type Wallet,
+} from '../src/index.ts'
 
 const hash = pad('0xabc', { size: 32 })
 const user = pad('0x1', { size: 20 })
@@ -65,5 +75,35 @@ describe('payout outcomes come from the forwarder logs', () => {
     const result = await sendAllPayouts(client('success', logs), wallet, [a, b])
     expect(result.sent).toEqual([a])
     expect(result.missed).toEqual([b])
+  })
+})
+
+describe('payout history', () => {
+  // A decoded YieldForwarded log as getLogs returns it.
+  const sent = (forwarder: Address, strategy: Address, shares: bigint, assets: bigint) => ({
+    address: forwarder,
+    blockNumber: 7n,
+    transactionHash: hash,
+    args: { strategy, receiver: treasury, shares, assets },
+  })
+
+  test('lists what every forwarder the vault used sent for it, in ETH value', async () => {
+    const queries: { address: unknown; args: unknown }[] = []
+    const stub = {
+      getBlockNumber: async () => 10n,
+      getLogs: async (params: { event: { name: string }; address: unknown; args: unknown }) => {
+        if (params.event.name === 'UpdateDragonRouter') return [{ args: { newDragonRouter: forwarderB } }]
+        queries.push({ address: params.address, args: params.args })
+        // The RPC filters by strategy; a junk event slipping through must still be dropped.
+        return [sent(forwarderA, vaultA, 100n, 90n), sent(forwarderB, vaultA, 50n, 45n), sent(forwarderA, vaultB, 1n, 1n)]
+      },
+    } as unknown as PublicClient
+
+    const history = await payoutHistory(stub, vaultA, forwarderA, 0n)
+    expect(queries).toEqual([{ address: [forwarderA, forwarderB], args: { strategy: vaultA } }])
+    expect(history.map((p) => [p.forwarder, p.amount, p.assets])).toEqual([
+      [forwarderA, 100n, 90n],
+      [forwarderB, 50n, 45n],
+    ])
   })
 })

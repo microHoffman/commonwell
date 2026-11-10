@@ -4,7 +4,7 @@ import { chainLabel, sharedValueUnit, type Community } from '@commonwell/core'
 const props = defineProps<{ community: Community }>()
 const totals = useVaultTotals(() => props.community.vaults)
 // Yield already paid out plus what's waiting, like the community page's circle.
-const generated = computed(() => (totals.data.value?.donated ?? 0n) + (totals.data.value?.status === 'ready' ? totals.data.value.ready : 0n))
+const generated = computed(() => (totals.data.value?.paidOut ?? 0n) + (totals.data.value?.status === 'ready' ? totals.data.value.ready : 0n))
 const { isCurator } = useRoles(() => props.community)
 const reviewOpen = ref(false)
 const multichain = useMultichain()

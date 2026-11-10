@@ -19,7 +19,7 @@ const draft = useDepositDraft()
 const staked = computed(() => props.view.state?.depositorValue ?? 0n)
 // Everything generated for the community: what's already been paid out plus what's waiting to be.
 const { preview, value: ready } = usePayoutPreview(() => props.view)
-const generated = computed(() => totalDonated(payouts.data.value) + (preview.value?.status === 'ready' ? (ready.value ?? 0n) : 0n))
+const generated = computed(() => totalPaidOut(payouts.data.value) + (preview.value?.status === 'ready' ? (ready.value ?? 0n) : 0n))
 const yours = computed(() => (isConnected.value ? (positions.data.value?.[0]?.value ?? 0n) : 0n))
 const adding = computed(() => (draft.value && draft.value > 0n ? draft.value : 0n))
 

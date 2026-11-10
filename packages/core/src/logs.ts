@@ -5,7 +5,7 @@ import type { AbiEvent, Address, GetLogsParameters, GetLogsReturnType, PublicCli
 export async function getLogsChunked<const TEvent extends AbiEvent>(
   client: PublicClient,
   params: {
-    address: Address
+    address: Address | Address[]
     event: TEvent
     args?: GetLogsParameters<TEvent>['args']
     fromBlock: bigint
