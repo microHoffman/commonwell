@@ -12,17 +12,21 @@ export function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error)
 }
 
+/// The toast after an action resolves: a success title, or a whole toast when the outcome was partial.
+export type TxOutcome = string | { title: string; description?: string; color?: 'success' | 'warning' | 'neutral'; icon?: string }
+
 /// Runs a wallet action with a pending flag and toasts, then refreshes every query.
 export function useTx() {
   const toast = useToast()
   const queryClient = useQueryClient()
   const pending = ref(false)
 
-  async function run<T>(success: string, action: () => Promise<T>): Promise<T | undefined> {
+  async function run<T>(success: TxOutcome | ((result: T) => TxOutcome), action: () => Promise<T>): Promise<T | undefined> {
     pending.value = true
     try {
       const result = await action()
-      toast.add({ title: success, color: 'success', icon: 'i-lucide-check' })
+      const outcome = typeof success === 'function' ? success(result) : success
+      toast.add({ color: 'success', icon: 'i-lucide-check', ...(typeof outcome === 'string' ? { title: outcome } : outcome) })
       return result
     } catch (error) {
       toast.add({ title: errorMessage(error), color: 'error', icon: 'i-lucide-circle-alert' })

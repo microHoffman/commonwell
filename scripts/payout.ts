@@ -16,10 +16,10 @@ for (const view of views) {
   for (const vault of view.active) {
     if (!vault.forwarder) continue
     const trigger = deployment.kinds[vault.link.kind]!.payoutTrigger
-    const target = { trigger, forwarder: vault.forwarder, vault: vault.vault }
+    const name = view.active.length > 1 ? `${view.profile.name} ${shortAddress(vault.vault)}` : view.profile.name
+    const target = { name, trigger, forwarder: vault.forwarder, vault: vault.vault }
     const preview = await previewPayout(client, sender.account.address, target.trigger, target.forwarder, target.vault)
     const detail = preview.status === 'ready' ? `${formatEther(preview.assets)} wstETH` : preview.status
-    const name = view.active.length > 1 ? `${view.profile.name} ${shortAddress(vault.vault)}` : view.profile.name
     console.log(`${name.padEnd(24)} ${detail}`)
     if (preview.status === 'ready') targets.push(target)
   }
@@ -28,6 +28,10 @@ for (const view of views) {
 if (targets.length === 0) {
   console.log('\nNothing to send yet: Lido updates its rate once a day.')
 } else {
-  const hash = await sendAllPayouts(client, sender, targets)
-  console.log(`\nSent ${targets.length} payout(s)  ${explorerTx(deployment, hash)}`)
+  const { hash, sent, missed } = await sendAllPayouts(client, sender, targets)
+  console.log(`\nSent ${sent.length} of ${targets.length} payout(s)  ${explorerTx(deployment, hash)}`)
+  if (missed.length > 0) {
+    console.log(`Didn't go through: ${missed.map((t) => t.name).join(', ')}`)
+    process.exitCode = 1
+  }
 }

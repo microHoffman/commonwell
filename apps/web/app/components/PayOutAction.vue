@@ -12,8 +12,13 @@ const { preview } = usePayoutPreview(() => props.view)
 
 async function send() {
   if (!isConnected.value) return connect()
-  await run(`Payout sent to ${props.communityName}`, async () =>
-    sendPayout(usePublicClient(props.view.chainId), await getWallet(props.view.chainId), triggerFor(props.view), props.view.forwarder!, props.view.vault),
+  await run(
+    ({ assets }) =>
+      assets > 0n
+        ? `Payout sent to ${props.communityName}`
+        : { title: 'Nothing to send yet', description: 'Someone may have just sent it.', color: 'neutral', icon: 'i-lucide-clock' },
+    async () =>
+      sendPayout(usePublicClient(props.view.chainId), await getWallet(props.view.chainId), triggerFor(props.view), props.view.forwarder!, props.view.vault),
   )
 }
 </script>
