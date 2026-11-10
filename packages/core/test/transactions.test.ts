@@ -12,7 +12,10 @@ const forwarderA = pad('0xa2', { size: 20 })
 const forwarderB = pad('0xb2', { size: 20 })
 
 function client(status: 'success' | 'reverted', logs: Log[] = []): PublicClient {
-  return { waitForTransactionReceipt: async () => ({ status, logs, transactionHash: hash }) } as unknown as PublicClient
+  return {
+    waitForTransactionReceipt: async () => ({ status, logs, transactionHash: hash }),
+    estimateContractGas: async () => 300_000n,
+  } as unknown as PublicClient
 }
 
 const wallet = { account: { address: user }, writeContract: async () => hash } as unknown as Wallet
@@ -55,6 +58,18 @@ describe('payout outcomes come from the forwarder logs', () => {
   test('a forwarder event for another strategy or from another address does not count', () => {
     const junk = [forwarded(forwarderA, pad('0xdead', { size: 20 }), 9n), forwarded(pad('0xdead', { size: 20 }), vaultA, 9n)]
     expect(forwardedIn(junk, { forwarder: forwarderA, vault: vaultA })).toBe(0n)
+  })
+
+  test('a batch gets enough gas for every payout inside it, not just for itself', async () => {
+    const sent: { gas?: bigint }[] = []
+    const recording = { ...wallet, writeContract: async (args: { gas?: bigint }) => (sent.push(args), hash) } as unknown as Wallet
+    const targets = [
+      { trigger, forwarder: forwarderA, vault: vaultA },
+      { trigger, forwarder: forwarderB, vault: vaultB },
+    ]
+    await sendAllPayouts(client('success'), recording, targets)
+    // Two payouts at 300k each, plus headroom.
+    expect(sent[0]!.gas).toBe((600_000n * 5n) / 4n + 50_000n)
   })
 
   test('a batch splits payouts that went through from those that did not', async () => {
