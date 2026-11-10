@@ -45,22 +45,39 @@ const multicall3Abi = [
   },
 ] as const
 
-export type Payout = { blockNumber: bigint; txHash: Hex; dragonRouter: Address; amount: bigint; exchangeRate: bigint }
+/// A transfer to the treasury. `amount` is the vault shares redeemed, which are stETH value (≈ ETH), the unit
+/// every other figure uses; `assets` is the wstETH the treasury received.
+export type Payout = { blockNumber: bigint; txHash: Hex; forwarder: Address; receiver: Address; amount: bigint; assets: bigint }
 
-const donationMinted = getAbiItem({ abi: vaultAbi, name: 'DonationMinted' })
+const yieldForwarded = getAbiItem({ abi: forwarderAbi, name: 'YieldForwarded' })
+const updateDragonRouter = getAbiItem({ abi: vaultAbi, name: 'UpdateDragonRouter' })
 
-/// Payout history from the vault's own DonationMinted events. Only the vault can emit them, so the
-/// history survives a forwarder replacement and can't be faked through the forwarder.
-/// `amount` is the donation's stETH value (≈ ETH).
-export async function payoutHistory(client: PublicClient, vault: Address, fromBlock: bigint): Promise<Payout[]> {
-  const logs = await getLogsChunked(client, { address: vault, event: donationMinted, fromBlock })
-  return logs.map((log) => ({
-    blockNumber: log.blockNumber,
-    txHash: log.transactionHash,
-    dragonRouter: log.args.dragonRouter as Address,
-    amount: log.args.amount as bigint,
-    exchangeRate: log.args.exchangeRate as bigint,
-  }))
+/// Payout history: what the vault's forwarders actually sent to the treasury, from their YieldForwarded events.
+/// Minting yield to the forwarder (DonationMinted) isn't a payout: the shares can wait there, and a loss can
+/// burn them. The forwarders are `forwarder` and any the vault switched to since, from the vault's own
+/// events, so the history survives a forwarder replacement. Anyone can make a forwarder emit YieldForwarded
+/// for a made-up strategy, so only events naming this vault count. Shares sent with `forwardToken` (a manual
+/// workaround) aren't included.
+export async function payoutHistory(
+  client: PublicClient,
+  vault: Address,
+  forwarder: Address | undefined,
+  fromBlock: bigint,
+): Promise<Payout[]> {
+  const changes = await getLogsChunked(client, { address: vault, event: updateDragonRouter, fromBlock })
+  const forwarders = [...new Set([forwarder, ...changes.map((log) => log.args.newDragonRouter)].filter((a) => a !== undefined))]
+  if (forwarders.length === 0) return []
+  const logs = await getLogsChunked(client, { address: forwarders, event: yieldForwarded, args: { strategy: vault }, fromBlock })
+  return logs
+    .filter((log) => isAddressEqual(log.args.strategy!, vault))
+    .map((log) => ({
+      blockNumber: log.blockNumber,
+      txHash: log.transactionHash,
+      forwarder: log.address,
+      receiver: log.args.receiver!,
+      amount: log.args.shares!,
+      assets: log.args.assets!,
+    }))
 }
 
 export type PayoutPreview =
