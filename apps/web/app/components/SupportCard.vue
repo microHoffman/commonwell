@@ -14,6 +14,11 @@ const positionOf = (v: VaultView) =>
 const position = computed(() => positionOf(props.view))
 // Withdraw lists only the vaults holding your money.
 const mine = computed(() => props.vaults.filter((v) => positionOf(v)))
+// Seen here, so My deposits can still list them if the directory can't be read later.
+const remembered = useRememberedVaults()
+watch(mine, (list) =>
+  remembered.remember(list.map((v) => ({ chainId: v.chainId, vault: v.vault, kind: v.link.kind, name: props.communityName }))),
+)
 
 const tab = ref<'deposit' | 'withdraw'>('deposit')
 const tabs = [
@@ -57,6 +62,11 @@ const tabs = [
       <UButton label="Sign in" color="neutral" variant="outline" @click="connect()" />
     </div>
     <USkeleton v-else-if="positions.isLoading.value" class="h-40 rounded-[1rem]" />
+    <!-- A failed read isn't "no deposit": say so and offer to try again. -->
+    <div v-else-if="positions.isError.value" class="space-y-4 py-6 text-center">
+      <p class="text-muted">Couldn't read your deposits with {{ communityName }}. They're safe; the network didn't answer.</p>
+      <UButton label="Try again" color="neutral" variant="outline" :loading="positions.isFetching.value" @click="positions.refetch()" />
+    </div>
     <div v-else-if="mine.length === 0" class="space-y-4 py-6 text-center">
       <p class="text-muted">You have no deposit with {{ communityName }} yet.</p>
       <UButton label="Make a deposit" color="neutral" variant="outline" @click="tab = 'deposit'" />
