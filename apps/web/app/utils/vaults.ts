@@ -1,5 +1,9 @@
 import { chainFor, getKind, shortAddress, valueUnit, type VaultView } from '@commonwell/core'
 
+/// What reading a position and withdrawing need: where the vault is and its type. A directory VaultView has it,
+/// and so does a vault remembered in this browser, so withdrawals don't depend on the directory.
+export type WithdrawTarget = Pick<VaultView, 'chainId' | 'vault'> & { link: Pick<VaultView['link'], 'kind'> }
+
 /// Where a vault earns, as the page names it: "Lido".
 export function protocolOf(view: VaultView): string {
   return getKind(view.link.kind)?.protocol ?? view.link.kind

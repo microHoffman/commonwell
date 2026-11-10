@@ -35,6 +35,8 @@ const deployment = useDeployment(chainId)
 const client = usePublicClient(chainId)
 const queryClient = useQueryClient()
 const toast = useToast()
+// Remembered after a deposit, so My deposits can list it even when the directory can't be read.
+const remembered = useRememberedVaults()
 const { address, isConnected, chainId: walletChain, getWallet } = useWallet()
 const wrongNetwork = computed(() => isConnected.value && walletChain.value !== chainId)
 const { connect } = useWeb3AuthConnect()
@@ -213,6 +215,7 @@ async function submit() {
       await depositWstEth(wallet, amount.value)
     }
     amountText.value = ''
+    remembered.remember([{ chainId, vault: vault.value, kind: props.view.link.kind, name: props.communityName }])
     toast.add({
       title: `Deposited. ${props.communityName} now receives its ${copy.yieldNoun}.`,
       color: 'success',
