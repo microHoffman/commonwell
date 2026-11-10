@@ -91,13 +91,13 @@ export function totalDonated(payouts: PayoutWithTime[] | undefined): bigint {
 export type ChainPosition = Position & { chainId: number }
 
 /// The connected wallet's positions across `views` on any chain (any status: positions stay withdrawable).
-export function usePositions(views: MaybeRefOrGetter<VaultView[]>) {
+export function usePositions(views: MaybeRefOrGetter<Pick<VaultView, 'chainId' | 'vault'>[]>) {
   const { address } = useWallet()
   return useQuery({
     queryKey: computed(() => ['positions', address.value, toValue(views).map(vaultKey)]),
     enabled: computed(() => address.value !== undefined && toValue(views).length > 0),
     queryFn: async (): Promise<ChainPosition[]> => {
-      const byChain = new Map<number, VaultView[]>()
+      const byChain = new Map<number, Pick<VaultView, 'chainId' | 'vault'>[]>()
       for (const v of toValue(views)) byChain.set(v.chainId, [...(byChain.get(v.chainId) ?? []), v])
       const results = await Promise.all(
         [...byChain].map(async ([chainId, list]) =>

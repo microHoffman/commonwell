@@ -33,6 +33,8 @@ const facts = computed(() => {
   const only = vaults.value.length === 1 ? vaults.value[0] : undefined
   return only ? `${kindCopy(only.link.kind).earning} on ${where.value}` : `${vaults.value.length} vaults on ${where.value}`
 })
+// The directory (or this community's chain) couldn't be read: "not found" would be a guess.
+const unreadable = computed(() => directory.isError.value || (directory.data.value?.unavailable.length ?? 0) > 0)
 const unlisted = computed(() => community.value !== undefined && vault.value === undefined)
 const pendingChange = computed(() => (vault.value?.state ? vaultFlags(vault.value.state).pendingChange : undefined))
 
@@ -50,6 +52,20 @@ useHead({ title: () => (community.value ? `${community.value.profile.name} · Co
     </div>
     <USkeleton class="h-96 rounded-[1.5rem]" />
   </div>
+  <UEmpty
+    v-else-if="!community && unreadable"
+    icon="i-lucide-wifi-off"
+    title="Couldn't load this community"
+    :description="
+      directory.isError.value
+        ? 'The community list couldn\'t be read right now. Deposits are safe.'
+        : `Couldn't read ${directory.data.value!.unavailable.join(' and ')}, where it may be.`
+    "
+    :actions="[
+      { label: 'Try again', color: 'neutral', variant: 'outline', loading: directory.isFetching.value, onClick: () => directory.refetch() },
+      { label: 'My deposits', color: 'neutral', variant: 'ghost', to: '/me' },
+    ]"
+  />
   <UEmpty
     v-else-if="!community"
     icon="i-lucide-search-x"

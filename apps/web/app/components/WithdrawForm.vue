@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { assetUnit, chainLabel, formatAmount, getKind, kindCopy, redeemAll, valueUnit, withdraw, type VaultView } from '@commonwell/core'
+import { assetUnit, chainLabel, formatAmount, getKind, kindCopy, redeemAll, valueUnit, withdraw } from '@commonwell/core'
+import type { WithdrawTarget } from '~/utils/vaults'
 
-const props = defineProps<{ view: VaultView }>()
+const props = defineProps<{ view: WithdrawTarget }>()
 const { getWallet, isConnected, chainId: walletChain } = useWallet()
 const wrongNetwork = computed(() => isConnected.value && walletChain.value !== props.view.chainId)
 const positions = usePositions(() => [props.view])
