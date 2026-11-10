@@ -30,7 +30,7 @@ export const copy: KindCopy = {
   rateLabel: 'Staking APR',
   yieldNoun: 'staking rewards',
   assetDescription: "Lido's staked ETH",
-  payoutNote: 'Unstake it through Lido to get ETH back, which usually takes a few days.',
+  payoutNote: 'Swap it for ETH right away, or unstake it through Lido for its full value, which usually takes a few days.',
   depositOptions: {
     eth: { symbol: 'ETH', description: 'Staked with Lido for you' },
     wsteth: { symbol: 'wstETH', description: 'Already staked with Lido' },
