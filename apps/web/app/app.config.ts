@@ -10,5 +10,7 @@ export default defineAppConfig({
     card: {
       slots: { root: 'rounded-[1.5rem]' },
     },
+    // The page is kraft-100, the same as bg-elevated, so default skeletons vanish on it and loading looks blank.
+    skeleton: { base: 'bg-accented' },
   },
 })
